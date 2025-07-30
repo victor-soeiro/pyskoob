@@ -1,0 +1,13 @@
+# Configuration file for Dependabot updates
+# Monitors dependency files in the repository and opens pull requests
+# with updates on a weekly schedule.
+version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
