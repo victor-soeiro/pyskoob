@@ -6,14 +6,12 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "bs4>=0.0.2",
-    "fastapi>=0.116.1",
     "httpx>=0.28.1",
     "pydantic>=2.11.7",
     "pytest>=8.4.1",
     "pytest-cov>=6.2.1",
     "requests>=2.32.4",
     "ruff>=0.12.4",
-    "uvicorn>=0.35.0",
 ]
 
 [tool.setuptools.packages.find]
@@ -61,3 +59,9 @@ max-complexity = 24
 
 [tool.ruff.lint.pydocstyle]
 convention = "numpy"
+
+[project.optional-dependencies]
+dev = [
+    "fastapi>=0.116.1",
+    "uvicorn>=0.35.0",
+]
