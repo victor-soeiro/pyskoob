@@ -1,7 +1,8 @@
-import httpx
-import pytest
 from datetime import datetime
 from typing import cast
+
+import httpx
+import pytest
 
 from pyskoob.auth import AuthService
 from pyskoob.models.user import User
