@@ -89,3 +89,9 @@ pytest --cov=pyskoob
 6. Open a pull request describing your changes.
 
 Contributions are very welcome!
+
+## Documentation
+The full project documentation is automatically published using [GitHub Pages](https://pages.github.com/).
+Once the workflow runs, you can access it at:
+
+https://victor-soeiro.github.io/pyskoob/
