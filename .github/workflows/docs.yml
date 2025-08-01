@@ -12,36 +12,55 @@ permissions:
   id-token: write
 
 jobs:
-  build:
+  build-docs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+
       - name: Cache pip
         uses: actions/cache@v4
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('pyproject.toml') }}
           restore-keys: ${{ runner.os }}-pip-
-      - run: pip install -e .[docs]
-      - run: mkdocs build --strict
-      - uses: actions/upload-pages-artifact@v3
+
+      - name: Install dependencies
+        run: pip install -e .[docs]
+
+      - name: Build documentation
+        run: mkdocs build --strict
+
+      - name: Upload build artifact
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./site
 
-  deploy:
-    if: github.event_name == 'push'
-    needs: build
+  deploy-docs:
+    needs: build-docs
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       pages: write
       id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -e .[docs]
+
+      - name: Deploy to GitHub Pages
+        run: mkdocs gh-deploy --force --remote-branch gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
