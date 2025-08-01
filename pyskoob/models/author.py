@@ -2,12 +2,10 @@ from pydantic import BaseModel, ConfigDict, Field
 
 
 class AuthorSearchResult(BaseModel):
+    id: int
     name: str
     url: str
     nickname: str
-    followers: int
-    readers: int
-    books: int
     img_url: str
 
     model_config = ConfigDict(from_attributes=True)

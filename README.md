@@ -1,12 +1,20 @@
 # PySkoob
 
 [![PyPI](https://img.shields.io/pypi/v/scraper-skoob?color=blue)](https://pypi.org/project/scraper-skoob/)
-[![CI](https://github.com/YOUR_GITHUB_USER/pyskoob/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_GITHUB_USER/pyskoob/actions/workflows/ci.yml)
+[![CI](https://github.com/victor-soeiro/pyskoob/actions/workflows/ci.yml/badge.svg)](https://github.com/victor-soeiro/pyskoob/actions/workflows/ci.yml)
 [![Python Versions](https://img.shields.io/pypi/pyversions/scraper-skoob)](https://pypi.org/project/scraper-skoob/)
-[![License](https://img.shields.io/github/license/YOUR_GITHUB_USER/pyskoob)](LICENSE)
+[![License](https://img.shields.io/github/license/victor-soeiro/pyskoob)](LICENSE)
 
 ## Overview
 PySkoob is a Python library that simplifies interacting with the Skoob website. It acts as an HTTP client, providing services for authentication, book searches, and profile access. The goal of the project is to streamline integrations and automation while offering an easy‑to‑use interface.
+
+## Documentation
+The full documentation is generated using [MkDocs](https://www.mkdocs.org/) and lives in the `docs/` folder. To preview it locally run:
+
+```bash
+pip install -e .[docs]
+mkdocs serve
+```
 
 ## Installation
 Create a virtual environment using [uv](https://github.com/astral-sh/uv) and
@@ -21,7 +29,7 @@ uv pip install scraper-skoob
 To always use the latest version from GitHub:
 
 ```bash
-uv pip install git+https://github.com/YOUR_GITHUB_USER/pyskoob.git
+uv pip install git+https://github.com/victor-soeiro/pyskoob.git
 ```
 
 ## Authentication

@@ -133,7 +133,7 @@ class PublisherService(BaseSkoobService):
 
     def _parse_book(self, div: Tag) -> PublisherItem:
         anchor = safe_find(div, "a")
-        img_tag = anchor.find("img") if anchor else None
+        img_tag = safe_find(anchor, "img")
         return PublisherItem(
             url=f"{self.base_url}{get_tag_attr(anchor, 'href')}",
             title=get_tag_attr(anchor, 'title'),
@@ -143,7 +143,7 @@ class PublisherService(BaseSkoobService):
     def _parse_author(self, div: Tag) -> PublisherAuthor:
         anchor = safe_find(div, "a")
         name_tag = safe_find(div, "h3")
-        img_tag = anchor.find("img") if anchor else None
+        img_tag = safe_find(anchor, "img")
         return PublisherAuthor(
             url=f"{self.base_url}{get_tag_attr(anchor, 'href')}",
             name=get_tag_text(name_tag),

@@ -7,6 +7,7 @@ from pyskoob.internal.base import BaseSkoobService
 from pyskoob.models.author import AuthorSearchResult
 from pyskoob.models.pagination import Pagination
 from pyskoob.utils.bs4_utils import get_tag_attr, get_tag_text, safe_find, safe_find_all
+from pyskoob.utils.skoob_parser_utils import get_author_id_from_url
 
 logger = logging.getLogger(__name__)
 
@@ -80,40 +81,18 @@ class AuthorService(BaseSkoobService):
             Parsed author data or ``None`` if required fields are missing.
         """
         img_tag = safe_find(div, "img", {"class": "img-rounded"})
-        link_tag = safe_find(div, "a", {"href": re.compile(r"/autor/\d+-")})
-        details = safe_find(div, "div", {"class": "autor-item-detalhe-2"})
-        if not (img_tag and link_tag and details):
+        links = [a for a in safe_find_all(div, "a", {"href": re.compile(r"/autor/\d+-")}) if get_tag_attr(a, "href")]
+        link_tag = next((a for a in links if get_tag_text(a)), None)
+        if not (img_tag and link_tag):
             return None
-        spans = [get_tag_text(s) for s in safe_find_all(details, "span") if get_tag_text(s)]
-        numbers = [self._to_int(s) for s in spans if re.search(r"\d", s)]
-        if len(numbers) < 3:
-            return None
+        href = get_tag_attr(link_tag, "href")
         return AuthorSearchResult(
+            id=int(get_author_id_from_url(href)),
             name=get_tag_text(link_tag),
-            url=f"{self.base_url}{get_tag_attr(link_tag, 'href')}",
+            url=f"{self.base_url}{href}",
             nickname=get_tag_text(safe_find(div, "i")),
-            books=numbers[0],
-            readers=numbers[1],
-            followers=numbers[2],
             img_url=get_tag_attr(img_tag, "src"),
         )
-
-    @staticmethod
-    def _to_int(text: str) -> int:
-        """Convert a string with digits to an integer.
-
-        Parameters
-        ----------
-        text : str
-            Text containing digits.
-
-        Returns
-        -------
-        int
-            Integer extracted from ``text`` or ``0`` if none found.
-        """
-        digits = re.search(r"(\d+[\.\d]*)", text)
-        return int(digits.group(1).replace(".", "")) if digits else 0
 
     @staticmethod
     def _extract_total_results(soup: Tag) -> int:
