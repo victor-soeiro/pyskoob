@@ -32,6 +32,28 @@ class HttpxSyncClient(SyncHTTPClient):
     def post(
         self, url: str, data: Any | None = None, **kwargs: Any
     ) -> HTTPResponse:
+        """Send a POST request.
+
+        Parameters
+        ----------
+        url:
+            The request URL.
+        data:
+            Optional request payload. If ``data`` is ``bytes`` or ``str`` it is
+            forwarded as ``content`` to avoid deprecation warnings from
+            ``httpx``. Other types are passed through unchanged.
+        **kwargs:
+            Additional arguments forwarded to ``httpx.Client.post``.
+
+        Returns
+        -------
+        HTTPResponse
+            The HTTP response instance returned by ``httpx``.
+        """
+
+        if isinstance(data, (str | bytes)):
+            return self._client.post(url, content=data, **kwargs)
+
         return self._client.post(url, data=data, **kwargs)
 
     def close(self) -> None:
@@ -60,6 +82,28 @@ class HttpxAsyncClient(AsyncHTTPClient):
     async def post(
         self, url: str, data: Any | None = None, **kwargs: Any
     ) -> HTTPResponse:
+        """Send a POST request asynchronously.
+
+        Parameters
+        ----------
+        url:
+            The request URL.
+        data:
+            Optional request payload. If ``data`` is ``bytes`` or ``str`` it is
+            forwarded as ``content`` to avoid deprecation warnings from
+            ``httpx``. Other types are passed through unchanged.
+        **kwargs:
+            Additional arguments forwarded to ``httpx.AsyncClient.post``.
+
+        Returns
+        -------
+        HTTPResponse
+            The HTTP response instance returned by ``httpx``.
+        """
+
+        if isinstance(data, (str | bytes)):
+            return await self._client.post(url, content=data, **kwargs)
+
         return await self._client.post(url, data=data, **kwargs)
 
     async def close(self) -> None:

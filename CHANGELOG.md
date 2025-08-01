@@ -9,6 +9,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - Initial structure for the changelog.
 - AuthorService for searching authors.
 - Example script demonstrating AuthorService usage.
+### Fixed
+- Avoided ``httpx`` deprecation warning when posting raw bytes or text.
 
 ## [0.1.0] - 2025-07-30
 ### Added
