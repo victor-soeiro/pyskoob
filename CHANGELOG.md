@@ -12,6 +12,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Fixed
 - Avoided ``httpx`` deprecation warning when posting raw bytes or text.
 
+### Changed
+- Removed the standalone lint workflow and moved Ruff earlier in the CI job.
+
 ## [0.1.0] - 2025-07-30
 ### Added
 - Initial release.

@@ -28,12 +28,12 @@ jobs:
       - name: Set up uv
         uses: astral-sh/setup-uv@v6
 
-      - name: Install dependencies
-        run: uv pip install --system -e .
-
       - name: Lint with ruff
         if: matrix.python-version == '3.12'
         run: ruff check --no-fix --output-format=github .
+
+      - name: Install dependencies
+        run: uv pip install --system -e .
 
       - name: Run tests with coverage
         run: pytest --cov=pyskoob --cov-report=xml --cov-fail-under=80
