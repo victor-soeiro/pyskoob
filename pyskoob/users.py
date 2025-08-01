@@ -28,6 +28,12 @@ logger = logging.getLogger(__name__)
 
 
 class UserService(BaseSkoobService):
+    """Fetch user profiles, books and friends from Skoob.
+
+    The service depends on :class:`AuthService` to validate the current
+    session before performing operations that require authentication such
+    as retrieving your own profile or editing bookshelf information.
+    """
     def __init__(self, client: httpx.Client, auth_service: AuthService):
         """
         Initializes the UserService.

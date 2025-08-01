@@ -25,6 +25,13 @@ logger = logging.getLogger(__name__)
 
 
 class BookService(BaseSkoobService):
+    """High level operations for retrieving and searching books.
+
+    The service parses HTML and JSON responses from Skoob and exposes
+    helpers to fetch book details, reviews and user lists. It can be used
+    independently from authentication, but other services may combine it
+    with :class:`AuthService` to operate on the authenticated user's data.
+    """
     def search(
         self,
         query: str,

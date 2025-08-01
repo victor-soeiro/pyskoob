@@ -10,6 +10,13 @@ logger = logging.getLogger(__name__)
 
 
 class SkoobProfileService(BaseSkoobService):
+    """Perform profile-related actions such as labeling and rating books.
+
+    This service requires an authenticated session via
+    :class:`AuthService` and is typically used alongside
+    :class:`UserService` when manipulating the logged user's bookshelf
+    and other profile metadata.
+    """
     def __init__(self, client: httpx.Client, auth_service: AuthService):
         """
         Initializes the SkoobProfileService.

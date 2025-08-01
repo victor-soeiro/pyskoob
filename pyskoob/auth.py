@@ -9,7 +9,13 @@ logger = logging.getLogger(__name__)
 
 
 class AuthService(BaseSkoobService):
-    """Handle authentication actions on Skoob."""
+    """Manage Skoob authentication and session validation.
+
+    The service wraps the login workflow and stores the session state so
+    other services (such as :class:`UserService` or
+    :class:`SkoobProfileService`) can verify that requests are
+    authenticated before accessing user data.
+    """
     def __init__(self, client: httpx.Client):
         """Initialize the service with a HTTPX client.
 
