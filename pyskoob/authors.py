@@ -49,12 +49,11 @@ class AuthorService(BaseSkoobService):
         response.raise_for_status()
         soup = self.parse_html(response.text)
 
-        author_blocks = [
-            div
-            for div in safe_find_all(soup, "div")
-            if "border-bottom:#ccc" in (div.get("style") or "")
-            and "margin-bottom:10px" in div.get("style", "")
-        ]
+        author_blocks = []
+        for div in safe_find_all(soup, "div"):
+            style = str(div.get("style") or "")
+            if "border-bottom:#ccc" in style and "margin-bottom:10px" in style:
+                author_blocks.append(div)
 
         results = [r for div in author_blocks if (r := self._parse_author_block(div))]
         total = self._extract_total_results(soup)
@@ -81,7 +80,7 @@ class AuthorService(BaseSkoobService):
             Parsed author data or ``None`` if required fields are missing.
         """
         img_tag = safe_find(div, "img", {"class": "img-rounded"})
-        link_tag = div.find("a", href=re.compile(r"/autor/\d+-"))
+        link_tag = safe_find(div, "a", {"href": re.compile(r"/autor/\d+-")})
         details = safe_find(div, "div", {"class": "autor-item-detalhe-2"})
         if not (img_tag and link_tag and details):
             return None
