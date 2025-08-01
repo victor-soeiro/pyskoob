@@ -2,11 +2,11 @@ import logging
 import re
 from datetime import datetime
 
-import httpx
 from bs4 import BeautifulSoup
 
 from pyskoob.auth import AuthService
 from pyskoob.exceptions import ParsingError
+from pyskoob.http.client import SyncHTTPClient
 from pyskoob.internal.base import BaseSkoobService
 from pyskoob.models.book import BookReview
 from pyskoob.models.enums import BookcaseOption, BrazilianState, UserGender, UsersRelation
@@ -28,20 +28,17 @@ logger = logging.getLogger(__name__)
 
 
 class UserService(BaseSkoobService):
-    """Fetch user profiles, books and friends from Skoob.
+    def __init__(self, client: SyncHTTPClient, auth_service: AuthService):
+        """Fetch user profiles, books and friends from Skoob.
 
-    The service depends on :class:`AuthService` to validate the current
-    session before performing operations that require authentication such
-    as retrieving your own profile or editing bookshelf information.
-    """
-    def __init__(self, client: httpx.Client, auth_service: AuthService):
-        """
-        Initializes the UserService.
+        The service depends on :class:`AuthService` to validate the current
+        session before performing operations that require authentication such
+        as retrieving your own profile or editing bookshelf information.
 
         Parameters
         ----------
-        client : httpx.Client
-            The HTTPX client to use for requests.
+        client : SyncHTTPClient
+            The HTTP client to use for requests.
         auth_service : AuthService
             The authentication service.
         """

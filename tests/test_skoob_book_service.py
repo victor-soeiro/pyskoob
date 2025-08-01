@@ -1,9 +1,9 @@
 from typing import cast
 
-import httpx
 from bs4 import BeautifulSoup
 
 from pyskoob.books import BookService
+from pyskoob.http.client import SyncHTTPClient
 from pyskoob.models.enums import BookUserStatus
 
 
@@ -26,7 +26,7 @@ class DummyClient:
 
 def make_service(html='', json_data=None):
     client = DummyClient(text=html, json_data=json_data)
-    return BookService(cast(httpx.Client, client)), client
+    return BookService(cast(SyncHTTPClient, client)), client
 
 
 def test_extract_helpers():

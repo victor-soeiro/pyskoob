@@ -1,8 +1,7 @@
 from typing import cast
 
-import httpx
-
 from pyskoob.auth import AuthService
+from pyskoob.http.client import SyncHTTPClient
 from pyskoob.models.enums import BookcaseOption, UsersRelation
 from pyskoob.users import UserService
 
@@ -33,7 +32,7 @@ def make_service(html='', json_data=None):
     client = DummyClient(text=html, json_data=json_data)
     auth = DummyAuth()
     return (
-        UserService(cast(httpx.Client, client), cast(AuthService, auth)),
+        UserService(cast(SyncHTTPClient, client), cast(AuthService, auth)),
         client,
     )
 

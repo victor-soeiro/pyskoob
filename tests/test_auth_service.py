@@ -1,10 +1,10 @@
 from datetime import datetime
 from typing import cast
 
-import httpx
 import pytest
 
 from pyskoob.auth import AuthService
+from pyskoob.http.client import SyncHTTPClient
 from pyskoob.models.user import User
 
 
@@ -54,7 +54,7 @@ def _make_user() -> User:
 
 def test_login_with_cookies(monkeypatch):
     client = DummyClient()
-    service = AuthService(cast(httpx.Client, client))
+    service = AuthService(cast(SyncHTTPClient, client))
     monkeypatch.setattr(service, "get_my_info", lambda: _make_user())
     user = service.login_with_cookies("tok")
     assert service._is_logged_in is True
@@ -63,7 +63,7 @@ def test_login_with_cookies(monkeypatch):
 
 
 def test_validate_login(monkeypatch):
-    service = AuthService(cast(httpx.Client, DummyClient()))
+    service = AuthService(cast(SyncHTTPClient, DummyClient()))
     with pytest.raises(PermissionError):
         service.validate_login()
     monkeypatch.setattr(service, "get_my_info", lambda: _make_user())

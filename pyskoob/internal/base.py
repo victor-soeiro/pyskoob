@@ -1,5 +1,7 @@
-import httpx
 from bs4 import BeautifulSoup
+
+from pyskoob.http.client import SyncHTTPClient
+from pyskoob.http.httpx import HttpxSyncClient
 
 
 class BaseHttpService:
@@ -10,19 +12,19 @@ class BaseHttpService:
     ----------
     _base_url : str
         The base URL for the service.
-    _client : httpx.Client
-        The HTTPX client for making requests.
+    _client : SyncHTTPClient
+        The HTTP client for making requests.
     """
     _base_url: str
 
-    def __init__(self, client: httpx.Client, base_url: str):
+    def __init__(self, client: SyncHTTPClient, base_url: str):
         """
         Initializes the BaseHttpService.
 
         Parameters
         ----------
-        client : httpx.Client
-            The HTTPX client to use for requests.
+        client : SyncHTTPClient
+            The HTTP client to use for requests.
         base_url : str
             The base URL for the service.
         """
@@ -30,14 +32,14 @@ class BaseHttpService:
         self._base_url = base_url
 
     @property
-    def client(self) -> httpx.Client:
+    def client(self) -> SyncHTTPClient:
         """
         The HTTPX client.
 
         Returns
         -------
-        httpx.Client
-            The HTTPX client instance.
+        SyncHTTPClient
+            The HTTP client instance.
         """
         return self._client
 
@@ -76,17 +78,18 @@ class BaseHttpService:
 
 
 class BaseSkoobService(BaseHttpService):
-    def __init__(self, client: httpx.Client | None):
-        """Initialize the service for the Skoob website.
+    def __init__(self, client: SyncHTTPClient | None):
+        """
+        Initializes the BaseSkoobService.
 
         Parameters
         ----------
-        client : httpx.Client | None
-            Optional client to use. A new client is created when ``None``.
+        client : SyncHTTPClient | None
+            The HTTP client to use for requests. If None, a new client is created.
 
         Examples
         --------
         >>> BaseSkoobService(httpx.Client())
         <BaseSkoobService ...>
         """
-        super().__init__(client or httpx.Client(), 'https://www.skoob.com.br')
+        super().__init__(client or HttpxSyncClient(), 'https://www.skoob.com.br')

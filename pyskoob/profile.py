@@ -1,8 +1,7 @@
 import logging
 
-import httpx
-
 from pyskoob.auth import AuthService
+from pyskoob.http.client import SyncHTTPClient
 from pyskoob.internal.base import BaseSkoobService
 from pyskoob.models.enums import BookLabel, BookShelf, BookStatus
 
@@ -10,21 +9,18 @@ logger = logging.getLogger(__name__)
 
 
 class SkoobProfileService(BaseSkoobService):
-    """Perform profile-related actions such as labeling and rating books.
+    def __init__(self, client: SyncHTTPClient, auth_service: AuthService):
+        """Perform profile-related actions such as labeling and rating books.
 
-    This service requires an authenticated session via
-    :class:`AuthService` and is typically used alongside
-    :class:`UserService` when manipulating the logged user's bookshelf
-    and other profile metadata.
-    """
-    def __init__(self, client: httpx.Client, auth_service: AuthService):
-        """
-        Initializes the SkoobProfileService.
+        This service requires an authenticated session via
+        :class:`AuthService` and is typically used alongside
+        :class:`UserService` when manipulating the logged user's bookshelf
+        and other profile metadata.
 
         Parameters
         ----------
-        client : httpx.Client
-            The HTTPX client to use for requests.
+        client : SyncHTTPClient
+            The HTTP client to use for requests.
         auth_service : AuthService
             The authentication service.
         """

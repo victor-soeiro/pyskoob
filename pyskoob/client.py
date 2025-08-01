@@ -1,7 +1,6 @@
-import httpx
-
 from pyskoob.auth import AuthService
 from pyskoob.books import BookService
+from pyskoob.http.httpx import HttpxSyncClient
 from pyskoob.profile import SkoobProfileService
 from pyskoob.users import UserService
 
@@ -18,7 +17,7 @@ class SkoobClient:
         """
         Initializes the SkoobClient.
         """
-        self._client = httpx.Client()
+        self._client = HttpxSyncClient()
         self.auth = AuthService(self._client)
         self.books = BookService(self._client)
         self.users = UserService(self._client, self.auth)

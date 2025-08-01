@@ -7,6 +7,8 @@ modules = [
     'pyskoob.books',
     'pyskoob.users',
     'pyskoob.profile',
+    'pyskoob.http.client',
+    'pyskoob.http.httpx',
     'pyskoob.utils.bs4_utils',
     'pyskoob.utils.skoob_parser_utils',
 ]

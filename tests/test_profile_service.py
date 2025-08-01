@@ -1,10 +1,10 @@
 
 from typing import cast
 
-import httpx
 import pytest
 
 from pyskoob.auth import AuthService
+from pyskoob.http.client import SyncHTTPClient
 from pyskoob.models.enums import BookLabel, BookShelf, BookStatus
 from pyskoob.profile import SkoobProfileService
 
@@ -39,7 +39,7 @@ def make_service(success=True):
     client = DummyClient({'success': success})
     return (
         SkoobProfileService(
-            cast(httpx.Client, client), cast(AuthService, DummyAuth())
+            cast(SyncHTTPClient, client), cast(AuthService, DummyAuth())
         ),
         client,
     )
