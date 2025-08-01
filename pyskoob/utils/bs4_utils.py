@@ -25,6 +25,11 @@ def safe_find(
     -------
     Tag | None
         The found Tag or None if not found or the soup is None.
+
+    Examples
+    --------
+    >>> safe_find(BeautifulSoup('<p>hi</p>', 'html.parser'), 'p').name
+    'p'
     """
     if not soup:
         return None
@@ -55,6 +60,11 @@ def safe_find_all(
     -------
     list[Tag]
         A list of found Tags, or an empty list if none are found or the soup is None.
+
+    Examples
+    --------
+    >>> len(safe_find_all(BeautifulSoup('<p>a</p><p>b</p>', 'html.parser'), 'p'))
+    2
     """
     if not soup:
         return []
@@ -80,6 +90,11 @@ def get_tag_text(
     -------
     str
         The text of the Tag or an empty string.
+
+    Examples
+    --------
+    >>> get_tag_text(BeautifulSoup('<p>Hi</p>', 'html.parser').p)
+    'Hi'
     """
     if tag:
         return tag.get_text(strip=strip)
@@ -107,6 +122,12 @@ def get_tag_attr(
     -------
     Any
         The value of the attribute or the default value.
+
+    Examples
+    --------
+    >>> tag = BeautifulSoup('<a href="/">home</a>', 'html.parser').a
+    >>> get_tag_attr(tag, 'href')
+    '/'
     """
     if tag:
         return tag.get(attr, default)

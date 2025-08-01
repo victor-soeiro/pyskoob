@@ -59,6 +59,11 @@ class BookService(BaseSkoobService):
         ------
         ParsingError
             If the HTML structure changes and parsing fails.
+
+        Examples
+        --------
+        >>> service.search("Duna").results[0].title
+        'Duna'
         """
         url = f"{self.base_url}/livro/lista/busca:{query}/tipo:{search_by.value}/mpage:{page}"
         logger.info(f"Searching for books with query: '{query}' on page {page}")
@@ -112,6 +117,11 @@ class BookService(BaseSkoobService):
             If no book is found with the given edition_id.
         ParsingError
             If parsing or HTTP errors occur.
+
+        Examples
+        --------
+        >>> service.get_by_id(1).title
+        'Some Book'
         """
         logger.info(f"Getting book by edition_id: {edition_id}")
         url = f"{self.base_url}/v1/book/{edition_id}/stats:true"
@@ -161,6 +171,11 @@ class BookService(BaseSkoobService):
         ------
         ParsingError
             If the HTML structure changes or parsing fails.
+
+        Examples
+        --------
+        >>> service.get_reviews(123).results
+        [...]
         """
         url = f'{self.base_url}/livro/resenhas/{book_id}/mpage:{page}/limit:50'
         if edition_id:
@@ -227,6 +242,11 @@ class BookService(BaseSkoobService):
         ------
         ParsingError
             If the HTML structure changes and parsing fails.
+
+        Examples
+        --------
+        >>> service.get_users_by_status(1, BookUserStatus.READERS).results[:3]
+        [1, 2, 3]
         """
         url = f"{self.base_url}/livro/leitores/{status.value}/{book_id}/limit:{limit}/page:{page}"
         if edition_id:
@@ -266,6 +286,12 @@ class BookService(BaseSkoobService):
         -------
         list of int
             List of user IDs found on the page.
+
+        Examples
+        --------
+        >>> html = "<div class='livro-leitor-container'><a href='/usuario/1-name'></a></div>"
+        >>> service._extract_user_ids_from_html(BeautifulSoup(html, 'html.parser'))
+        [1]
         """
         users_html = safe_find_all(soup, 'div', {'class': 'livro-leitor-container'})
         users_id = []
@@ -295,6 +321,12 @@ class BookService(BaseSkoobService):
         -------
         int or None
             Edition ID or None if not found.
+
+        Examples
+        --------
+        >>> html = "<div id='pg-livro-menu-principal-container'><a href='/livro/1-ed3'></a></div>"
+        >>> service._extract_edition_id_from_reviews_page(BeautifulSoup(html, 'html.parser'))
+        3
         """
         menu_div = safe_find(soup, 'div', {'id': 'pg-livro-menu-principal-container'})
         menu_div_a = safe_find(menu_div, 'a') if menu_div else None
@@ -329,6 +361,12 @@ class BookService(BaseSkoobService):
         -------
         BookReview or None
             Parsed review or None if incomplete.
+
+        Examples
+        --------
+        >>> html = "<div id='resenha1'></div>"
+        >>> service._parse_review(BeautifulSoup(html, 'html.parser'), 1, None)
+        ... # doctest: +ELLIPSIS
         """
         review_id_str = get_tag_attr(r, 'id')
         review_id = int(review_id_str.replace('resenha', '')) if review_id_str else None
@@ -370,6 +408,12 @@ class BookService(BaseSkoobService):
         -------
         tuple of (datetime or None, str)
             Parsed review date (if found) and review text.
+
+        Examples
+        --------
+        >>> soup = BeautifulSoup('<span>01/01/2020</span> Great', 'html.parser')
+        >>> service._extract_review_date_and_text(soup, 1)[1]
+        'Great'
         """
         date = None
         review_text = ""
@@ -408,6 +452,12 @@ class BookService(BaseSkoobService):
         -------
         BookSearchResult or None
             Parsed result or None if data is incomplete.
+
+        Examples
+        --------
+        >>> html = "<a class='capa-link-item' title='X' href='/livro/1-ed2'></a>"
+        >>> service._parse_search_result(BeautifulSoup(html, 'html.parser'))
+        BookSearchResult(...)
         """
         container = safe_find(book_div, 'a', {'class': 'capa-link-item'})
         if not container:
@@ -450,6 +500,12 @@ class BookService(BaseSkoobService):
         -------
         str
             URL of the book cover image or an empty string if not found.
+
+        Examples
+        --------
+        >>> html = "<a><img src='https://img.com/c.jpg'></a>"
+        >>> service._extract_img_url(BeautifulSoup(html, 'html.parser').a)
+        'https://img.com/c.jpg'
         """
         if container.img and isinstance(container.img, Tag):
             src = get_tag_attr(container.img, 'src')
@@ -470,6 +526,12 @@ class BookService(BaseSkoobService):
         -------
         tuple of (str or None, str or None)
             Publisher and ISBN string or None if not found.
+
+        Examples
+        --------
+        >>> html = "<div class='detalhes-2-sub'><div><span>Editora</span></div></div>"
+        >>> service._extract_publisher_and_isbn(BeautifulSoup(html, 'html.parser'))
+        ('Editora', None)
         """
         detalhes2sub = safe_find(book_div, 'div', {'class': 'detalhes-2-sub'})
         detalhes2sub_div = detalhes2sub.div if detalhes2sub else None
@@ -503,6 +565,12 @@ class BookService(BaseSkoobService):
         -------
         float or None
             The rating or None if not found or parsing fails.
+
+        Examples
+        --------
+        >>> html = "<div class='star-mini'><strong>4,5</strong></div>"
+        >>> service._extract_rating(BeautifulSoup(html, 'html.parser'), 'Example')
+        4.5
         """
         star_mini = safe_find(book_div, 'div', {'class': 'star-mini'})
         if star_mini:
@@ -528,6 +596,11 @@ class BookService(BaseSkoobService):
         -------
         int
             Total number of results, or 0 if not found.
+
+        Examples
+        --------
+        >>> service._extract_total_results(BeautifulSoup("<div class='contador'>1 encontrados</div>", 'html.parser'))
+        1
         """
         total_results_tag = safe_find(soup, 'div', {'class': 'contador'})
         if total_results_tag:
@@ -549,6 +622,13 @@ class BookService(BaseSkoobService):
         Returns
         -------
         None
+
+        Examples
+        --------
+        >>> data = {"url": "/book", "isbn": "0"}
+        >>> service._clean_book_json_data(data)
+        >>> data["cover_url"]
+        ''
         """
         json_data["url"] = f"{self.base_url}{json_data['url']}"
         json_data["isbn"] = None if str(json_data.get("isbn", "0")) == "0" else json_data["isbn"]

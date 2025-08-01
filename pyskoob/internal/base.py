@@ -66,18 +66,27 @@ class BaseHttpService:
         -------
         BeautifulSoup
             The parsed BeautifulSoup object.
+
+        Examples
+        --------
+        >>> service.parse_html("<html></html>").name
+        '[document]'
         """
         return BeautifulSoup(content, "html.parser")
 
 
 class BaseSkoobService(BaseHttpService):
     def __init__(self, client: httpx.Client | None):
-        """
-        Initializes the BaseSkoobService.
+        """Initialize the service for the Skoob website.
 
         Parameters
         ----------
         client : httpx.Client | None
-            The HTTPX client to use for requests. If None, a new client is created.
+            Optional client to use. A new client is created when ``None``.
+
+        Examples
+        --------
+        >>> BaseSkoobService(httpx.Client())
+        <BaseSkoobService ...>
         """
         super().__init__(client or httpx.Client(), 'https://www.skoob.com.br')
