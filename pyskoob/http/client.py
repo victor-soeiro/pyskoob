@@ -2,7 +2,7 @@ from __future__ import annotations
 
 """Protocol definitions for HTTP client abstractions."""
 
-from collections.abc import Mapping
+from collections.abc import Mapping, MutableMapping
 from typing import Any, Protocol, Self
 
 
@@ -38,7 +38,7 @@ class SyncHTTPClient(Protocol):
     and ``close`` methods with signatures compatible with ``httpx.Client``.
     """
 
-    cookies: Mapping[str, Any]
+    cookies: MutableMapping[str, Any]
 
     def get(self, url: str, **kwargs: Any) -> HTTPResponse:
         """Send a GET request."""
@@ -65,7 +65,7 @@ class AsyncHTTPClient(Protocol):
     ``close`` method and a ``cookies`` attribute.
     """
 
-    cookies: Mapping[str, Any]
+    cookies: MutableMapping[str, Any]
 
     async def get(self, url: str, **kwargs: Any) -> HTTPResponse:
         """Send an asynchronous GET request."""

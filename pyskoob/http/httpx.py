@@ -2,7 +2,7 @@ from __future__ import annotations
 
 """httpx-based implementations of the HTTP client protocols."""
 
-from collections.abc import Mapping
+from collections.abc import Mapping, MutableMapping
 from typing import Any
 
 import httpx
@@ -23,7 +23,7 @@ class HttpxSyncClient(SyncHTTPClient):
         self._client = httpx.Client(**kwargs)
 
     @property
-    def cookies(self) -> Mapping[str, Any]:
+    def cookies(self) -> MutableMapping[str, Any]:
         return self._client.cookies
 
     def get(self, url: str, **kwargs: Any) -> HTTPResponse:
@@ -51,7 +51,7 @@ class HttpxAsyncClient(AsyncHTTPClient):
         self._client = httpx.AsyncClient(**kwargs)
 
     @property
-    def cookies(self) -> Mapping[str, Any]:
+    def cookies(self) -> MutableMapping[str, Any]:
         return self._client.cookies
 
     async def get(self, url: str, **kwargs: Any) -> HTTPResponse:
