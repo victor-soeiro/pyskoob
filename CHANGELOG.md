@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ### Changed
 - Removed the standalone lint workflow and moved Ruff earlier in the CI job.
+- Added a dedicated step to install Ruff before running linting.
 
 ## [0.1.0] - 2025-07-30
 ### Added
