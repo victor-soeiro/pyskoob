@@ -65,6 +65,11 @@ dev = [
     "fastapi>=0.116.1",
     "uvicorn>=0.35.0",
 ]
+docs = [
+    "mkdocs>=1.6.0",
+    "mkdocs-material>=9.5.17",
+    "mkdocstrings[python]>=0.24.0",
+]
 
 [build-system]
 requires = ["setuptools>=65", "wheel"]
