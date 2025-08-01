@@ -28,8 +28,9 @@ uv pip install -e .
 # Run the test suite
 pytest -q
 
-# Optionally format and lint
-ruff --fix
+# Format the code and run the linter
+ruff format .
+ruff check .
 ```
 
 Open your PR on GitHub and fill in a brief summary of your changes. A maintainer will review it as soon as possible.

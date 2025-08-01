@@ -88,13 +88,18 @@ pytest --cov=pyskoob
    uv pip install -e .
    ```
 3. Implement your change and add tests.
-4. Run `ruff` to check code style:
+4. Format your code using `ruff`:
 
    ```bash
-   ruff .
+   ruff format .
    ```
-5. Run `pytest` and ensure everything passes.
-6. Open a pull request describing your changes.
+5. Lint the project:
+
+   ```bash
+   ruff check .
+   ```
+6. Run `pytest` and ensure everything passes.
+7. Open a pull request describing your changes.
 
 Contributions are very welcome!
 

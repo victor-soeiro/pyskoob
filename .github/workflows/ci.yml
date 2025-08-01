@@ -32,6 +32,10 @@ jobs:
         if: matrix.python-version == '3.12'
         run: uv pip install --system ruff
 
+      - name: Check formatting
+        if: matrix.python-version == '3.12'
+        run: ruff format --check .
+
       - name: Lint with ruff
         if: matrix.python-version == '3.12'
         run: ruff check --no-fix --output-format=github .
