@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 - Initial structure for the changelog.
 - AuthorService for searching authors.
+- Example script demonstrating AuthorService usage.
 
 ## [0.1.0] - 2025-07-30
 ### Added
