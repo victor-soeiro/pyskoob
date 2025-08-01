@@ -100,6 +100,8 @@ Contributions are very welcome!
 
 ## Documentation
 The full project documentation is automatically published using [GitHub Pages](https://pages.github.com/).
-Once the workflow runs, you can access it at:
+Our workflow builds the site on every push or pull request but only deploys on pushes to the `main` branch. The generated files are pushed to the `gh-pages` branch using the official **GitHub Pages** action. Make sure the repository Pages settings are configured with **GitHub Actions** as the source, otherwise GitHub will render the repository README instead of the site.
+
+The published site is available at:
 
 https://victor-soeiro.github.io/pyskoob/
