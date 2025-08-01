@@ -9,14 +9,19 @@ logger = logging.getLogger(__name__)
 
 
 class AuthService(BaseSkoobService):
+    """Handle authentication actions on Skoob."""
     def __init__(self, client: httpx.Client):
-        """
-        Initializes the AuthService.
+        """Initialize the service with a HTTPX client.
 
         Parameters
         ----------
         client : httpx.Client
-            The HTTPX client to use for requests.
+            Client used to perform HTTP requests.
+
+        Examples
+        --------
+        >>> import httpx
+        >>> service = AuthService(httpx.Client())
         """
         super().__init__(client)
         self._is_logged_in = False
@@ -34,6 +39,11 @@ class AuthService(BaseSkoobService):
         -------
         User
             The authenticated user's information.
+
+        Examples
+        --------
+        >>> service.login_with_cookies("PHPSESSID=abc123")
+        User(name='example')
         """
         logger.info("Attempting to log in with session token.")
         self.client.cookies.update({"PHPSESSID": session_token})
@@ -62,6 +72,11 @@ class AuthService(BaseSkoobService):
         ------
         ConnectionError
             If authentication fails or the session cannot be established.
+
+        Examples
+        --------
+        >>> service.login("user@example.com", "password")
+        User(name='example')
         """
         logger.info("Attempting to log in with email and password.")
         url = f"{self.base_url}/v1/login"
@@ -101,6 +116,11 @@ class AuthService(BaseSkoobService):
         ------
         ConnectionError
             If it fails to retrieve user information.
+
+        Examples
+        --------
+        >>> service.get_my_info().name
+        'Example User'
         """
         logger.info("Getting authenticated user's information.")
         url = f"{self.base_url}/v1/user/stats:true"
@@ -129,6 +149,11 @@ class AuthService(BaseSkoobService):
         ------
         PermissionError
             If the user is not logged in.
+
+        Examples
+        --------
+        >>> service.validate_login()
+        None
         """
         logger.debug("Validating login status.")
         if not self._is_logged_in:

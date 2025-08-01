@@ -25,8 +25,17 @@ class SkoobProfileService(BaseSkoobService):
         self._auth_service = auth_service
 
     def _validate_login(self) -> None:
-        """
-        Validates if the user is logged in.
+        """Ensure the session is authenticated before making requests.
+
+        Raises
+        ------
+        PermissionError
+            If the user is not logged in.
+
+        Examples
+        --------
+        >>> service._validate_login()
+        None
         """
         self._auth_service.validate_login()
 
@@ -45,6 +54,11 @@ class SkoobProfileService(BaseSkoobService):
         -------
         bool
             True if the label was added successfully, False otherwise.
+
+        Examples
+        --------
+        >>> service.add_book_label(10, BookLabel.FAVORITE)
+        True
         """
         self._validate_login()
         url = f'{self.base_url}/v1/label_add/{edition_id}/{label.value}'
@@ -65,6 +79,11 @@ class SkoobProfileService(BaseSkoobService):
         -------
         bool
             True if the label was removed successfully, False otherwise.
+
+        Examples
+        --------
+        >>> service.remove_book_label(10)
+        True
         """
         self._validate_login()
         url = f'{self.base_url}/v1/label_del/{edition_id}'
@@ -87,6 +106,11 @@ class SkoobProfileService(BaseSkoobService):
         -------
         bool
             True if the status was updated successfully, False otherwise.
+
+        Examples
+        --------
+        >>> service.update_book_status(10, BookStatus.READ)
+        True
         """
         self._validate_login()
         url = f'{self.base_url}/v1/shelf_add/{edition_id}/{status.value}'
@@ -107,6 +131,11 @@ class SkoobProfileService(BaseSkoobService):
         -------
         bool
             True if the status was removed successfully, False otherwise.
+
+        Examples
+        --------
+        >>> service.remove_book_status(10)
+        True
         """
         self._validate_login()
         url = f'{self.base_url}/v1/shelf_del/{edition_id}'
@@ -129,6 +158,11 @@ class SkoobProfileService(BaseSkoobService):
         -------
         bool
             True if the bookshelf was changed successfully.
+
+        Examples
+        --------
+        >>> service.change_book_shelf(10, BookShelf.FAVORITES)
+        True
         """
         self._validate_login()
         url = f'{self.base_url}/estante/prateleira/{edition_id}/{bookshelf.value}'
@@ -158,6 +192,11 @@ class SkoobProfileService(BaseSkoobService):
             If the rating is not between 0 and 5.
         RuntimeError
             If it fails to rate the book.
+
+        Examples
+        --------
+        >>> service.rate_book(10, 4.5)
+        True
         """
         self._validate_login()
         if not (0 <= ranking <= 5):
