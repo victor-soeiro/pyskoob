@@ -6,30 +6,33 @@ on:
   pull_request:
     branches: [main]
 
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+          cache: 'pip'
+      - run: pip install -e .[docs]
+      - run: mkdocs build --strict
+      - uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./site
 
-      - name: Install dependencies
-        run: |
-          pip install -e .[docs]
-
-      - name: Build documentation
-        run: mkdocs build --strict
-
-      - name: Deploy to GitHub Pages
-        run: mkdocs gh-deploy --force --remote-branch gh-pages
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  deploy:
+    if: github.event_name == 'push'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v1
