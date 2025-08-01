@@ -5,6 +5,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 class BookStats(BaseModel):
     """Aggregated statistics about a book derived from Skoob's API."""
+
     readers: int = Field(..., alias="qt_lido")
     currently_reading: int = Field(..., alias="qt_lendo")
     want_to_read: int = Field(..., alias="qt_vouler")
@@ -29,6 +30,7 @@ class BookStats(BaseModel):
 
 class Book(BaseModel):
     """Detailed information about a book edition."""
+
     book_id: int = Field(..., alias="livro_id")
     edition_id: int = Field(..., alias="id")
     title: str = Field(..., alias="titulo")
@@ -58,6 +60,7 @@ class Book(BaseModel):
 
 class BookSearchResult(BaseModel):
     """Lightweight representation returned by the search endpoint."""
+
     edition_id: int
     book_id: int
     title: str
@@ -72,12 +75,14 @@ class BookSearchResult(BaseModel):
 
 class BookTag(BaseModel):
     """Tags associated with a book edition."""
+
     edition_id: int
     tags: list[str] | None = None
 
 
 class BookReview(BaseModel):
     """User review for a specific book edition."""
+
     review_id: int
     book_id: int
     edition_id: int | None

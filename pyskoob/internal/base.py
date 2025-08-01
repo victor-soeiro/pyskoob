@@ -15,6 +15,7 @@ class BaseHttpService:
     _client : SyncHTTPClient
         The HTTP client for making requests.
     """
+
     _base_url: str
 
     def __init__(self, client: SyncHTTPClient, base_url: str):
@@ -92,4 +93,6 @@ class BaseSkoobService(BaseHttpService):
         >>> BaseSkoobService(httpx.Client())
         <BaseSkoobService ...>
         """
-        super().__init__(client or HttpxSyncClient(), 'https://www.skoob.com.br')
+        super().__init__(
+            client or HttpxSyncClient(), "https://www.skoob.com.br"
+        )
