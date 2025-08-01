@@ -2,7 +2,7 @@ from __future__ import annotations
 
 """httpx-based implementations of the HTTP client protocols."""
 
-from collections.abc import Mapping, MutableMapping
+from collections.abc import MutableMapping
 from typing import Any
 
 import httpx
