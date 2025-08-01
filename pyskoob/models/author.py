@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class AuthorSearchResult(BaseModel):
@@ -9,6 +9,8 @@ class AuthorSearchResult(BaseModel):
     readers: int
     books: int
     img_url: str
+
+    model_config = ConfigDict(from_attributes=True)
 
 
 class AuthorStats(BaseModel):
