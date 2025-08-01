@@ -1,9 +1,13 @@
 from typing import cast
 
+import pytest
 from bs4 import BeautifulSoup
+from conftest import DummyResponse
 
 from pyskoob.books import BookService
+from pyskoob.exceptions import ParsingError
 from pyskoob.http.client import SyncHTTPClient
+from pyskoob.models.book import Book
 from pyskoob.models.enums import BookUserStatus
 
 
@@ -94,3 +98,87 @@ def test_search_and_reviews_and_users():
     client.text = users_html
     users = service.get_users_by_status(10, BookUserStatus.READ)
     assert users.results == [7]
+
+
+def _minimal_book_json() -> dict:
+    return {
+        "livro_id": 1,
+        "id": 2,
+        "titulo": "T",
+        "subtitulo": "",
+        "serie": "",
+        "volume": "1",
+        "autor": "A",
+        "sinopse": "",
+        "editora": "Ed",
+        "isbn": "123",
+        "paginas": 100,
+        "ano": 2020,
+        "mes": 1,
+        "idioma": "PT",
+        "url": "/book/1-t-ed2",
+        "img_url": "https://img",
+        "generos": [],
+        "estatisticas": dict.fromkeys(
+            [
+                "qt_lido",
+                "qt_lendo",
+                "qt_vouler",
+                "qt_relendo",
+                "qt_abandonei",
+                "qt_resenhas",
+                "ranking",
+                "qt_avaliadores",
+                "qt_favoritos",
+                "qt_desejados",
+                "qt_troco",
+                "qt_emprestados",
+                "qt_tenho",
+                "qt_meta",
+                "qt_mulheres",
+                "qt_homens",
+                "qt_estantes",
+            ],
+            0,
+        ),
+    }
+
+
+def test_get_by_id_success():
+    json_data = {"response": _minimal_book_json()}
+    service, client = make_service(json_data=json_data)
+    book = service.get_by_id(2)
+    assert isinstance(book, Book)
+    assert client.called[0].endswith("/v1/book/2/stats:true")
+    assert book.edition_id == 2
+
+
+def test_get_by_id_not_found():
+    json_data = {"cod_description": "not", "response": None}
+    service, _ = make_service(json_data=json_data)
+    with pytest.raises(FileNotFoundError):
+        service.get_by_id(3)
+
+
+class BadClient(DummyClient):
+    def get(self, url):  # type: ignore[override]
+        self.called.append(url)
+        return DummyResponse(json_data=ValueError("bad"))
+
+
+def test_get_by_id_error():
+    service = BookService(cast(SyncHTTPClient, BadClient()))
+    with pytest.raises(ParsingError):
+        service.get_by_id(4)
+
+
+@pytest.mark.parametrize("page,total,has_next", [(1, 60, True), (2, 60, False)])
+def test_search_pagination(page: int, total: int, has_next: bool):
+    html = (
+        "<div class='box_lista_busca_vertical'>"
+        "<a class='capa-link-item' title='B' href='/book/1-b-ed2.html'></a>"
+        "</div><div class='contador'>" + str(total) + " encontrados</div>"
+    )
+    service, _ = make_service(html=html)
+    res = service.search("b", page=page)
+    assert res.has_next_page is has_next

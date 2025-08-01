@@ -1,8 +1,15 @@
 from typing import cast
 
+import pytest
+
 from pyskoob.auth import AuthService
 from pyskoob.http.client import SyncHTTPClient
-from pyskoob.models.enums import BookcaseOption, UsersRelation
+from pyskoob.models.enums import (
+    BookcaseOption,
+    BrazilianState,
+    UserGender,
+    UsersRelation,
+)
 from pyskoob.users import UserService
 
 
@@ -98,3 +105,24 @@ def test_search_and_relations_and_reviews():
     client.text = reviews_html
     rev = service.get_reviews(10)
     assert rev.results[0].rating == 5
+
+
+
+@pytest.mark.parametrize(
+    "gender,state,frag",
+    [
+        (UserGender.MALE, None, "/sexo:M"),
+        (None, BrazilianState.SAO_PAULO, "/uf:SP"),
+        (UserGender.FEMALE, BrazilianState.RIO_DE_JANEIRO, "/sexo:F/uf:RJ"),
+    ],
+)
+def test_search_filters(logged_auth: AuthService, dummy_client: DummyClient, gender, state, frag):
+    html = (
+        "<div style='border: 1px solid #e4e4e4'>"
+        "<a href='/usuario/1-a'>A</a></div><div class='contador'>1 encontrados</div>"
+    )
+    dummy_client.text = html
+    service = UserService(cast(SyncHTTPClient, dummy_client), logged_auth)
+    res = service.search("a", gender=gender, state=state)
+    assert frag in dummy_client.called[-1]
+    assert res.total == 1 and res.results[0].id == 1

@@ -1,71 +1,64 @@
-from datetime import datetime
 from typing import cast
 
 import pytest
+from conftest import DummyClient, DummyResponse, make_user
 
 from pyskoob.auth import AuthService
 from pyskoob.http.client import SyncHTTPClient
-from pyskoob.models.user import User
 
 
-class DummyResponse:
-    def __init__(self, data):
-        self._data = data
-
-    def raise_for_status(self):
-        pass
-
-    def json(self):
-        return self._data
-
-
-class DummyClient:
-    def __init__(self, data=None):
-        self.data = data or {"success": True}
-        self.cookies = {}
-
-    def post(self, url, data=None):
-        return DummyResponse(self.data)
-
-
-def _make_user() -> User:
-    return User.model_validate(
-        {
-            "id": 1,
-            "nome": "John",
-            "apelido": "john",
-            "abbr": "j",
-            "url": "/john",
-            "skoob": "john",
-            "foto_mini": "http://a",
-            "foto_pequena": "http://b",
-            "foto_media": "http://c",
-            "foto_grande": "http://d",
-            "premium": False,
-            "beta": False,
-            "about": "",
-            "ano": 2024,
-            "mes": 1,
-            "termo": datetime(2024, 1, 1),
-            "estatisticas": {},
-        }
-    )
-
-
-def test_login_with_cookies(monkeypatch):
-    client = DummyClient()
-    service = AuthService(cast(SyncHTTPClient, client))
-    monkeypatch.setattr(service, "get_my_info", lambda: _make_user())
+def test_login_with_cookies(dummy_client: DummyClient, monkeypatch):
+    service = AuthService(cast(SyncHTTPClient, dummy_client))
+    monkeypatch.setattr(service, "get_my_info", make_user)
     user = service.login_with_cookies("tok")
     assert service._is_logged_in is True
-    assert client.cookies["PHPSESSID"] == "tok"
+    assert dummy_client.cookies["PHPSESSID"] == "tok"
     assert user.id == 1
 
 
-def test_validate_login(monkeypatch):
-    service = AuthService(cast(SyncHTTPClient, DummyClient()))
+def test_validate_login(dummy_auth: AuthService, monkeypatch):
     with pytest.raises(PermissionError):
-        service.validate_login()
-    monkeypatch.setattr(service, "get_my_info", lambda: _make_user())
-    service._is_logged_in = True
-    service.validate_login()  # should not raise
+        dummy_auth.validate_login()
+    monkeypatch.setattr(dummy_auth, "get_my_info", make_user)
+    dummy_auth._is_logged_in = True
+    dummy_auth.validate_login()
+
+
+def test_login_success(dummy_client: DummyClient, monkeypatch):
+    dummy_client.json_data = {"success": True}
+    service = AuthService(cast(SyncHTTPClient, dummy_client))
+    monkeypatch.setattr(service, "get_my_info", make_user)
+    user = service.login("a@b.com", "pass")
+    assert user.name == "John" and service._is_logged_in
+
+
+def test_login_bad_json(dummy_client: DummyClient):
+    class BadResponse(DummyClient):
+        def post(self, url: str, data=None):  # type: ignore[override]
+            return DummyResponse(json_data=ValueError("bad"))
+
+    bad_client = BadResponse()
+    service = AuthService(cast(SyncHTTPClient, bad_client))
+    with pytest.raises(ConnectionError):
+        service.login("e", "p")
+
+
+def test_login_failure(dummy_client: DummyClient):
+    dummy_client.json_data = {"success": False, "message": "nope"}
+    service = AuthService(cast(SyncHTTPClient, dummy_client))
+    with pytest.raises(ConnectionError):
+        service.login("e", "p")
+
+
+def test_get_my_info_success(dummy_client: DummyClient):
+    dummy_client.json_data = {"success": True, "response": make_user().model_dump(by_alias=True)}
+    service = AuthService(cast(SyncHTTPClient, dummy_client))
+    user = service.get_my_info()
+    assert user.id == 1
+
+
+def test_get_my_info_failure(dummy_client: DummyClient):
+    dummy_client.json_data = {"success": False}
+    service = AuthService(cast(SyncHTTPClient, dummy_client))
+    with pytest.raises(ConnectionError):
+        service.get_my_info()
