@@ -8,6 +8,7 @@ from .enums import (
     UsersRelation,
 )
 from .pagination import Pagination
+from .publisher import Publisher, PublisherAuthor, PublisherItem, PublisherStats
 from .user import User, UserBook, UserReadStats
 
 __all__ = [
@@ -23,4 +24,8 @@ __all__ = [
     "BookcaseOption",
     "UsersRelation",
     "Pagination",
+    "Publisher",
+    "PublisherAuthor",
+    "PublisherItem",
+    "PublisherStats",
 ]

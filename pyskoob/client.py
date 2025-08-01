@@ -2,6 +2,7 @@ from pyskoob.auth import AuthService
 from pyskoob.books import BookService
 from pyskoob.http.httpx import HttpxSyncClient
 from pyskoob.profile import SkoobProfileService
+from pyskoob.publishers import PublisherService
 from pyskoob.users import UserService
 
 
@@ -23,6 +24,7 @@ class SkoobClient:
         self.books = BookService(self._client)
         self.users = UserService(self._client, self.auth)
         self.me = SkoobProfileService(self._client, self.auth)
+        self.publishers = PublisherService(self._client)
 
     def __enter__(self):
         """
