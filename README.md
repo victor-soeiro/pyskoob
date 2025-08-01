@@ -8,6 +8,14 @@
 ## Overview
 PySkoob is a Python library that simplifies interacting with the Skoob website. It acts as an HTTP client, providing services for authentication, book searches, and profile access. The goal of the project is to streamline integrations and automation while offering an easy‑to‑use interface.
 
+## Documentation
+The full documentation is generated using [MkDocs](https://www.mkdocs.org/) and lives in the `docs/` folder. To preview it locally run:
+
+```bash
+pip install -e .[docs]
+mkdocs serve
+```
+
 ## Installation
 Create a virtual environment using [uv](https://github.com/astral-sh/uv) and
 install from PyPI:
