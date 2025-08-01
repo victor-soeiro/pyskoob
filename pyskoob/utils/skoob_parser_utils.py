@@ -67,3 +67,24 @@ def get_user_id_from_url(url: str) -> str:
     '5'
     """
     return url.split("/")[-1].split("-")[0]
+
+
+def get_author_id_from_url(url: str) -> str:
+    """Extract the author ID from a Skoob author URL.
+
+    Parameters
+    ----------
+    url : str
+        The Skoob author URL.
+
+    Returns
+    -------
+    str
+        The author ID.
+
+    Examples
+    --------
+    >>> get_author_id_from_url('https://www.skoob.com.br/autor/50-name')
+    '50'
+    """
+    return url.split("/")[-1].split("-")[0]

@@ -27,7 +27,7 @@ def main() -> None:
     with SkoobClient() as client:
         results = client.authors.search(args.query, page=args.page)
         for author in results.results:
-            print(f"{author.name} - {author.books} books")
+            print(f"{author.name} ({author.nickname}) - id {author.id}")
 
 
 if __name__ == "__main__":
