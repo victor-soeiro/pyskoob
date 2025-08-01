@@ -1,9 +1,13 @@
 from typing import cast
 
+import pytest
 from bs4 import BeautifulSoup
+from conftest import DummyResponse
 
 from pyskoob.books import BookService
+from pyskoob.exceptions import ParsingError
 from pyskoob.http.client import SyncHTTPClient
+from pyskoob.models.book import Book
 from pyskoob.models.enums import BookUserStatus
 
 
@@ -95,10 +99,6 @@ def test_search_and_reviews_and_users():
     users = service.get_users_by_status(10, BookUserStatus.READ)
     assert users.results == [7]
 
-import pytest
-from pyskoob.exceptions import ParsingError
-from pyskoob.models.book import Book
-
 
 def _minimal_book_json() -> dict:
     return {
@@ -119,11 +119,28 @@ def _minimal_book_json() -> dict:
         "url": "/book/1-t-ed2",
         "img_url": "https://img",
         "generos": [],
-        "estatisticas": {k: 0 for k in [
-            "qt_lido","qt_lendo","qt_vouler","qt_relendo","qt_abandonei",
-            "qt_resenhas","ranking","qt_avaliadores","qt_favoritos",
-            "qt_desejados","qt_troco","qt_emprestados","qt_tenho",
-            "qt_meta","qt_mulheres","qt_homens","qt_estantes"]},
+        "estatisticas": dict.fromkeys(
+            [
+                "qt_lido",
+                "qt_lendo",
+                "qt_vouler",
+                "qt_relendo",
+                "qt_abandonei",
+                "qt_resenhas",
+                "ranking",
+                "qt_avaliadores",
+                "qt_favoritos",
+                "qt_desejados",
+                "qt_troco",
+                "qt_emprestados",
+                "qt_tenho",
+                "qt_meta",
+                "qt_mulheres",
+                "qt_homens",
+                "qt_estantes",
+            ],
+            0,
+        ),
     }
 
 

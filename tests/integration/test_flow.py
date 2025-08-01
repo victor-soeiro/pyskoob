@@ -1,8 +1,8 @@
 import httpx
+from conftest import make_user
 
 from pyskoob.client import SkoobClient
 from pyskoob.http.httpx import HttpxSyncClient
-from conftest import make_user
 
 
 def test_login_and_search_flow(monkeypatch):

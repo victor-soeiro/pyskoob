@@ -1,9 +1,10 @@
-import pytest
 from typing import cast
+
+import pytest
+from conftest import DummyClient, DummyResponse, make_user
 
 from pyskoob.auth import AuthService
 from pyskoob.http.client import SyncHTTPClient
-from conftest import DummyClient, make_user, DummyResponse
 
 
 def test_login_with_cookies(dummy_client: DummyClient, monkeypatch):

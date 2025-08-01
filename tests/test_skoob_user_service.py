@@ -1,8 +1,15 @@
 from typing import cast
 
+import pytest
+
 from pyskoob.auth import AuthService
 from pyskoob.http.client import SyncHTTPClient
-from pyskoob.models.enums import BookcaseOption, UsersRelation
+from pyskoob.models.enums import (
+    BookcaseOption,
+    BrazilianState,
+    UserGender,
+    UsersRelation,
+)
 from pyskoob.users import UserService
 
 
@@ -99,8 +106,6 @@ def test_search_and_relations_and_reviews():
     rev = service.get_reviews(10)
     assert rev.results[0].rating == 5
 
-import pytest
-from pyskoob.models.enums import BrazilianState, UserGender
 
 
 @pytest.mark.parametrize(

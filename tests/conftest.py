@@ -1,6 +1,7 @@
-import pytest
 from datetime import datetime
 from typing import Any, cast
+
+import pytest
 
 from pyskoob.auth import AuthService
 from pyskoob.http.client import SyncHTTPClient
