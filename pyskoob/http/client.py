@@ -2,7 +2,8 @@ from __future__ import annotations
 
 """Protocol definitions for HTTP client abstractions."""
 
-from typing import Any, Protocol
+from collections.abc import Mapping
+from typing import Any, Protocol, Self
 
 
 class HTTPResponse(Protocol):
@@ -14,15 +15,18 @@ class HTTPResponse(Protocol):
     be adapted easily.
     """
 
-    def raise_for_status(self) -> None:  # noqa: D401 - simple pass through
+    def raise_for_status(self) -> Self:  # noqa: D401 - simple pass through
         """Proxy to the underlying client's raise_for_status method."""
+        ...
 
     def json(self) -> Any:  # noqa: D401 - simple pass through
         """Return the response JSON body."""
+        ...
 
     @property
     def text(self) -> str:  # noqa: D401 - simple pass through
         """Return the response text."""
+        ...
 
 
 class SyncHTTPClient(Protocol):
@@ -34,18 +38,21 @@ class SyncHTTPClient(Protocol):
     and ``close`` methods with signatures compatible with ``httpx.Client``.
     """
 
-    cookies: dict[str, Any]
+    cookies: Mapping[str, Any]
 
     def get(self, url: str, **kwargs: Any) -> HTTPResponse:
         """Send a GET request."""
+        ...
 
     def post(
         self, url: str, data: Any | None = None, **kwargs: Any
     ) -> HTTPResponse:
         """Send a POST request."""
+        ...
 
     def close(self) -> None:
         """Close the client and release resources."""
+        ...
 
 
 class AsyncHTTPClient(Protocol):
@@ -58,15 +65,18 @@ class AsyncHTTPClient(Protocol):
     ``close`` method and a ``cookies`` attribute.
     """
 
-    cookies: dict[str, Any]
+    cookies: Mapping[str, Any]
 
     async def get(self, url: str, **kwargs: Any) -> HTTPResponse:
         """Send an asynchronous GET request."""
+        ...
 
     async def post(
         self, url: str, data: Any | None = None, **kwargs: Any
     ) -> HTTPResponse:
         """Send an asynchronous POST request."""
+        ...
 
     async def close(self) -> None:
         """Close the client and release resources."""
+        ...
