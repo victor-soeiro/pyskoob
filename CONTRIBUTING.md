@@ -4,7 +4,7 @@ Thank you for wanting to contribute to **PySkoob**! The following guidelines wil
 
 ## Reporting Issues
 
-- Search the existing [issues](https://github.com/your-org/pyskoob/issues) to avoid duplicates.
+- Search the existing [issues](https://github.com/victor-soeiro/pyskoob/issues) to avoid duplicates.
 - Provide clear steps to reproduce the problem and describe what you expected to happen.
 - Include logs, stack traces and your environment information when applicable.
 

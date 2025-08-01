@@ -1,5 +1,5 @@
 site_name: PySkoob
-repo_url: https://github.com/YOUR_GITHUB_USER/pyskoob
+repo_url: https://github.com/victor-soeiro/pyskoob
 docs_dir: docs
 theme:
   name: material
