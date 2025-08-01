@@ -1,6 +1,7 @@
 from typing import cast
 
 import pytest
+from conftest import make_user
 
 from pyskoob.auth import AuthService
 from pyskoob.http.client import SyncHTTPClient
@@ -126,3 +127,34 @@ def test_search_filters(logged_auth: AuthService, dummy_client: DummyClient, gen
     res = service.search("a", gender=gender, state=state)
     assert frag in dummy_client.called[-1]
     assert res.total == 1 and res.results[0].id == 1
+
+
+def test_get_by_id_success(dummy_client: DummyClient):
+    user_json = {"success": True, "response": make_user().model_dump(by_alias=True)}
+    dummy_client.json_data = user_json
+    service = UserService(cast(SyncHTTPClient, dummy_client), cast(AuthService, DummyAuth()))
+    user = service.get_by_id(1)
+    assert user.id == 1
+    assert dummy_client.called[0].endswith("/v1/user/1/stats:true")
+
+
+def test_get_by_id_not_found(dummy_client: DummyClient):
+    dummy_client.json_data = {"success": False}
+    service = UserService(cast(SyncHTTPClient, dummy_client), cast(AuthService, DummyAuth()))
+    with pytest.raises(FileNotFoundError):
+        service.get_by_id(2)
+
+
+def test_get_reviews_invalid_date(dummy_client: DummyClient):
+    service = UserService(cast(SyncHTTPClient, dummy_client), cast(AuthService, DummyAuth()))
+    html = (
+        "<div id='resenha1'>"
+        "<a href='/livro/1ed2.html'></a>"
+        "<div id='resenhac1'><span>bad</span>Text</div>"
+        "<star-rating rate='2'/></div>"
+    )
+    dummy_client.text = html
+    reviews = service.get_reviews(5)
+    assert reviews.results[0].reviewed_at is None
+    assert reviews.results[0].review_text == "Text"
+
