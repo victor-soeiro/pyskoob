@@ -1,7 +1,6 @@
 import logging
 
-import httpx
-
+from pyskoob.http.client import SyncHTTPClient
 from pyskoob.internal.base import BaseSkoobService
 from pyskoob.models.user import User
 
@@ -9,14 +8,14 @@ logger = logging.getLogger(__name__)
 
 
 class AuthService(BaseSkoobService):
-    def __init__(self, client: httpx.Client):
+    def __init__(self, client: SyncHTTPClient):
         """
         Initializes the AuthService.
 
         Parameters
         ----------
-        client : httpx.Client
-            The HTTPX client to use for requests.
+        client : SyncHTTPClient
+            The HTTP client to use for requests.
         """
         super().__init__(client)
         self._is_logged_in = False

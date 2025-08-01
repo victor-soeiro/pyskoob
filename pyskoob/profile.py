@@ -1,8 +1,7 @@
 import logging
 
-import httpx
-
 from pyskoob.auth import AuthService
+from pyskoob.http.client import SyncHTTPClient
 from pyskoob.internal.base import BaseSkoobService
 from pyskoob.models.enums import BookLabel, BookShelf, BookStatus
 
@@ -10,14 +9,14 @@ logger = logging.getLogger(__name__)
 
 
 class SkoobProfileService(BaseSkoobService):
-    def __init__(self, client: httpx.Client, auth_service: AuthService):
+    def __init__(self, client: SyncHTTPClient, auth_service: AuthService):
         """
         Initializes the SkoobProfileService.
 
         Parameters
         ----------
-        client : httpx.Client
-            The HTTPX client to use for requests.
+        client : SyncHTTPClient
+            The HTTP client to use for requests.
         auth_service : AuthService
             The authentication service.
         """
