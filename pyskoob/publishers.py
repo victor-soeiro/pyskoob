@@ -1,4 +1,5 @@
 import logging
+from typing import cast
 
 from bs4 import Tag
 
@@ -33,7 +34,7 @@ class PublisherService(BaseSkoobService):
             soup = self.parse_html(response.text)
             name = get_tag_text(safe_find(soup, "h2")) or get_tag_text(soup.title)
             description = get_tag_text(safe_find(soup, "div", {"id": "historico"}))
-            site_link = soup.find("a", string="Site oficial")
+            site_link = cast(Tag | None, soup.find("a", string="Site oficial"))
             website = get_tag_attr(site_link, "href")
             stats = self._parse_stats(safe_find(soup, "div", {"id": "vt_estatisticas"}))
             releases_div = safe_find(soup, "div", {"id": "livros_lancamentos"})
@@ -102,17 +103,18 @@ class PublisherService(BaseSkoobService):
         ratings = None
         male = None
         female = None
-        seg_span = div.find("span", string=lambda x: x and "Seguidor" in x)
+        seg_span = div.find("span", string=lambda text: bool(text and "Seguidor" in text))
         if seg_span:
             followers_text = get_tag_text(seg_span.find_next("span")).replace(".", "")
             followers = int(followers_text) if followers_text.isdigit() else None
-        aval_span = div.find("span", string=lambda x: x and "Avalia" in x)
+        aval_span = div.find("span", string=lambda text: bool(text and "Avalia" in text))
         if aval_span:
             rating_info = get_tag_text(aval_span.find_next("span"))
             if "/" in rating_info:
                 rating_part, total_part = [p.strip() for p in rating_info.split("/")]
                 avg = float(rating_part.replace(",", ".")) if rating_part else None
-                ratings = int(total_part.replace(".", "")) if total_part.isdigit() or total_part.replace(".", "").isdigit() else None
+                clean_total = total_part.replace(".", "")
+                ratings = int(clean_total) if clean_total.isdigit() else None
         male_icon = div.find("i", {"class": "icon-male"})
         if male_icon:
             male_text = get_tag_text(male_icon.find_next("span")).replace("%", "")
@@ -131,17 +133,19 @@ class PublisherService(BaseSkoobService):
 
     def _parse_book(self, div: Tag) -> PublisherItem:
         anchor = safe_find(div, "a")
+        img_tag = anchor.find("img") if anchor else None
         return PublisherItem(
             url=f"{self.base_url}{get_tag_attr(anchor, 'href')}",
             title=get_tag_attr(anchor, 'title'),
-            img_url=get_tag_attr(anchor.img if anchor else None, 'src'),
+            img_url=get_tag_attr(img_tag, 'src'),
         )
 
     def _parse_author(self, div: Tag) -> PublisherAuthor:
         anchor = safe_find(div, "a")
         name_tag = safe_find(div, "h3")
+        img_tag = anchor.find("img") if anchor else None
         return PublisherAuthor(
             url=f"{self.base_url}{get_tag_attr(anchor, 'href')}",
             name=get_tag_text(name_tag),
-            img_url=get_tag_attr(anchor.img if anchor else None, 'src'),
+            img_url=get_tag_attr(img_tag, 'src'),
         )
