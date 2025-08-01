@@ -68,6 +68,11 @@ class BaseHttpService:
         -------
         BeautifulSoup
             The parsed BeautifulSoup object.
+
+        Examples
+        --------
+        >>> service.parse_html("<html></html>").name
+        '[document]'
         """
         return BeautifulSoup(content, "html.parser")
 
@@ -81,5 +86,10 @@ class BaseSkoobService(BaseHttpService):
         ----------
         client : SyncHTTPClient | None
             The HTTP client to use for requests. If None, a new client is created.
+
+        Examples
+        --------
+        >>> BaseSkoobService(httpx.Client())
+        <BaseSkoobService ...>
         """
         super().__init__(client or HttpxSyncClient(), 'https://www.skoob.com.br')

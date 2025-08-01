@@ -6,9 +6,12 @@ from pyskoob.users import UserService
 
 
 class SkoobClient:
-    """
-    A facade for interacting with the Skoob API.
-    Provides access to different services (auth, books, users, authenticated user actions).
+    """Facade for interacting with Skoob services.
+
+    Examples
+    --------
+    >>> with SkoobClient() as client:
+    ...     client.auth.login_with_cookies("token")
     """
     def __init__(self):
         """
@@ -28,6 +31,11 @@ class SkoobClient:
         -------
         SkoobClient
             The SkoobClient instance.
+
+        Examples
+        --------
+        >>> with SkoobClient() as client:
+        ...     pass
         """
         return self
 
@@ -43,5 +51,11 @@ class SkoobClient:
             The exception value.
         exc_tb : traceback
             The traceback object.
+
+        Examples
+        --------
+        >>> client = SkoobClient()
+        >>> client.__exit__(None, None, None)
+        None
         """
         self._client.close()

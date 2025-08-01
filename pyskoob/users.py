@@ -45,9 +45,18 @@ class UserService(BaseSkoobService):
         super().__init__(client)
         self._auth_service = auth_service
 
-    def _validate_login(self):
-        """
-        Validates if the user is logged in.
+    def _validate_login(self) -> None:
+        """Ensure the session is authenticated before making requests.
+
+        Raises
+        ------
+        PermissionError
+            If the user is not logged in.
+
+        Examples
+        --------
+        >>> service._validate_login()
+        None
         """
         self._auth_service.validate_login()
 
@@ -69,6 +78,11 @@ class UserService(BaseSkoobService):
         ------
         FileNotFoundError
             If the user with the given ID is not found.
+
+        Examples
+        --------
+        >>> service.get_by_id(1).name
+        'Example'
         """
         self._validate_login()
         logger.info(f"Getting user by id: {user_id}")
@@ -114,6 +128,11 @@ class UserService(BaseSkoobService):
         ------
         ParsingError
             If the HTML structure of the page changes and parsing fails.
+
+        Examples
+        --------
+        >>> service.get_relations(1, UsersRelation.FRIENDS).results
+        [2, 3]
         """
         self._validate_login()
         url = f'{self.base_url}/{relation.value}/listar/{user_id}/page:{page}/limit:100'
@@ -324,23 +343,37 @@ class UserService(BaseSkoobService):
         gender: UserGender | None = None,
         state: BrazilianState | None = None,
         page: int = 1,
-        limit: int = 100
+        limit: int = 100,
     ) -> Pagination[UserSearch]:
-        """
-        Searches for users on Skoob by query, gender, and state.
+        """Search for users on Skoob.
 
-        Args:
-            query (str): The search query for usernames or names.
-            gender (UserGender | None, optional): Optional gender filter (M/F). Defaults to None.
-            state (BrazilianState | None, optional): Optional state filter (e.g., SP, RJ). Defaults to None.
-            page (int, optional): Page number to fetch. Defaults to 1.
-            limit (int, optional): Number of users per page (only honored if backend supports it). Defaults to 100.
+        Parameters
+        ----------
+        query : str
+            The search query for usernames or names.
+        gender : UserGender, optional
+            Optional gender filter (M/F), by default ``None``.
+        state : BrazilianState, optional
+            Optional state filter (e.g., ``SP``), by default ``None``.
+        page : int, optional
+            Page number to fetch, by default ``1``.
+        limit : int, optional
+            Number of users per page, by default ``100``.
 
-        Returns:
-            Pagination[User]: A paginated list of users matching the criteria.
+        Returns
+        -------
+        Pagination[UserSearch]
+            A paginated list of users matching the criteria.
 
-        Raises:
-            ParsingError: If the HTML structure is invalid or parsing fails.
+        Raises
+        ------
+        ParsingError
+            If the HTML structure is invalid or parsing fails.
+
+        Examples
+        --------
+        >>> service.search("example").page
+        1
         """
         self._validate_login()
 
