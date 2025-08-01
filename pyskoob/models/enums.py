@@ -5,13 +5,15 @@ from enum import IntEnum, StrEnum
 
 class BookShelf(StrEnum):
     """Shelf categories available on the website."""
-    COMIC = 'comic'
-    BOOK = 'book'
-    MAGAZINE = 'magazine'
+
+    COMIC = "comic"
+    BOOK = "book"
+    MAGAZINE = "magazine"
 
 
 class BookLabel(IntEnum):
     """Numeric labels used by the API when tagging books."""
+
     FAVORITE = 8
     WISHLIST = 9
     OWNED = 6
@@ -21,16 +23,18 @@ class BookLabel(IntEnum):
 
 class BookSearch(StrEnum):
     """Search modes accepted by the book search endpoint."""
-    ALL = 'geral'
-    ISBN = 'isbn'
-    AUTHOR = 'autor'
-    PUBLISHER = 'editora'
-    TITLE = 'titulo'
-    TAGS = 'tags'
+
+    ALL = "geral"
+    ISBN = "isbn"
+    AUTHOR = "autor"
+    PUBLISHER = "editora"
+    TITLE = "titulo"
+    TAGS = "tags"
 
 
 class BookStatus(IntEnum):
     """Status codes for a user's relationship with a book."""
+
     READ = 1
     CURRENTLY_READING = 2
     WANT_TO_READ = 3
@@ -40,19 +44,21 @@ class BookStatus(IntEnum):
 
 class BookUserStatus(StrEnum):
     """URL slugs representing shelves in user listings."""
-    READ = 'leram'
-    CURRENTLY_READING = 'lendo'
-    WANT_TO_READ = 'vaoler'
-    REREADING = 'relendo'
-    ABANDONED = 'abandonaram'
-    FAVORITED = 'favoritos'
-    TRADABLE = 'trocam'
-    WISHLISTED = 'desejam'
-    RATED = 'avaliaram'
+
+    READ = "leram"
+    CURRENTLY_READING = "lendo"
+    WANT_TO_READ = "vaoler"
+    REREADING = "relendo"
+    ABANDONED = "abandonaram"
+    FAVORITED = "favoritos"
+    TRADABLE = "trocam"
+    WISHLISTED = "desejam"
+    RATED = "avaliaram"
 
 
 class BookcaseOption(IntEnum):
     """Filter options for a user's virtual bookcase."""
+
     ALL = 0
     READ = 1
     CURRENTLY_READING = 2
@@ -73,19 +79,22 @@ class BookcaseOption(IntEnum):
 
 class UsersRelation(StrEnum):
     """Types of relationship between users."""
-    FRIENDS = 'amigos'
-    FOLLOWING = 'seguidos'
-    FOLLOWERS = 'seguidores'
+
+    FRIENDS = "amigos"
+    FOLLOWING = "seguidos"
+    FOLLOWERS = "seguidores"
 
 
 class UserGender(StrEnum):
     """Gender codes returned by the API."""
-    MALE = 'M'
-    FEMALE = 'F'
+
+    MALE = "M"
+    FEMALE = "F"
 
 
 class BrazilianState(StrEnum):
     """Brazilian state abbreviations used in user profiles."""
+
     ACRE = "AC"
     ALAGOAS = "AL"
     AMAPA = "AP"

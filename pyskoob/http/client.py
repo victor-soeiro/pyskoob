@@ -39,7 +39,9 @@ class SyncHTTPClient(Protocol):
     def get(self, url: str, **kwargs: Any) -> HTTPResponse:
         """Send a GET request."""
 
-    def post(self, url: str, data: Any | None = None, **kwargs: Any) -> HTTPResponse:
+    def post(
+        self, url: str, data: Any | None = None, **kwargs: Any
+    ) -> HTTPResponse:
         """Send a POST request."""
 
     def close(self) -> None:
@@ -61,7 +63,9 @@ class AsyncHTTPClient(Protocol):
     async def get(self, url: str, **kwargs: Any) -> HTTPResponse:
         """Send an asynchronous GET request."""
 
-    async def post(self, url: str, data: Any | None = None, **kwargs: Any) -> HTTPResponse:
+    async def post(
+        self, url: str, data: Any | None = None, **kwargs: Any
+    ) -> HTTPResponse:
         """Send an asynchronous POST request."""
 
     async def close(self) -> None:

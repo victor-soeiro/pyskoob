@@ -13,6 +13,7 @@ class SkoobClient:
     >>> with SkoobClient() as client:
     ...     client.auth.login_with_cookies("token")
     """
+
     def __init__(self):
         """
         Initializes the SkoobClient.

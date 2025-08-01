@@ -17,12 +17,12 @@ def get_book_id_from_url(url: str) -> str:
     >>> get_book_id_from_url('https://www.skoob.com.br/livro/1-ed1.html')
     '1'
     """
-    filename = url.split('/')[-1]
-    parts = filename.split('-')
+    filename = url.split("/")[-1]
+    parts = filename.split("-")
     if parts[0].isdigit():
         return parts[0]
     else:
-        return parts[-1].split('ed')[0].strip()
+        return parts[-1].split("ed")[0].strip()
 
 
 def get_book_edition_id_from_url(url: str) -> str:
@@ -44,7 +44,7 @@ def get_book_edition_id_from_url(url: str) -> str:
     >>> get_book_edition_id_from_url('https://www.skoob.com.br/livro/1-ed10.html')
     '10'
     """
-    return url.split('ed')[-1].replace('.html', '')
+    return url.split("ed")[-1].replace(".html", "")
 
 
 def get_user_id_from_url(url: str) -> str:
@@ -66,4 +66,4 @@ def get_user_id_from_url(url: str) -> str:
     >>> get_user_id_from_url('https://www.skoob.com.br/usuario/5-name')
     '5'
     """
-    return url.split('/')[-1].split('-')[0]
+    return url.split("/")[-1].split("-")[0]

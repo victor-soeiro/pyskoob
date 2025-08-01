@@ -5,9 +5,7 @@ from bs4.element import PageElement
 
 
 def safe_find(
-    soup: BeautifulSoup | Tag | None,
-    name: str,
-    attrs: dict | None = None
+    soup: BeautifulSoup | Tag | None, name: str, attrs: dict | None = None
 ) -> Tag | None:
     """
     Safely finds a single Tag in a BeautifulSoup object.
@@ -40,9 +38,7 @@ def safe_find(
 
 
 def safe_find_all(
-    soup: BeautifulSoup | Tag | None,
-    name: str,
-    attrs: dict | None = None
+    soup: BeautifulSoup | Tag | None, name: str, attrs: dict | None = None
 ) -> list[Tag]:
     """
     Safely finds all Tags in a BeautifulSoup object.
@@ -72,10 +68,7 @@ def safe_find_all(
     return [tag for tag in all_found if isinstance(tag, Tag)]
 
 
-def get_tag_text(
-    tag: PageElement | None,
-    strip: bool = True
-) -> str:
+def get_tag_text(tag: PageElement | None, strip: bool = True) -> str:
     """
     Gets the text of a Tag, returning an empty string if the tag is None.
 
@@ -101,11 +94,7 @@ def get_tag_text(
     return ""
 
 
-def get_tag_attr(
-    tag: Tag | None,
-    attr: str,
-    default: Any = None
-) -> Any:
+def get_tag_attr(tag: Tag | None, attr: str, default: Any = None) -> Any:
     """
     Gets an attribute from a Tag, returning a default value if the tag is None.
 
