@@ -4,6 +4,7 @@ from pydantic import BaseModel, ConfigDict, Field, HttpUrl
 
 
 class UserSearch(BaseModel):
+    """Minimal user information returned by search queries."""
     id: int
     username: str
     name: str
@@ -13,6 +14,7 @@ class UserSearch(BaseModel):
 
 
 class User(BaseModel):
+    """Profile information for a Skoob user."""
     id: int
     name: str = Field(..., alias="nome")
     nickname: str = Field(..., alias="apelido")
@@ -40,6 +42,7 @@ class User(BaseModel):
 
 
 class UserBook(BaseModel):
+    """Status of a specific book in a user's shelf."""
     user_id: int
     book_id: int
     edition_id: int
@@ -57,6 +60,7 @@ class UserBook(BaseModel):
 
 
 class UserReadStats(BaseModel):
+    """Reading progress statistics for a particular year."""
     user_id: int
     year: int
 
@@ -72,6 +76,7 @@ class UserReadStats(BaseModel):
 
 
 class UserStats(BaseModel):
+    """Aggregated counts describing the user's activity on Skoob."""
     books: int = Field(0, alias="livros")
     magazines: int = Field(0, alias="revistas")
     comics: int = Field(0, alias="quadrinhos")
