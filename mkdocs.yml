@@ -1,2 +1,18 @@
 site_name: PySkoob
 repo_url: https://github.com/victor-soeiro/pyskoob
+docs_dir: docs
+theme:
+  name: material
+  palette:
+    primary: indigo
+    accent: indigo
+markdown_extensions:
+  - admonition
+  - codehilite
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: numpy
