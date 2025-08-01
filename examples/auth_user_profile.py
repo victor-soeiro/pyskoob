@@ -6,7 +6,7 @@ display basic information about the logged in user as a demonstration of
 the authentication and user APIs.
 """
 
-from pyskoob.client import SkoobClient
+from pyskoob import SkoobClient
 
 
 def main() -> None:

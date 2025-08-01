@@ -1,7 +1,7 @@
 import httpx
 from conftest import make_user
 
-from pyskoob.client import SkoobClient
+from pyskoob import SkoobClient
 from pyskoob.http.httpx import HttpxSyncClient
 
 

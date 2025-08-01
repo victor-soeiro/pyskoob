@@ -5,7 +5,7 @@ pages until ``has_next_page`` is False. The title of each book is printed
 along with the page number from which it came.
 """
 
-from pyskoob.client import SkoobClient
+from pyskoob import SkoobClient
 from pyskoob.models.enums import BookSearch
 
 
