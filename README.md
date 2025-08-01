@@ -5,103 +5,65 @@
 [![Python Versions](https://img.shields.io/pypi/pyversions/scraper-skoob)](https://pypi.org/project/scraper-skoob/)
 [![License](https://img.shields.io/github/license/victor-soeiro/pyskoob)](LICENSE)
 
-## Overview
-PySkoob is a Python library that simplifies interacting with the Skoob website. It acts as an HTTP client, providing services for authentication, book searches, and profile access. The goal of the project is to streamline integrations and automation while offering an easy‑to‑use interface.
+**PySkoob** is a Python client that makes it easy to interact with the Skoob website. It takes care of authentication and HTML parsing so you can focus on your automation or data collection tasks.
 
-## Documentation
-The full documentation is generated using [MkDocs](https://www.mkdocs.org/) and lives in the `docs/` folder. To preview it locally run:
+## Features
 
-```bash
-pip install -e .[docs]
-mkdocs serve
-```
+- Search books by title, author or ISBN
+- Retrieve detailed book information and reviews
+- Access user profiles and reading statistics
+- Authenticate using email/password or an existing session cookie
 
 ## Installation
-Create a virtual environment using [uv](https://github.com/astral-sh/uv) and
-install from PyPI:
+
+Install the latest release from PyPI:
 
 ```bash
-uv venv .venv
-source .venv/bin/activate
-uv pip install scraper-skoob
+pip install scraper-skoob
 ```
 
-To always use the latest version from GitHub:
+Or install the bleeding edge version from GitHub:
 
 ```bash
-uv pip install git+https://github.com/victor-soeiro/pyskoob.git
+pip install git+https://github.com/victor-soeiro/pyskoob.git
 ```
 
-## Authentication
-You can authenticate in two different ways:
+## Quick start
 
-1. **Email and password**
+Authenticate and perform a book search:
 
-    ```python
-    from pyskoob.client import SkoobClient
-
-    with SkoobClient() as client:
-        me = client.auth.login(email="you@example.com", password="secret")
-    ```
-
-2. **Session cookie**
-
-    ```python
-    from pyskoob.client import SkoobClient
-
-    with SkoobClient() as client:
-        me = client.auth.login_with_cookies("PHPSESSID_TOKEN")
-    ```
-
-Once authenticated you can access all other services.
-
-## Usage example
 ```python
 from pyskoob.client import SkoobClient
 from pyskoob.models.enums import BookSearch
 
 with SkoobClient() as client:
+    client.auth.login(email="you@example.com", password="secret")
     results = client.books.search("Harry Potter", BookSearch.TITLE)
     for book in results.results:
         print(book.title, book.book_id)
 ```
 
-## Running tests
-Install the project in editable mode and run the test suite:
+More examples can be found in the [`examples/`](examples) folder and in the [project documentation](https://victor-soeiro.github.io/pyskoob/).
+
+## Development
+
+Clone the repository and install in editable mode:
 
 ```bash
-uv pip install -e .
-pytest -vv
+pip install -e .
 ```
 
-Generate a coverage report with:
+Run `ruff` and `pytest` to ensure code style and tests pass:
 
 ```bash
-pytest --cov=pyskoob
+ruff check .
+pytest
 ```
 
 ## Contributing
-1. Fork the repository and create a branch for your feature.
-2. Install the dependencies in editable mode:
 
-   ```bash
-   uv pip install -e .
-   ```
-3. Implement your change and add tests.
-4. Run `ruff` to check code style:
-
-   ```bash
-   ruff .
-   ```
-5. Run `pytest` and ensure everything passes.
-6. Open a pull request describing your changes.
-
-Contributions are very welcome!
+Pull requests are welcome! Please open an issue first to discuss any changes.
 
 ## Documentation
-The full project documentation is automatically published using [GitHub Pages](https://pages.github.com/).
-Our workflow builds the site on every push or pull request but only deploys on pushes to the `main` branch. The generated files are pushed to the `gh-pages` branch using the official **GitHub Pages** action. Make sure the repository Pages settings are configured with **GitHub Actions** as the source, otherwise GitHub will render the repository README instead of the site.
 
-The published site is available at:
-
-https://victor-soeiro.github.io/pyskoob/
+The full API reference and guides are published at <https://victor-soeiro.github.io/pyskoob/>.
