@@ -5,7 +5,7 @@ import from ``pyskoob``. Everything listed in ``__all__`` is considered stable
 and will not change without a deprecation period.
 """
 
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 
 from . import models
 from .auth import AuthService
