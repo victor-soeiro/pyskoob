@@ -5,6 +5,9 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -19,6 +22,14 @@ jobs:
 
       - name: Set up uv
         uses: astral-sh/setup-uv@v6
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/uv
+          key: ${{ runner.os }}-uv-${{ hashFiles('uv.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-uv-
 
       - name: Install ruff
         run: uv pip install --system ruff
@@ -44,6 +55,14 @@ jobs:
 
       - name: Set up uv
         uses: astral-sh/setup-uv@v6
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/uv
+          key: ${{ runner.os }}-uv-${{ hashFiles('uv.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-uv-
 
       - name: Install ruff
         if: matrix.python-version == '3.12'
