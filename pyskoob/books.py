@@ -72,7 +72,9 @@ class BookService(BaseSkoobService):
             f"tipo:{search_by.value}/mpage:{page}"
         )
         logger.info(
-            f"Searching for books with query: '{query}' on page {page}"
+            "Searching for books with query: '%s' on page %s",
+            query,
+            page,
         )
         try:
             response = self.client.get(url)
@@ -92,12 +94,15 @@ class BookService(BaseSkoobService):
             next_page_link = True if page * limit < total_results else False
         except (AttributeError, ValueError, IndexError, TypeError) as e:
             logger.error(
-                f"Failed to parse book search results: {e}", exc_info=True
+                "Failed to parse book search results: %s",
+                e,
+                exc_info=True,
             )
             raise ParsingError("Failed to parse book search results.") from e
         except Exception as e:
             logger.error(
-                f"An unexpected error occurred during book search: {e}",
+                "An unexpected error occurred during book search: %s",
+                e,
                 exc_info=True,
             )
             raise ParsingError(
@@ -144,7 +149,7 @@ class BookService(BaseSkoobService):
         >>> service.get_by_id(1).title
         'Some Book'
         """
-        logger.info(f"Getting book by edition_id: {edition_id}")
+        logger.info("Getting book by edition_id: %s", edition_id)
         url = f"{self.base_url}/v1/book/{edition_id}/stats:true"
         try:
             response = self.client.get(url)
@@ -155,11 +160,12 @@ class BookService(BaseSkoobService):
                     "cod_description", "No description provided."
                 )
                 error_msg = (
-                    f"No data found for edition_id {edition_id}. "
-                    f"Description: {cod_description}"
+                    "No data found for edition_id %s. Description: %s"
                 )
-                logger.warning(error_msg)
-                raise FileNotFoundError(error_msg)
+                logger.warning(error_msg, edition_id, cod_description)
+                raise FileNotFoundError(
+                    error_msg % (edition_id, cod_description)
+                )
             self._clean_book_json_data(json_data)
             book = Book.model_validate(json_data)
             logger.info(
@@ -172,7 +178,9 @@ class BookService(BaseSkoobService):
             raise
         except Exception as e:
             logger.error(
-                f"Error retrieving book for edition_id {edition_id}: {e}",
+                "Error retrieving book for edition_id %s: %s",
+                edition_id,
+                e,
                 exc_info=True,
             )
             raise ParsingError(
@@ -212,7 +220,11 @@ class BookService(BaseSkoobService):
         url = f"{self.base_url}/livro/resenhas/{book_id}/mpage:{page}/limit:50"
         if edition_id:
             url += f"/edition:{edition_id}"
-        logger.info(f"Getting reviews for book_id: {book_id}, page: {page}")
+        logger.info(
+            "Getting reviews for book_id: %s, page: %s",
+            book_id,
+            page,
+        )
         try:
             response = self.client.get(url)
             response.raise_for_status()
@@ -231,17 +243,22 @@ class BookService(BaseSkoobService):
             ]
             next_page_link = safe_find(soup, "a", {"class": "proximo"})
         except (AttributeError, ValueError, IndexError, TypeError) as e:
-            logger.error(f"Failed to parse book reviews: {e}", exc_info=True)
+            logger.error("Failed to parse book reviews: %s", e, exc_info=True)
             raise ParsingError("Failed to parse book reviews.") from e
         except Exception as e:
             logger.error(
-                f"An unexpected error occurred during review fetching: {e}",
+                "An unexpected error occurred during review fetching: %s",
+                e,
                 exc_info=True,
             )
             raise ParsingError(
                 "An unexpected error occurred during review fetching."
             ) from e
-        logger.info(f"Found {len(book_reviews)} reviews on page {page}.")
+        logger.info(
+            "Found %s reviews on page %s.",
+            len(book_reviews),
+            page,
+        )
         return Pagination[BookReview](
             results=book_reviews,
             limit=50,
@@ -309,7 +326,9 @@ class BookService(BaseSkoobService):
             next_page_link = safe_find(soup, "a", {"class": "proximo"})
         except (AttributeError, ValueError, IndexError, TypeError) as e:
             logger.error(
-                f"Failed to parse users by status: {e}", exc_info=True
+                "Failed to parse users by status: %s",
+                e,
+                exc_info=True,
             )
             raise ParsingError("Failed to parse users by status.") from e
         except Exception as e:
@@ -372,7 +391,8 @@ class BookService(BaseSkoobService):
                     users_id.append(int(user_id))
                 else:
                     logger.warning(
-                        f"Could not extract user ID from URL: {href}"
+                        "Could not extract user ID from URL: %s",
+                        href,
                     )
             else:
                 logger.warning(
@@ -416,7 +436,8 @@ class BookService(BaseSkoobService):
                 return int(extracted_edition_id)
             else:
                 logger.warning(
-                    f"Could not extract edition_id from URL: {href}"
+                    "Could not extract edition_id from URL: %s",
+                    href,
                 )
         return None
 
@@ -461,7 +482,8 @@ class BookService(BaseSkoobService):
         )
         if review_id is None:
             logger.warning(
-                f"Skipping review due to missing or invalid ID: {get_tag_attr(r, 'id')}"
+                "Skipping review due to missing or invalid ID: %s",
+                get_tag_attr(r, "id"),
             )
             return None
         user_link = safe_find(r, "a", {"href": re.compile(r"/usuario/")})
@@ -469,7 +491,8 @@ class BookService(BaseSkoobService):
         user_id = int(get_user_id_from_url(user_url)) if user_url else None
         if user_id is None:
             logger.warning(
-                f"Skipping review {review_id} due to missing user ID."
+                "Skipping review %s due to missing user ID.",
+                review_id,
             )
             return None
         star_tag = safe_find(r, "star-rating")
@@ -529,7 +552,9 @@ class BookService(BaseSkoobService):
                     date = datetime.strptime(date_text, "%d/%m/%Y")
                 except ValueError:
                     logger.warning(
-                        f"Could not parse date '{date_text}' for review {review_id}. Setting to None."
+                        "Could not parse date '%s' for review %s. Setting to None.",
+                        date_text,
+                        review_id,
                     )
             content_parts = []
             if date_span:
@@ -584,7 +609,8 @@ class BookService(BaseSkoobService):
             edition_id = int(get_book_edition_id_from_url(book_url))
         except Exception:
             logger.warning(
-                f"Skipping book_div due to invalid book/edition id in url: {book_url}"
+                "Skipping book_div due to invalid book/edition id in url: %s",
+                book_url,
             )
             return None
 
@@ -700,7 +726,9 @@ class BookService(BaseSkoobService):
                     return float(rating_text.replace(",", "."))
                 except ValueError:
                     logger.warning(
-                        f"Could not parse rating '{rating_text}' for book '{title}'. Setting to None."
+                        "Could not parse rating '%s' for book '%s'. Setting to None.",
+                        rating_text,
+                        title,
                     )
         return None
 

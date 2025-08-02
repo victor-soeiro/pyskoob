@@ -90,14 +90,14 @@ class UserService(BaseSkoobService):
         'Example'
         """
         self._validate_login()
-        logger.info(f"Getting user by id: {user_id}")
+        logger.info("Getting user by id: %s", user_id)
         url = f"{self.base_url}/v1/user/{user_id}/stats:true"
         response = self.client.get(url)
         response.raise_for_status()
 
         json_data = response.json()
         if not json_data.get("success"):
-            logger.warning(f"User with ID {user_id} not found.")
+            logger.warning("User with ID %s not found.", user_id)
             raise FileNotFoundError(f"User with ID {user_id} not found.")
 
         user_data = json_data["response"]
@@ -105,7 +105,7 @@ class UserService(BaseSkoobService):
             self.base_url + user_data["url"]
         )  # patch field for alias
         user = User.model_validate(user_data)
-        logger.info(f"Successfully retrieved user: '{user.name}'")
+        logger.info("Successfully retrieved user: '%s'", user.name)
         return user
 
     def get_relations(
@@ -141,7 +141,10 @@ class UserService(BaseSkoobService):
         self._validate_login()
         url = f"{self.base_url}/{relation.value}/listar/{user_id}/page:{page}/limit:100"
         logger.info(
-            f"Getting '{relation.value}' for user_id: {user_id}, page: {page}"
+            "Getting '%s' for user_id: %s, page: %s",
+            relation.value,
+            user_id,
+            page,
         )
         response = self.client.get(url)
         response.raise_for_status()
@@ -158,10 +161,10 @@ class UserService(BaseSkoobService):
             ]
             next_page_link = safe_find(soup, "div", {"class": "proximo"})
         except (AttributeError, ValueError, IndexError) as e:
-            logger.error(f"Failed to parse user relations: {e}")
+            logger.error("Failed to parse user relations: %s", e)
             raise ParsingError("Failed to parse user relations.") from e
 
-        logger.info(f"Found {len(users_id)} users on page {page}.")
+        logger.info("Found %s users on page %s.", len(users_id), page)
         return Pagination(
             results=users_id,
             limit=100,
@@ -199,7 +202,7 @@ class UserService(BaseSkoobService):
         url = (
             f"{self.base_url}/estante/resenhas/{user_id}/mpage:{page}/limit:50"
         )
-        logger.info(f"Getting reviews for user_id: {user_id}, page: {page}")
+        logger.info("Getting reviews for user_id: %s, page: %s", user_id, page)
         response = self.client.get(url)
         response.raise_for_status()
 
@@ -254,10 +257,10 @@ class UserService(BaseSkoobService):
                 )
             next_page_link = safe_find(soup, "a", {"string": " Próxima"})
         except (AttributeError, ValueError, IndexError) as e:
-            logger.error(f"Failed to parse user reviews: {e}")
+            logger.error("Failed to parse user reviews: %s", e)
             raise ParsingError("Failed to parse user reviews.") from e
 
-        logger.info(f"Found {len(user_reviews)} reviews on page {page}.")
+        logger.info("Found %s reviews on page %s.", len(user_reviews), page)
         return Pagination(
             results=user_reviews,
             limit=50,
@@ -283,7 +286,7 @@ class UserService(BaseSkoobService):
             The user's reading statistics.
         """
         self._validate_login()
-        logger.info(f"Getting read stats for user_id: {user_id}")
+        logger.info("Getting read stats for user_id: %s", user_id)
         url = f"{self.base_url}/v1/meta_stats/{user_id}"
 
         response = self.client.get(url)
@@ -303,7 +306,8 @@ class UserService(BaseSkoobService):
             ideal_reading_speed=json_data.get("velocidade_ideal"),
         )
         logger.info(
-            f"Successfully retrieved read stats for user_id: {user_id}"
+            "Successfully retrieved read stats for user_id: %s",
+            user_id,
         )
         return stats
 
@@ -330,7 +334,10 @@ class UserService(BaseSkoobService):
         self._validate_login()
         url = f"{self.base_url}/v1/bookcase/books/{user_id}/shelf_id:{bookcase_option.value}/page:{page}/limit:100"
         logger.info(
-            f"Getting bookcase for user_id: {user_id}, option: '{bookcase_option.name}', page: {page}"
+            "Getting bookcase for user_id: %s, option: '%s', page: %s",
+            user_id,
+            bookcase_option.name,
+            page,
         )
         response = self.client.get(url)
         response.raise_for_status()
@@ -356,7 +363,7 @@ class UserService(BaseSkoobService):
                 )
             )
 
-        logger.info(f"Found {len(results)} books on page {page}.")
+        logger.info("Found %s books on page %s.", len(results), page)
         return Pagination(
             limit=100,
             results=results,
