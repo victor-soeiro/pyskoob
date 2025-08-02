@@ -70,7 +70,7 @@ with SkoobClient() as client:
 Install the project in editable mode and run the test suite:
 
 ```bash
-uv pip install -e .
+uv pip install -e .[dev]
 pytest -vv
 ```
 
@@ -85,7 +85,7 @@ pytest --cov=pyskoob
 2. Install the dependencies in editable mode:
 
    ```bash
-   uv pip install -e .
+   uv pip install -e .[dev]
    ```
 3. Implement your change and add tests.
 4. Run `ruff` to check code style:
