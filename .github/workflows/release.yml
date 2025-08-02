@@ -33,5 +33,6 @@ jobs:
         uses: pypa/gh-action-pypi-publish@v1.8.11
         with:
           password: ${{ secrets.PYPI_API_TOKEN }}
+          skip-existing: true
         env:
           TWINE_NON_INTERACTIVE: true
