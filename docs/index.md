@@ -26,3 +26,8 @@ with SkoobClient() as client:
 ::: pyskoob.users
 ::: pyskoob.profile
 ::: pyskoob.publishers
+
+## Further Reading
+
+- [Advanced Usage](advanced_usage.md)
+- [Stable Public API](stable_api.md)
