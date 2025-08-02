@@ -129,7 +129,7 @@ class PublisherService(BaseSkoobService):
         if aval_span:
             rating_info = get_tag_text(aval_span.find_next("span"))
             if "/" in rating_info:
-                rating_part, total_part = [p.strip() for p in rating_info.split("/")]
+                rating_part, total_part = (p.strip() for p in rating_info.split("/"))
                 avg = float(rating_part.replace(",", ".")) if rating_part else None
                 clean_total = total_part.replace(".", "")
                 ratings = int(clean_total) if clean_total.isdigit() else None
@@ -154,8 +154,8 @@ class PublisherService(BaseSkoobService):
         img_tag = safe_find(anchor, "img")
         return PublisherItem(
             url=f"{self.base_url}{get_tag_attr(anchor, 'href')}",
-            title=get_tag_attr(anchor, 'title'),
-            img_url=get_tag_attr(img_tag, 'src'),
+            title=get_tag_attr(anchor, "title"),
+            img_url=get_tag_attr(img_tag, "src"),
         )
 
     def _parse_author(self, div: Tag) -> PublisherAuthor:
@@ -165,5 +165,5 @@ class PublisherService(BaseSkoobService):
         return PublisherAuthor(
             url=f"{self.base_url}{get_tag_attr(anchor, 'href')}",
             name=get_tag_text(name_tag),
-            img_url=get_tag_attr(img_tag, 'src'),
+            img_url=get_tag_attr(img_tag, "src"),
         )

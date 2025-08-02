@@ -36,9 +36,7 @@ class HttpxSyncClient(SyncHTTPClient):
         except httpx.HTTPError as exc:
             raise HTTPClientError(str(exc)) from exc
 
-    def post(
-        self, url: str, data: Any | None = None, **kwargs: Any
-    ) -> HTTPResponse:
+    def post(self, url: str, data: Any | None = None, **kwargs: Any) -> HTTPResponse:
         """Send a POST request.
 
         Parameters
@@ -96,9 +94,7 @@ class HttpxAsyncClient(AsyncHTTPClient):
         except httpx.HTTPError as exc:
             raise HTTPClientError(str(exc)) from exc
 
-    async def post(
-        self, url: str, data: Any | None = None, **kwargs: Any
-    ) -> HTTPResponse:
+    async def post(self, url: str, data: Any | None = None, **kwargs: Any) -> HTTPResponse:
         """Send a POST request asynchronously.
 
         Parameters
