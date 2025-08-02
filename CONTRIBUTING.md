@@ -34,8 +34,22 @@ ruff --fix
 
 Open your PR on GitHub and fill in a brief summary of your changes. A maintainer will review it as soon as possible.
 
+## Coding Standards
+
+- Adhere to [PEP 8](https://peps.python.org/pep-0008/) and keep lines under 140 characters.
+- Run `ruff --fix` to format and lint the codebase.
+- Provide type hints and docstrings for all public modules, classes, and functions.
+
+## Commit Message Format
+
+This project follows the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification.
+
+- Use the structure `<type>: <short description>` in the imperative mood.
+- Common types include `feat`, `fix`, `docs`, `refactor`, `test`, and `chore`.
+- Limit the first line to 72 characters and reference issues when relevant, e.g., `fix: handle edge case (#123)`.
+
 ## Best Practices
 
-- Follow the project's coding style; `ruff` is used for linting and formatting.
+- Review the coding standards and commit message format above before submitting your work.
 - Add tests for any new functionality.
 - Update documentation whenever behavior changes.
