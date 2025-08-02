@@ -93,9 +93,10 @@ pytest --cov=pyskoob
    ```bash
    ruff format .
    ```
-5. Lint the project:
+5. Ensure formatting and lint checks pass:
 
    ```bash
+   ruff format --check .
    ruff check .
    ```
 6. Run `pytest` and ensure everything passes.

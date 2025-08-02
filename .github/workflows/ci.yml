@@ -30,7 +30,7 @@ jobs:
 
       - name: Install ruff
         if: matrix.python-version == '3.12'
-        run: uv pip install --system ruff
+        run: uv pip install --system "ruff==0.4.5"
 
       - name: Check formatting
         if: matrix.python-version == '3.12'

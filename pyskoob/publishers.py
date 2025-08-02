@@ -108,7 +108,7 @@ class PublisherService(BaseSkoobService):
         if aval_span:
             rating_info = get_tag_text(aval_span.find_next("span"))
             if "/" in rating_info:
-                rating_part, total_part = [p.strip() for p in rating_info.split("/")]
+                rating_part, total_part = (p.strip() for p in rating_info.split("/"))
                 avg = float(rating_part.replace(",", ".")) if rating_part else None
                 clean_total = total_part.replace(".", "")
                 ratings = int(clean_total) if clean_total.isdigit() else None

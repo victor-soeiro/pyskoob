@@ -33,6 +33,8 @@ ruff format .
 ruff check .
 ```
 
+Run `ruff format .` to automatically fix formatting issues. The CI workflow uses `ruff format --check .` to ensure files are already formatted.
+
 Open your PR on GitHub and fill in a brief summary of your changes. A maintainer will review it as soon as possible.
 
 ## Best Practices
