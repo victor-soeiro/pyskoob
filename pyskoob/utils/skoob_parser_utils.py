@@ -1,3 +1,10 @@
+"""Helper utilities for parsing Skoob URLs.
+
+These functions extract numeric identifiers for books, editions, users, and
+authors from their respective Skoob links.
+"""
+
+
 def get_book_id_from_url(url: str) -> str:
     """
     Extracts the book ID from a Skoob book URL.
