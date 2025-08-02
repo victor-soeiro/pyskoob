@@ -11,11 +11,14 @@ class DummyClient:
 
     def get(self, url: str, **_: str):
         self.called.append(url)
+
         class R:
             def __init__(self, t: str):
                 self.text = t
+
             def raise_for_status(self):
                 pass
+
         return R(self.text)
 
     def close(self):  # pragma: no cover - simple stub
@@ -55,18 +58,14 @@ def test_get_by_id():
 
 
 def test_get_authors_and_books():
-    authors_html = (
-        "<div class='box_autor'><a href='/a1'><img src='a.jpg'></a><h3>A</h3></div>"
-        "<div class='proximo'></div>"
-    )
+    authors_html = "<div class='box_autor'><a href='/a1'><img src='a.jpg'></a><h3>A</h3></div><div class='proximo'></div>"
     service, client = make_service(authors_html)
     res = service.get_authors(1)
     assert res.results[0].name == "A"
     assert res.has_next_page is True
 
     books_html = (
-        "<div class='box_livro'><a class='capa-link-item' href='/b1' title='B'><img src='b.jpg'></a></div>"
-        "<div class='proximo'></div>"
+        "<div class='box_livro'><a class='capa-link-item' href='/b1' title='B'><img src='b.jpg'></a></div><div class='proximo'></div>"
     )
     client.text = books_html
     books = service.get_books(1)

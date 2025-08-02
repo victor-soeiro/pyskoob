@@ -38,7 +38,7 @@ You can authenticate in two different ways:
 1. **Email and password**
 
     ```python
-    from pyskoob.client import SkoobClient
+    from pyskoob import SkoobClient
 
     with SkoobClient() as client:
         me = client.auth.login(email="you@example.com", password="secret")
@@ -47,7 +47,7 @@ You can authenticate in two different ways:
 2. **Session cookie**
 
     ```python
-    from pyskoob.client import SkoobClient
+    from pyskoob import SkoobClient
 
     with SkoobClient() as client:
         me = client.auth.login_with_cookies("PHPSESSID_TOKEN")
@@ -57,7 +57,7 @@ Once authenticated you can access all other services.
 
 ## Usage example
 ```python
-from pyskoob.client import SkoobClient
+from pyskoob import SkoobClient
 from pyskoob.models.enums import BookSearch
 
 with SkoobClient() as client:
@@ -88,13 +88,19 @@ pytest --cov=pyskoob
    uv pip install -e .
    ```
 3. Implement your change and add tests.
-4. Run `ruff` to check code style:
+4. Format your code using `ruff`:
 
    ```bash
-   ruff .
+   ruff format .
    ```
-5. Run `pytest` and ensure everything passes.
-6. Open a pull request describing your changes.
+5. Ensure formatting and lint checks pass:
+
+   ```bash
+   ruff format --check .
+   ruff check .
+   ```
+6. Run `pytest` and ensure everything passes.
+7. Open a pull request describing your changes.
 
 Contributions are very welcome!
 

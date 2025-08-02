@@ -67,13 +67,8 @@ class BookService(BaseSkoobService):
         >>> service.search("Duna").results[0].title
         'Duna'
         """
-        url = (
-            f"{self.base_url}/livro/lista/busca:{query}/"
-            f"tipo:{search_by.value}/mpage:{page}"
-        )
-        logger.info(
-            f"Searching for books with query: '{query}' on page {page}"
-        )
+        url = f"{self.base_url}/livro/lista/busca:{query}/tipo:{search_by.value}/mpage:{page}"
+        logger.info(f"Searching for books with query: '{query}' on page {page}")
         try:
             response = self.client.get(url)
             response.raise_for_status()
@@ -81,28 +76,21 @@ class BookService(BaseSkoobService):
 
             limit = 30
             results: list[BookSearchResult | None] = [
-                self._parse_search_result(book_div)
-                for book_div in safe_find_all(
-                    soup, "div", {"class": "box_lista_busca_vertical"}
-                )
+                self._parse_search_result(book_div) for book_div in safe_find_all(soup, "div", {"class": "box_lista_busca_vertical"})
             ]
             cleaned_results: list[BookSearchResult] = [i for i in results if i]
 
             total_results = self._extract_total_results(soup)
             next_page_link = True if page * limit < total_results else False
         except (AttributeError, ValueError, IndexError, TypeError) as e:
-            logger.error(
-                f"Failed to parse book search results: {e}", exc_info=True
-            )
+            logger.error(f"Failed to parse book search results: {e}", exc_info=True)
             raise ParsingError("Failed to parse book search results.") from e
         except Exception as e:
             logger.error(
                 f"An unexpected error occurred during book search: {e}",
                 exc_info=True,
             )
-            raise ParsingError(
-                "An unexpected error occurred during book search."
-            ) from e
+            raise ParsingError("An unexpected error occurred during book search.") from e
 
         logger.info(
             "Found %s books on page %s, total %s results.",
@@ -151,13 +139,8 @@ class BookService(BaseSkoobService):
             response.raise_for_status()
             json_data = response.json().get("response")
             if not json_data:
-                cod_description = response.json().get(
-                    "cod_description", "No description provided."
-                )
-                error_msg = (
-                    f"No data found for edition_id {edition_id}. "
-                    f"Description: {cod_description}"
-                )
+                cod_description = response.json().get("cod_description", "No description provided.")
+                error_msg = f"No data found for edition_id {edition_id}. Description: {cod_description}"
                 logger.warning(error_msg)
                 raise FileNotFoundError(error_msg)
             self._clean_book_json_data(json_data)
@@ -175,13 +158,9 @@ class BookService(BaseSkoobService):
                 f"Error retrieving book for edition_id {edition_id}: {e}",
                 exc_info=True,
             )
-            raise ParsingError(
-                f"Failed to retrieve book for edition_id {edition_id}."
-            ) from e
+            raise ParsingError(f"Failed to retrieve book for edition_id {edition_id}.") from e
 
-    def get_reviews(
-        self, book_id: int, edition_id: int | None = None, page: int = 1
-    ) -> Pagination[BookReview]:
+    def get_reviews(self, book_id: int, edition_id: int | None = None, page: int = 1) -> Pagination[BookReview]:
         """
         Retrieves reviews for a book.
 
@@ -222,10 +201,7 @@ class BookService(BaseSkoobService):
             book_reviews = [
                 review
                 for review in (
-                    self._parse_review(r, book_id, edition_id)
-                    for r in safe_find_all(
-                        soup, "div", {"id": re.compile(r"resenha\d+")}
-                    )
+                    self._parse_review(r, book_id, edition_id) for r in safe_find_all(soup, "div", {"id": re.compile(r"resenha\d+")})
                 )
                 if review is not None
             ]
@@ -238,9 +214,7 @@ class BookService(BaseSkoobService):
                 f"An unexpected error occurred during review fetching: {e}",
                 exc_info=True,
             )
-            raise ParsingError(
-                "An unexpected error occurred during review fetching."
-            ) from e
+            raise ParsingError("An unexpected error occurred during review fetching.") from e
         logger.info(f"Found {len(book_reviews)} reviews on page {page}.")
         return Pagination[BookReview](
             results=book_reviews,
@@ -289,10 +263,7 @@ class BookService(BaseSkoobService):
         >>> service.get_users_by_status(1, BookUserStatus.READERS).results[:3]
         [1, 2, 3]
         """
-        url = (
-            f"{self.base_url}/livro/leitores/{status.value}/{book_id}/"
-            f"limit:{limit}/page:{page}"
-        )
+        url = f"{self.base_url}/livro/leitores/{status.value}/{book_id}/limit:{limit}/page:{page}"
         if edition_id:
             url += f"/edition:{edition_id}"
         logger.info(
@@ -308,9 +279,7 @@ class BookService(BaseSkoobService):
             users_id = self._extract_user_ids_from_html(soup)
             next_page_link = safe_find(soup, "a", {"class": "proximo"})
         except (AttributeError, ValueError, IndexError, TypeError) as e:
-            logger.error(
-                f"Failed to parse users by status: {e}", exc_info=True
-            )
+            logger.error(f"Failed to parse users by status: {e}", exc_info=True)
             raise ParsingError("Failed to parse users by status.") from e
         except Exception as e:
             logger.error(
@@ -318,9 +287,7 @@ class BookService(BaseSkoobService):
                 e,
                 exc_info=True,
             )
-            raise ParsingError(
-                "An unexpected error occurred during user status fetching."
-            ) from e
+            raise ParsingError("An unexpected error occurred during user status fetching.") from e
         logger.info(
             "Found %s users on page %s.",
             len(users_id),
@@ -359,9 +326,7 @@ class BookService(BaseSkoobService):
         ... )
         [1]
         """
-        users_html = safe_find_all(
-            soup, "div", {"class": "livro-leitor-container"}
-        )
+        users_html = safe_find_all(soup, "div", {"class": "livro-leitor-container"})
         users_id = []
         for user_div in users_html:
             user_link = safe_find(user_div, "a")
@@ -371,13 +336,9 @@ class BookService(BaseSkoobService):
                 if user_id:
                     users_id.append(int(user_id))
                 else:
-                    logger.warning(
-                        f"Could not extract user ID from URL: {href}"
-                    )
+                    logger.warning(f"Could not extract user ID from URL: {href}")
             else:
-                logger.warning(
-                    "Skipping user_div due to missing 'a' tag or href attribute."
-                )
+                logger.warning("Skipping user_div due to missing 'a' tag or href attribute.")
         return users_id
 
     def _extract_edition_id_from_reviews_page(self, soup) -> int | None:
@@ -405,9 +366,7 @@ class BookService(BaseSkoobService):
         ... )
         3
         """
-        menu_div = safe_find(
-            soup, "div", {"id": "pg-livro-menu-principal-container"}
-        )
+        menu_div = safe_find(soup, "div", {"id": "pg-livro-menu-principal-container"})
         menu_div_a = safe_find(menu_div, "a") if menu_div else None
         href = get_tag_attr(menu_div_a, "href")
         if href:
@@ -415,9 +374,7 @@ class BookService(BaseSkoobService):
             if extracted_edition_id:
                 return int(extracted_edition_id)
             else:
-                logger.warning(
-                    f"Could not extract edition_id from URL: {href}"
-                )
+                logger.warning(f"Could not extract edition_id from URL: {href}")
         return None
 
     def _parse_review(
@@ -454,34 +411,20 @@ class BookService(BaseSkoobService):
         ... # doctest: +ELLIPSIS
         """
         review_id_str = get_tag_attr(r, "id")
-        review_id = (
-            int(review_id_str.replace("resenha", ""))
-            if review_id_str
-            else None
-        )
+        review_id = int(review_id_str.replace("resenha", "")) if review_id_str else None
         if review_id is None:
-            logger.warning(
-                f"Skipping review due to missing or invalid ID: {get_tag_attr(r, 'id')}"
-            )
+            logger.warning(f"Skipping review due to missing or invalid ID: {get_tag_attr(r, 'id')}")
             return None
         user_link = safe_find(r, "a", {"href": re.compile(r"/usuario/")})
         user_url = get_tag_attr(user_link, "href")
         user_id = int(get_user_id_from_url(user_url)) if user_url else None
         if user_id is None:
-            logger.warning(
-                f"Skipping review {review_id} due to missing user ID."
-            )
+            logger.warning(f"Skipping review {review_id} due to missing user ID.")
             return None
         star_tag = safe_find(r, "star-rating")
-        rating = (
-            float(get_tag_attr(star_tag, "rate"))
-            if star_tag and get_tag_attr(star_tag, "rate")
-            else 0.0
-        )
+        rating = float(get_tag_attr(star_tag, "rate")) if star_tag and get_tag_attr(star_tag, "rate") else 0.0
         comment_div = safe_find(r, "div", {"id": re.compile(r"resenhac\d+")})
-        date, review_text = self._extract_review_date_and_text(
-            comment_div, review_id
-        )
+        date, review_text = self._extract_review_date_and_text(comment_div, review_id)
         return BookReview(
             review_id=review_id,
             book_id=book_id,
@@ -492,9 +435,7 @@ class BookService(BaseSkoobService):
             reviewed_at=date,
         )
 
-    def _extract_review_date_and_text(
-        self, comment_div: Tag | None, review_id: int
-    ) -> tuple[datetime | None, str]:
+    def _extract_review_date_and_text(self, comment_div: Tag | None, review_id: int) -> tuple[datetime | None, str]:
         """
         Extracts the review date and text from the comment div.
 
@@ -528,24 +469,18 @@ class BookService(BaseSkoobService):
                 try:
                     date = datetime.strptime(date_text, "%d/%m/%Y")
                 except ValueError:
-                    logger.warning(
-                        f"Could not parse date '{date_text}' for review {review_id}. Setting to None."
-                    )
+                    logger.warning(f"Could not parse date '{date_text}' for review {review_id}. Setting to None.")
             content_parts = []
             if date_span:
                 for sibling in date_span.next_siblings:
                     if isinstance(sibling, Tag):
-                        content_parts.append(
-                            sibling.get_text(separator="\n", strip=True)
-                        )
+                        content_parts.append(sibling.get_text(separator="\n", strip=True))
                     elif isinstance(sibling, str):
                         stripped_text = sibling.strip()
                         if stripped_text:
                             content_parts.append(stripped_text)
             else:
-                content_parts.append(
-                    comment_div.get_text(separator="\n", strip=True)
-                )
+                content_parts.append(comment_div.get_text(separator="\n", strip=True))
             review_text = "\n".join(filter(None, content_parts)).strip()
         return date, review_text
 
@@ -571,21 +506,17 @@ class BookService(BaseSkoobService):
         """
         container = safe_find(book_div, "a", {"class": "capa-link-item"})
         if not container:
-            logger.warning(
-                "Skipping book_div due to missing 'capa-link-item' container."
-            )
+            logger.warning("Skipping book_div due to missing 'capa-link-item' container.")
             return None
 
         title = get_tag_attr(container, "title")
-        book_url = f'{self.base_url}{get_tag_attr(container, "href")}'
+        book_url = f"{self.base_url}{get_tag_attr(container, 'href')}"
         img_url = self._extract_img_url(container)
         try:
             book_id = int(get_book_id_from_url(book_url))
             edition_id = int(get_book_edition_id_from_url(book_url))
         except Exception:
-            logger.warning(
-                f"Skipping book_div due to invalid book/edition id in url: {book_url}"
-            )
+            logger.warning(f"Skipping book_div due to invalid book/edition id in url: {book_url}")
             return None
 
         publisher, isbn = self._extract_publisher_and_isbn(book_div)
@@ -624,12 +555,10 @@ class BookService(BaseSkoobService):
         if container.img and isinstance(container.img, Tag):
             src = get_tag_attr(container.img, "src")
             if src and "https" in src:
-                return f'https{src.split("https")[-1].strip()}'
+                return f"https{src.split('https')[-1].strip()}"
         return ""
 
-    def _extract_publisher_and_isbn(
-        self, book_div: Tag
-    ) -> tuple[str | None, str | None]:
+    def _extract_publisher_and_isbn(self, book_div: Tag) -> tuple[str | None, str | None]:
         """
         Extracts publisher and ISBN information from a book search result div.
 
@@ -651,14 +580,8 @@ class BookService(BaseSkoobService):
         """
         detalhes2sub = safe_find(book_div, "div", {"class": "detalhes-2-sub"})
         detalhes2sub_div = detalhes2sub.div if detalhes2sub else None
-        spans = (
-            safe_find_all(detalhes2sub_div, "span") if detalhes2sub_div else []
-        )
-        cleaned_spans = [
-            text
-            for span in spans
-            if (text := span.get_text(strip=True)) and text != "|"
-        ]
+        spans = safe_find_all(detalhes2sub_div, "span") if detalhes2sub_div else []
+        cleaned_spans = [text for span in spans if (text := span.get_text(strip=True)) and text != "|"]
         isbn_pattern = re.compile(r"^\d{9,13}$|^B0[A-Z0-9]{8,}$")
         isbn: str | None = None
         publisher: str | None = None
@@ -699,9 +622,7 @@ class BookService(BaseSkoobService):
                 try:
                     return float(rating_text.replace(",", "."))
                 except ValueError:
-                    logger.warning(
-                        f"Could not parse rating '{rating_text}' for book '{title}'. Setting to None."
-                    )
+                    logger.warning(f"Could not parse rating '{rating_text}' for book '{title}'. Setting to None.")
         return None
 
     def _extract_total_results(self, soup) -> int:
@@ -752,32 +673,12 @@ class BookService(BaseSkoobService):
         ''
         """
         json_data["url"] = f"{self.base_url}{json_data['url']}"
-        json_data["isbn"] = (
-            None
-            if str(json_data.get("isbn", "0")) == "0"
-            else json_data["isbn"]
-        )
-        json_data["autor"] = (
-            None
-            if json_data.get("autor", "").lower() == "não especificado"
-            else json_data["autor"]
-        )
+        json_data["isbn"] = None if str(json_data.get("isbn", "0")) == "0" else json_data["isbn"]
+        json_data["autor"] = None if json_data.get("autor", "").lower() == "não especificado" else json_data["autor"]
         json_data["serie"] = json_data.get("serie") or None
-        json_data["volume"] = (
-            None
-            if not json_data.get("volume") or str(json_data["volume"]) == "0"
-            else str(json_data["volume"])
-        )
-        json_data["mes"] = (
-            None
-            if not json_data.get("mes") or str(json_data["mes"]).strip() == ""
-            else json_data["mes"]
-        )
+        json_data["volume"] = None if not json_data.get("volume") or str(json_data["volume"]) == "0" else str(json_data["volume"])
+        json_data["mes"] = None if not json_data.get("mes") or str(json_data["mes"]).strip() == "" else json_data["mes"]
         img_url = json_data.get("img_url", "")
-        json_data["cover_url"] = (
-            f'https{img_url.split("https")[-1].strip()}'
-            if img_url and "https" in img_url
-            else ""
-        )
+        json_data["cover_url"] = f"https{img_url.split('https')[-1].strip()}" if img_url and "https" in img_url else ""
         generos = json_data.get("generos")
         json_data["generos"] = generos if generos else None

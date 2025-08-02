@@ -50,10 +50,7 @@ def test_extract_user_ids_and_edition_id():
     ids = service._extract_user_ids_from_html(soup)
     assert ids == [1, 2]
 
-    html_reviews = (
-        "<div id='pg-livro-menu-principal-container'>"
-        "<a href='/livro/10-ed5.html'></a></div>"
-    )
+    html_reviews = "<div id='pg-livro-menu-principal-container'><a href='/livro/10-ed5.html'></a></div>"
     soup = BeautifulSoup(html_reviews, "html.parser")
     edition = service._extract_edition_id_from_reviews_page(soup)
     assert edition == 5
