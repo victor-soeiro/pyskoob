@@ -8,8 +8,6 @@ dependencies = [
     "bs4>=0.0.2",
     "httpx>=0.28.1",
     "pydantic>=2.11.7",
-    "pytest>=8.4.1",
-    "pytest-cov>=6.2.1",
     "requests>=2.32.4",
     "ruff>=0.12.4",
 ]
@@ -62,8 +60,8 @@ convention = "numpy"
 
 [project.optional-dependencies]
 dev = [
-    "fastapi>=0.116.1",
-    "uvicorn>=0.35.0",
+    "pytest>=8.4.1",
+    "pytest-cov>=6.2.1",
 ]
 docs = [
     "mkdocs>=1.6.0",

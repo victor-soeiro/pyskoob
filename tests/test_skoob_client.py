@@ -1,4 +1,4 @@
-from pyskoob.client import SkoobClient
+from pyskoob import SkoobClient
 
 
 def test_client_context_manager(monkeypatch):

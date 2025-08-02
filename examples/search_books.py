@@ -6,7 +6,7 @@ the search term or switch ``search_by`` to ``BookSearch.AUTHOR`` to search
 by an author's name instead.
 """
 
-from pyskoob.client import SkoobClient
+from pyskoob import SkoobClient
 from pyskoob.models.enums import BookSearch
 
 
