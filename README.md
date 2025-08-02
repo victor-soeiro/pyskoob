@@ -69,7 +69,7 @@ with SkoobClient() as client:
 ### Fetch book details
 
 ```python
-from pyskoob.client import SkoobClient
+from pyskoob import SkoobClient
 
 with SkoobClient() as client:
     book = client.books.get_by_id(1)  # replace with a real edition ID
@@ -79,7 +79,7 @@ with SkoobClient() as client:
 ### Authenticate and access your profile
 
 ```python
-from pyskoob.client import SkoobClient
+from pyskoob import SkoobClient
 
 with SkoobClient() as client:
     # TIP: use environment variables or a secrets manager instead of hard-coding credentials
@@ -105,7 +105,19 @@ pytest -vv
    uv pip install -e .[dev]
    ```
 3. Implement your change and add tests.
-4. Run `ruff` to check code style.
+4. Format your code with Ruff:
+
+   ```bash
+   ruff format .
+   ```
+5. Ensure formatting and lint checks pass:
+
+   ```bash
+   ruff format --check .
+   ruff check .
+   ```
+6. Run `pytest` and ensure everything passes.
+7. Open a pull request describing your changes.
 
 ## Learn more
 

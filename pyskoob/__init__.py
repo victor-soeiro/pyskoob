@@ -7,6 +7,7 @@ and will not change without a deprecation period.
 
 __version__ = "0.1.1"
 
+from . import models
 from .auth import AuthService
 from .authors import AuthorService
 from .books import BookService
@@ -27,6 +28,7 @@ __all__ = [
     "SkoobClient",
     "SkoobProfileService",
     "UserService",
+    "models",
     "ParsingError",
     "__version__",
 ]

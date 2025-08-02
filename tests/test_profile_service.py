@@ -1,4 +1,3 @@
-
 from typing import cast
 
 import pytest
@@ -36,11 +35,9 @@ class DummyClient:
 
 
 def make_service(success=True):
-    client = DummyClient({'success': success})
+    client = DummyClient({"success": success})
     return (
-        SkoobProfileService(
-            cast(SyncHTTPClient, client), cast(AuthService, DummyAuth())
-        ),
+        SkoobProfileService(cast(SyncHTTPClient, client), cast(AuthService, DummyAuth())),
         client,
     )
 
