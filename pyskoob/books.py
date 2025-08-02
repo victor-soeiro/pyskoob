@@ -4,7 +4,7 @@ from datetime import datetime
 
 from bs4 import Tag
 
-from pyskoob.exceptions import ParsingError
+from pyskoob.exceptions import HTTPClientError, ParsingError
 from pyskoob.internal.base import BaseSkoobService
 from pyskoob.models.book import Book, BookReview, BookSearchResult
 from pyskoob.models.enums import BookSearch, BookUserStatus
@@ -76,7 +76,6 @@ class BookService(BaseSkoobService):
         )
         try:
             response = self.client.get(url)
-            response.raise_for_status()
             soup = self.parse_html(response.text)
 
             limit = 30
@@ -95,13 +94,13 @@ class BookService(BaseSkoobService):
                 f"Failed to parse book search results: {e}", exc_info=True
             )
             raise ParsingError("Failed to parse book search results.") from e
-        except Exception as e:
+        except HTTPClientError as e:
             logger.error(
-                f"An unexpected error occurred during book search: {e}",
+                f"HTTP error occurred during book search: {e}",
                 exc_info=True,
             )
             raise ParsingError(
-                "An unexpected error occurred during book search."
+                "HTTP error occurred during book search."
             ) from e
 
         logger.info(
@@ -148,7 +147,6 @@ class BookService(BaseSkoobService):
         url = f"{self.base_url}/v1/book/{edition_id}/stats:true"
         try:
             response = self.client.get(url)
-            response.raise_for_status()
             json_data = response.json().get("response")
             if not json_data:
                 cod_description = response.json().get(
@@ -170,13 +168,21 @@ class BookService(BaseSkoobService):
             return book
         except FileNotFoundError:
             raise
-        except Exception as e:
+        except HTTPClientError as e:
             logger.error(
-                f"Error retrieving book for edition_id {edition_id}: {e}",
+                f"HTTP error retrieving book for edition_id {edition_id}: {e}",
                 exc_info=True,
             )
             raise ParsingError(
-                f"Failed to retrieve book for edition_id {edition_id}."
+                f"HTTP error retrieving book for edition_id {edition_id}."
+            ) from e
+        except (KeyError, ValueError, TypeError) as e:
+            logger.error(
+                f"Failed to parse book data for edition_id {edition_id}: {e}",
+                exc_info=True,
+            )
+            raise ParsingError(
+                f"Failed to parse book data for edition_id {edition_id}."
             ) from e
 
     def get_reviews(
@@ -215,7 +221,6 @@ class BookService(BaseSkoobService):
         logger.info(f"Getting reviews for book_id: {book_id}, page: {page}")
         try:
             response = self.client.get(url)
-            response.raise_for_status()
             soup = self.parse_html(response.text)
             if edition_id is None:
                 edition_id = self._extract_edition_id_from_reviews_page(soup)
@@ -233,13 +238,13 @@ class BookService(BaseSkoobService):
         except (AttributeError, ValueError, IndexError, TypeError) as e:
             logger.error(f"Failed to parse book reviews: {e}", exc_info=True)
             raise ParsingError("Failed to parse book reviews.") from e
-        except Exception as e:
+        except HTTPClientError as e:
             logger.error(
-                f"An unexpected error occurred during review fetching: {e}",
+                f"HTTP error occurred during review fetching: {e}",
                 exc_info=True,
             )
             raise ParsingError(
-                "An unexpected error occurred during review fetching."
+                "HTTP error occurred during review fetching."
             ) from e
         logger.info(f"Found {len(book_reviews)} reviews on page {page}.")
         return Pagination[BookReview](
@@ -303,7 +308,6 @@ class BookService(BaseSkoobService):
         )
         try:
             response = self.client.get(url)
-            response.raise_for_status()
             soup = self.parse_html(response.text)
             users_id = self._extract_user_ids_from_html(soup)
             next_page_link = safe_find(soup, "a", {"class": "proximo"})
@@ -312,14 +316,14 @@ class BookService(BaseSkoobService):
                 f"Failed to parse users by status: {e}", exc_info=True
             )
             raise ParsingError("Failed to parse users by status.") from e
-        except Exception as e:
+        except HTTPClientError as e:
             logger.error(
-                "An unexpected error occurred during user status fetching: %s",
+                "HTTP error occurred during user status fetching: %s",
                 e,
                 exc_info=True,
             )
             raise ParsingError(
-                "An unexpected error occurred during user status fetching."
+                "HTTP error occurred during user status fetching."
             ) from e
         logger.info(
             "Found %s users on page %s.",
@@ -582,7 +586,7 @@ class BookService(BaseSkoobService):
         try:
             book_id = int(get_book_id_from_url(book_url))
             edition_id = int(get_book_edition_id_from_url(book_url))
-        except Exception:
+        except ValueError:
             logger.warning(
                 f"Skipping book_div due to invalid book/edition id in url: {book_url}"
             )

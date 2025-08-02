@@ -18,6 +18,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - Removed the standalone lint workflow and moved Ruff earlier in the CI job.
 - Added a dedicated step to install Ruff before running linting.
 - Fixed installation command for Ruff to target the system environment.
+- Refined exception handling to use specific exceptions and propagate meaningful errors.
+- Introduced ``HTTPClientError`` and moved HTTP error handling to the client layer to avoid ``httpx`` coupling.
 
 ## [0.1.0] - 2025-07-30
 ### Added

@@ -479,5 +479,5 @@ class UserService(BaseSkoobService):
                 has_next_page=has_next,
             )
 
-        except Exception as e:
+        except (AttributeError, ValueError, IndexError, TypeError) as e:
             raise ParsingError("Failed to parse user search results.") from e
