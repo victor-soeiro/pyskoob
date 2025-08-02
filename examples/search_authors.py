@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import argparse
 
-from pyskoob.client import SkoobClient
+from pyskoob import SkoobClient
 
 
 def parse_args() -> argparse.Namespace:

@@ -11,7 +11,7 @@ pip install scraper-skoob
 ## Usage
 
 ```python
-from pyskoob.client import SkoobClient
+from pyskoob import SkoobClient
 
 with SkoobClient() as client:
     books = client.books.search("python").results

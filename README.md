@@ -9,10 +9,10 @@
 
 ## Features
 
-- Search books by title, author or ISBN
-- Retrieve detailed book information and reviews
-- Access user profiles and reading statistics
-- Authenticate using email/password or an existing session cookie
+* Search books by title, author or ISBN
+* Retrieve detailed book information and reviews
+* Access user profiles and reading statistics
+* Authenticate using email/password or an existing session cookie
 
 ## Installation
 
@@ -28,12 +28,32 @@ Or install the bleeding edge version from GitHub:
 pip install git+https://github.com/victor-soeiro/pyskoob.git
 ```
 
-## Quick start
+## Authentication and Quick Start
 
-Authenticate and perform a book search:
+You can authenticate in two different ways:
+
+1. **Email and password**
+
+   ```python
+   from pyskoob import SkoobClient
+
+   with SkoobClient() as client:
+       me = client.auth.login(email="you@example.com", password="secret")
+   ```
+
+2. **Session cookie**
+
+   ```python
+   from pyskoob import SkoobClient
+
+   with SkoobClient(cookie="your_session_cookie") as client:
+       me = client.auth.me()
+   ```
+
+Example: Search for a book after authenticating
 
 ```python
-from pyskoob.client import SkoobClient
+from pyskoob import SkoobClient
 from pyskoob.models.enums import BookSearch
 
 with SkoobClient() as client:
@@ -66,4 +86,4 @@ Pull requests are welcome! Please open an issue first to discuss any changes.
 
 ## Documentation
 
-The full API reference and guides are published at <https://victor-soeiro.github.io/pyskoob/>.
+The full API reference and guides are published at [https://victor-soeiro.github.io/pyskoob/](https://victor-soeiro.github.io/pyskoob/).
