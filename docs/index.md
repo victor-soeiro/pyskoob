@@ -11,7 +11,7 @@ pip install scraper-skoob
 ## Usage
 
 ```python
-from pyskoob.client import SkoobClient
+from pyskoob import SkoobClient
 
 with SkoobClient() as client:
     books = client.books.search("python").results
@@ -26,3 +26,8 @@ with SkoobClient() as client:
 ::: pyskoob.users
 ::: pyskoob.profile
 ::: pyskoob.publishers
+
+## Further Reading
+
+- [Advanced Usage](advanced_usage.md)
+- [Stable Public API](stable_api.md)

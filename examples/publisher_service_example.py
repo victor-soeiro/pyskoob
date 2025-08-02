@@ -1,6 +1,6 @@
 """Example usage of the PublisherService."""
 
-from pyskoob.client import SkoobClient
+from pyskoob import SkoobClient
 
 
 def main() -> None:
