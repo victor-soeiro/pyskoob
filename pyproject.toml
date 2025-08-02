@@ -8,8 +8,6 @@ dependencies = [
     "bs4>=0.0.2",
     "httpx>=0.28.1",
     "pydantic>=2.11.7",
-    "requests>=2.32.4",
-    "ruff>=0.12.4",
 ]
 
 [tool.setuptools.packages.find]
@@ -62,6 +60,8 @@ convention = "numpy"
 dev = [
     "pytest>=8.4.1",
     "pytest-cov>=6.2.1",
+    "requests>=2.32.4",
+    "ruff>=0.12.4",
 ]
 docs = [
     "mkdocs>=1.6.0",
