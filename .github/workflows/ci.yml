@@ -32,7 +32,7 @@ jobs:
             ${{ runner.os }}-uv-
 
       - name: Install ruff
-        run: uv pip install --system ruff
+        run: uv pip install --system "ruff==0.4.5"
 
       - name: Lint with ruff
         run: ruff check --no-fix --output-format=github .
