@@ -93,6 +93,4 @@ class BaseSkoobService(BaseHttpService):
         >>> BaseSkoobService(httpx.Client())
         <BaseSkoobService ...>
         """
-        super().__init__(
-            client or HttpxSyncClient(), "https://www.skoob.com.br"
-        )
+        super().__init__(client or HttpxSyncClient(), "https://www.skoob.com.br")
