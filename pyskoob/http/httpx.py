@@ -29,9 +29,7 @@ class HttpxSyncClient(SyncHTTPClient):
     def get(self, url: str, **kwargs: Any) -> HTTPResponse:
         return self._client.get(url, **kwargs)
 
-    def post(
-        self, url: str, data: Any | None = None, **kwargs: Any
-    ) -> HTTPResponse:
+    def post(self, url: str, data: Any | None = None, **kwargs: Any) -> HTTPResponse:
         """Send a POST request.
 
         Parameters
@@ -79,9 +77,7 @@ class HttpxAsyncClient(AsyncHTTPClient):
     async def get(self, url: str, **kwargs: Any) -> HTTPResponse:
         return await self._client.get(url, **kwargs)
 
-    async def post(
-        self, url: str, data: Any | None = None, **kwargs: Any
-    ) -> HTTPResponse:
+    async def post(self, url: str, data: Any | None = None, **kwargs: Any) -> HTTPResponse:
         """Send a POST request asynchronously.
 
         Parameters
