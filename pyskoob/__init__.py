@@ -5,6 +5,8 @@ import from ``pyskoob``. Everything listed in ``__all__`` is considered stable
 and will not change without a deprecation period.
 """
 
+__version__ = "0.1.1"
+
 from .auth import AuthService
 from .authors import AuthorService
 from .books import BookService
@@ -25,5 +27,6 @@ __all__ = [
     "SkoobClient",
     "SkoobProfileService",
     "UserService",
-    "ParsingError"
+    "ParsingError",
+    "__version__",
 ]
