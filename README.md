@@ -38,7 +38,7 @@ You can authenticate in two different ways:
 1. **Email and password**
 
     ```python
-    from pyskoob.client import SkoobClient
+    from pyskoob import SkoobClient
 
     with SkoobClient() as client:
         me = client.auth.login(email="you@example.com", password="secret")
@@ -47,7 +47,7 @@ You can authenticate in two different ways:
 2. **Session cookie**
 
     ```python
-    from pyskoob.client import SkoobClient
+    from pyskoob import SkoobClient
 
     with SkoobClient() as client:
         me = client.auth.login_with_cookies("PHPSESSID_TOKEN")
@@ -57,7 +57,7 @@ Once authenticated you can access all other services.
 
 ## Usage example
 ```python
-from pyskoob.client import SkoobClient
+from pyskoob import SkoobClient
 from pyskoob.models.enums import BookSearch
 
 with SkoobClient() as client:

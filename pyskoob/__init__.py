@@ -9,6 +9,7 @@ from .auth import AuthService
 from .authors import AuthorService
 from .books import BookService
 from .client import SkoobClient
+from .exceptions import ParsingError
 from .http.httpx import HttpxAsyncClient, HttpxSyncClient
 from .profile import SkoobProfileService
 from .publishers import PublisherService
@@ -24,5 +25,5 @@ __all__ = [
     "PublisherService",
     "HttpxSyncClient",
     "HttpxAsyncClient",
+    "ParsingError"
 ]
-
