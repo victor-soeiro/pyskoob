@@ -23,7 +23,7 @@ uv venv .venv
 source .venv/bin/activate
 
 # Install dependencies in editable mode
-uv pip install -e .
+uv pip install -e .[dev]
 
 # Run the test suite
 pytest -q
