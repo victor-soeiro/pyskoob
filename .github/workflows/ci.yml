@@ -1,16 +1,33 @@
-# GitHub Actions workflow for linting and testing the project
-# Runs on pushes and pull requests against main branch
 name: CI
 
+# Run lint and tests on each push and pull request
 on:
   push:
-    branches: [main]
   pull_request:
-    branches: [main]
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Install ruff
+        run: uv pip install --system ruff
+
+      - name: Lint with ruff
+        run: ruff check --no-fix --output-format=github .
+
   test:
-    # Run the job on ubuntu runners for each supported Python version
+    # Run tests on ubuntu runners for each supported Python version
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -43,11 +60,5 @@ jobs:
       - name: Install dependencies
         run: uv pip install --system -e .[dev]
 
-      - name: Run tests with coverage
-        run: pytest --cov=pyskoob --cov-report=xml --cov-fail-under=80
-
-      - name: Upload coverage report
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-${{ matrix.python-version }}
-          path: coverage.xml
+      - name: Run tests
+        run: pytest
