@@ -45,6 +45,18 @@ jobs:
       - name: Set up uv
         uses: astral-sh/setup-uv@v6
 
+      - name: Install ruff
+        if: matrix.python-version == '3.12'
+        run: uv pip install --system "ruff==0.4.5"
+
+      - name: Check formatting
+        if: matrix.python-version == '3.12'
+        run: ruff format --check .
+
+      - name: Lint with ruff
+        if: matrix.python-version == '3.12'
+        run: ruff check --no-fix --output-format=github .
+
       - name: Install dependencies
         run: uv pip install --system -e .[dev]
 

@@ -4,9 +4,7 @@ from bs4 import BeautifulSoup, Tag
 from bs4.element import PageElement
 
 
-def safe_find(
-    soup: BeautifulSoup | Tag | None, name: str, attrs: dict | None = None
-) -> Tag | None:
+def safe_find(soup: BeautifulSoup | Tag | None, name: str, attrs: dict | None = None) -> Tag | None:
     """
     Safely finds a single Tag in a BeautifulSoup object.
 
@@ -37,9 +35,7 @@ def safe_find(
     return None
 
 
-def safe_find_all(
-    soup: BeautifulSoup | Tag | None, name: str, attrs: dict | None = None
-) -> list[Tag]:
+def safe_find_all(soup: BeautifulSoup | Tag | None, name: str, attrs: dict | None = None) -> list[Tag]:
     """
     Safely finds all Tags in a BeautifulSoup object.
 
