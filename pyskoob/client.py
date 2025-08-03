@@ -46,7 +46,7 @@ class SkoobClient:
         """
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
+    def __exit__(self, exc_type, exc_val, exc_tb) -> bool | None:
         """
         Exit the runtime context, closing the HTTPX client.
 
@@ -58,6 +58,12 @@ class SkoobClient:
             The exception value.
         exc_tb : traceback
             The traceback object.
+
+        Returns
+        -------
+        bool or None
+            ``True`` to suppress the exception; otherwise ``None`` or ``False``
+            to propagate it.
 
         Examples
         --------
