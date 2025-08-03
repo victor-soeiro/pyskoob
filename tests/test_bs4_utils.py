@@ -25,20 +25,14 @@ def test_get_tag_text_and_attr():
     assert bs4_utils.get_tag_attr(None, "href", "default") == "default"
 
 
-class FalsySoup:
-    """A BeautifulSoup wrapper that evaluates to False."""
+class FalsySoup(BeautifulSoup):
+    """A ``BeautifulSoup`` subclass that evaluates to ``False``."""
 
     def __init__(self, html: str) -> None:
-        self._soup = BeautifulSoup(html, "html.parser")
+        super().__init__(html, "html.parser")
 
     def __bool__(self) -> bool:  # pragma: no cover - behavior is deterministic
         return False
-
-    def find(self, name, attrs):  # type: ignore[no-untyped-def]
-        return self._soup.find(name, attrs)
-
-    def find_all(self, name, attrs):  # type: ignore[no-untyped-def]
-        return self._soup.find_all(name, attrs)
 
 
 def test_safe_find_handles_falsy_soup() -> None:
