@@ -61,10 +61,7 @@ class PublisherService(BaseSkoobService):
             website = get_tag_attr(site_link, "href")
             stats = self._parse_stats(safe_find(soup, "div", {"id": "vt_estatisticas"}))
             releases_div = safe_find(soup, "div", {"id": "livros_lancamentos"})
-            releases = [
-                self._parse_book(div)
-                for div in safe_find_all(releases_div, "div", {"class": "livro-capa-mini"})
-            ]
+            releases = [self._parse_book(div) for div in safe_find_all(releases_div, "div", {"class": "livro-capa-mini"})]
             return Publisher(
                 id=publisher_id,
                 name=name,
@@ -82,9 +79,7 @@ class PublisherService(BaseSkoobService):
                 exc,
                 exc_info=True,
             )
-            raise ParsingError(
-                "An unexpected error occurred while parsing publisher page."
-            ) from exc
+            raise ParsingError("An unexpected error occurred while parsing publisher page.") from exc
 
     def get_authors(self, publisher_id: int, page: int = 1) -> Pagination[PublisherAuthor]:
         """Retrieve authors associated with a publisher.
@@ -117,10 +112,7 @@ class PublisherService(BaseSkoobService):
             response = self.client.get(url)
             response.raise_for_status()
             soup = self.parse_html(response.text)
-            authors = [
-                self._parse_author(div)
-                for div in safe_find_all(soup, "div", {"class": "box_autor"})
-            ]
+            authors = [self._parse_author(div) for div in safe_find_all(soup, "div", {"class": "box_autor"})]
             next_page = bool(safe_find(soup, "div", {"class": "proximo"}))
             return Pagination(
                 results=authors,
@@ -138,9 +130,7 @@ class PublisherService(BaseSkoobService):
                 exc,
                 exc_info=True,
             )
-            raise ParsingError(
-                "An unexpected error occurred while parsing publisher authors."
-            ) from exc
+            raise ParsingError("An unexpected error occurred while parsing publisher authors.") from exc
 
     def get_books(self, publisher_id: int, page: int = 1) -> Pagination[PublisherItem]:
         """Retrieve books published by the publisher.
@@ -173,10 +163,7 @@ class PublisherService(BaseSkoobService):
             response = self.client.get(url)
             response.raise_for_status()
             soup = self.parse_html(response.text)
-            books = [
-                self._parse_book(div)
-                for div in safe_find_all(soup, "div", {"class": "box_livro"})
-            ]
+            books = [self._parse_book(div) for div in safe_find_all(soup, "div", {"class": "box_livro"})]
             next_page = bool(safe_find(soup, "div", {"class": "proximo"}))
             return Pagination(
                 results=books,
@@ -194,9 +181,7 @@ class PublisherService(BaseSkoobService):
                 exc,
                 exc_info=True,
             )
-            raise ParsingError(
-                "An unexpected error occurred while parsing publisher books."
-            ) from exc
+            raise ParsingError("An unexpected error occurred while parsing publisher books.") from exc
 
     # Helpers
     def _parse_stats(self, div: Tag | None) -> PublisherStats:
