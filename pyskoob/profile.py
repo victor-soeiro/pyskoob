@@ -67,7 +67,7 @@ class SkoobProfileService(BaseSkoobService):
         url = f"{self.base_url}/v1/label_add/{edition_id}/{label.value}"
         response = self.client.get(url)
         response.raise_for_status()
-        return response.json().get("success", False)
+        return bool(response.json().get("success", False))
 
     def remove_book_label(self, edition_id: int) -> bool:
         """
@@ -92,7 +92,7 @@ class SkoobProfileService(BaseSkoobService):
         url = f"{self.base_url}/v1/label_del/{edition_id}"
         response = self.client.get(url)
         response.raise_for_status()
-        return response.json().get("success", False)
+        return bool(response.json().get("success", False))
 
     def update_book_status(self, edition_id: int, status: BookStatus) -> bool:
         """
@@ -119,7 +119,7 @@ class SkoobProfileService(BaseSkoobService):
         url = f"{self.base_url}/v1/shelf_add/{edition_id}/{status.value}"
         response = self.client.get(url)
         response.raise_for_status()
-        return response.json().get("success", False)
+        return bool(response.json().get("success", False))
 
     def remove_book_status(self, edition_id: int) -> bool:
         """
@@ -144,7 +144,7 @@ class SkoobProfileService(BaseSkoobService):
         url = f"{self.base_url}/v1/shelf_del/{edition_id}"
         response = self.client.get(url)
         response.raise_for_status()
-        return response.json().get("success", False)
+        return bool(response.json().get("success", False))
 
     def change_book_shelf(self, edition_id: int, bookshelf: BookShelf) -> bool:
         """
@@ -171,7 +171,7 @@ class SkoobProfileService(BaseSkoobService):
         url = f"{self.base_url}/estante/prateleira/{edition_id}/{bookshelf.value}"
         response = self.client.get(url)
         response.raise_for_status()
-        return response.json().get("success", False)
+        return bool(response.json().get("success", False))
 
     def rate_book(self, edition_id: int, ranking: float) -> bool:
         """

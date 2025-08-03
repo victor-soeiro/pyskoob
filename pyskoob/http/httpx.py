@@ -26,6 +26,10 @@ class HttpxSyncClient(SyncHTTPClient):
     def cookies(self) -> MutableMapping[str, Any]:
         return self._client.cookies
 
+    @cookies.setter
+    def cookies(self, value: Any) -> None:
+        self._client.cookies = value
+
     def get(self, url: str, **kwargs: Any) -> HTTPResponse:
         return self._client.get(url, **kwargs)
 
@@ -73,6 +77,10 @@ class HttpxAsyncClient(AsyncHTTPClient):
     @property
     def cookies(self) -> MutableMapping[str, Any]:
         return self._client.cookies
+
+    @cookies.setter
+    def cookies(self, value: Any) -> None:
+        self._client.cookies = value
 
     async def get(self, url: str, **kwargs: Any) -> HTTPResponse:
         return await self._client.get(url, **kwargs)

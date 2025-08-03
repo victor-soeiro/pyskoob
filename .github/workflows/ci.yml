@@ -20,11 +20,14 @@ jobs:
       - name: Set up uv
         uses: astral-sh/setup-uv@v6
 
-      - name: Install ruff
-        run: uv pip install --system ruff
+      - name: Install linters
+        run: uv pip install --system ruff mypy
 
       - name: Lint with ruff
         run: ruff check --no-fix --output-format=github .
+
+      - name: Type check with mypy
+        run: mypy .
 
   test:
     # Run tests on ubuntu runners for each supported Python version
