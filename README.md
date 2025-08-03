@@ -17,6 +17,16 @@
 * Access user profiles and reading statistics
 * Authenticate using email/password or an existing session cookie
 
+## Services
+
+Documentation for each service is available on GitHub Pages:
+
+- [Author Service](https://victor-soeiro.github.io/pyskoob/author_service/)
+- [Books Service](https://victor-soeiro.github.io/pyskoob/books_service/)
+- [Publishers Service](https://victor-soeiro.github.io/pyskoob/publishers_service/)
+- [Users Service](https://victor-soeiro.github.io/pyskoob/users_service/)
+- [Profile Service](https://victor-soeiro.github.io/pyskoob/profile_service/)
+
 ## Installation
 
 Install the latest release from PyPI:
@@ -124,6 +134,6 @@ pytest -vv
 
 ## Learn more
 
-* [Examples](examples)
+* [Examples](https://victor-soeiro.github.io/pyskoob/advanced_usage/)
 * [Documentation](https://victor-soeiro.github.io/pyskoob/)
-* [Contributing guidelines](CONTRIBUTING.md)
+* [Contributing guidelines](https://victor-soeiro.github.io/pyskoob/contributing/)

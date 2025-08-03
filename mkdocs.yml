@@ -6,6 +6,17 @@ theme:
   palette:
     primary: indigo
     accent: indigo
+nav:
+  - Home: index.md
+  - Services:
+      - Author Service: author_service.md
+      - Books Service: books_service.md
+      - Publishers Service: publishers_service.md
+      - Users Service: users_service.md
+      - Profile Service: profile_service.md
+  - Advanced Usage: advanced_usage.md
+  - Stable Public API: stable_api.md
+  - Contributing: contributing.md
 markdown_extensions:
   - admonition
   - codehilite
