@@ -1,10 +1,12 @@
 # PySkoob
-
-[![PyPI](https://img.shields.io/pypi/v/pyskoob?color=blue)](https://pypi.org/project/pyskoob/)
-[![CI](https://github.com/victor-soeiro/pyskoob/actions/workflows/ci.yml/badge.svg)](https://github.com/victor-soeiro/pyskoob/actions/workflows/ci.yml)
+[![Latest Tag](https://img.shields.io/github/v/tag/victor-soeiro/pyskoob?sort=semver&style=flat-square)](https://github.com/victor-soeiro/pyskoob/releases)
+[![PyPI Version](https://img.shields.io/pypi/v/pyskoob?style=flat-square&logo=pypi)](https://pypi.org/project/pyskoob/)
+[![Python Versions](https://img.shields.io/pypi/pyversions/pyskoob?style=flat-square&logo=python)](https://pypi.org/project/pyskoob/)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/pyskoob?style=flat-square)](https://pypi.org/project/pyskoob/)
+[![CI](https://img.shields.io/github/actions/workflow/status/victor-soeiro/pyskoob/ci.yml?style=flat-square)](https://github.com/victor-soeiro/pyskoob/actions/workflows/ci.yml)
 [![Coverage](https://raw.githubusercontent.com/victor-soeiro/pyskoob/main/coverage.svg)](https://github.com/victor-soeiro/pyskoob/actions/workflows/ci.yml)
-[![Python Versions](https://img.shields.io/pypi/pyversions/pyskoob)](https://pypi.org/project/pyskoob/)
-[![License](https://img.shields.io/github/license/victor-soeiro/pyskoob)](LICENSE)
+[![Docs](https://img.shields.io/badge/docs-latest-blue?style=flat-square)](https://victor-soeiro.github.io/pyskoob/)
+[![License](https://img.shields.io/github/license/victor-soeiro/pyskoob?style=flat-square)](LICENSE)
 
 **PySkoob** is a Python client that makes it easy to interact with the Skoob website. It takes care of authentication and HTML parsing so you can focus on your automation or data collection tasks.
 
