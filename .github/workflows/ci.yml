@@ -80,10 +80,23 @@ jobs:
         run: uv pip install --system -e .[dev]
 
       - name: Run tests with coverage
-        run: pytest --cov --cov-report=xml
+        run: pytest --cov --cov-report=xml --cov-fail-under=96
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
         with:
           name: coverage-${{ matrix.python-version }}
           path: coverage.xml
+
+      - name: Generate coverage badge
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && matrix.python-version == '3.12'
+        run: |
+          uv pip install --system coverage-badge
+          coverage-badge -o coverage.svg -f
+
+      - name: Commit coverage badge
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && matrix.python-version == '3.12'
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update coverage badge [skip ci]"
+          file_pattern: coverage.svg

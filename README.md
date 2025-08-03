@@ -2,6 +2,7 @@
 
 [![PyPI](https://img.shields.io/pypi/v/pyskoob?color=blue)](https://pypi.org/project/pyskoob/)
 [![CI](https://github.com/victor-soeiro/pyskoob/actions/workflows/ci.yml/badge.svg)](https://github.com/victor-soeiro/pyskoob/actions/workflows/ci.yml)
+[![Coverage](https://raw.githubusercontent.com/victor-soeiro/pyskoob/main/coverage.svg)](https://github.com/victor-soeiro/pyskoob/actions/workflows/ci.yml)
 [![Python Versions](https://img.shields.io/pypi/pyversions/pyskoob)](https://pypi.org/project/pyskoob/)
 [![License](https://img.shields.io/github/license/victor-soeiro/pyskoob)](LICENSE)
 
