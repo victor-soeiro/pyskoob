@@ -55,3 +55,12 @@ This project follows the [Conventional Commits](https://www.conventionalcommits.
 - Review the coding standards and commit message format above before submitting your work.
 - Add tests for any new functionality.
 - Update documentation whenever behavior changes.
+
+## Release Process
+
+To publish a new version and deploy documentation:
+
+1. Trigger the **Release** workflow from the GitHub Actions tab.
+2. Choose the desired semantic version bump (`patch`, `minor`, or `major`).
+3. The workflow will bump the version, tag the commit, publish to PyPI, build the documentation, and push it to GitHub Pages.
+
