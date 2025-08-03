@@ -5,11 +5,12 @@ import from ``pyskoob``. Everything listed in ``__all__`` is considered stable
 and will not change without a deprecation period.
 """
 
+from . import models
 from .auth import AuthService
 from .authors import AuthorService
 from .books import BookService
 from .client import SkoobClient
-from .exceptions import ParsingError
+from .exceptions import HTTPClientError, ParsingError
 from .http.httpx import HttpxAsyncClient, HttpxSyncClient
 from .profile import SkoobProfileService
 from .publishers import PublisherService
@@ -25,5 +26,7 @@ __all__ = [
     "SkoobClient",
     "SkoobProfileService",
     "UserService",
-    "ParsingError"
+    "HTTPClientError",
+    "ParsingError",
+    "models",
 ]

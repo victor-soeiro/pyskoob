@@ -7,6 +7,8 @@ from typing import Any
 
 import httpx
 
+from pyskoob.exceptions import HTTPClientError
+
 from .client import AsyncHTTPClient, HTTPResponse, SyncHTTPClient
 
 
@@ -27,11 +29,14 @@ class HttpxSyncClient(SyncHTTPClient):
         return self._client.cookies
 
     def get(self, url: str, **kwargs: Any) -> HTTPResponse:
-        return self._client.get(url, **kwargs)
+        try:
+            response = self._client.get(url, **kwargs)
+            response.raise_for_status()
+            return response
+        except httpx.HTTPError as exc:
+            raise HTTPClientError(str(exc)) from exc
 
-    def post(
-        self, url: str, data: Any | None = None, **kwargs: Any
-    ) -> HTTPResponse:
+    def post(self, url: str, data: Any | None = None, **kwargs: Any) -> HTTPResponse:
         """Send a POST request.
 
         Parameters
@@ -51,10 +56,15 @@ class HttpxSyncClient(SyncHTTPClient):
             The HTTP response instance returned by ``httpx``.
         """
 
-        if isinstance(data, (str | bytes)):
-            return self._client.post(url, content=data, **kwargs)
-
-        return self._client.post(url, data=data, **kwargs)
+        try:
+            if isinstance(data, (str | bytes)):
+                response = self._client.post(url, content=data, **kwargs)
+            else:
+                response = self._client.post(url, data=data, **kwargs)
+            response.raise_for_status()
+            return response
+        except httpx.HTTPError as exc:
+            raise HTTPClientError(str(exc)) from exc
 
     def close(self) -> None:
         self._client.close()
@@ -77,11 +87,14 @@ class HttpxAsyncClient(AsyncHTTPClient):
         return self._client.cookies
 
     async def get(self, url: str, **kwargs: Any) -> HTTPResponse:
-        return await self._client.get(url, **kwargs)
+        try:
+            response = await self._client.get(url, **kwargs)
+            response.raise_for_status()
+            return response
+        except httpx.HTTPError as exc:
+            raise HTTPClientError(str(exc)) from exc
 
-    async def post(
-        self, url: str, data: Any | None = None, **kwargs: Any
-    ) -> HTTPResponse:
+    async def post(self, url: str, data: Any | None = None, **kwargs: Any) -> HTTPResponse:
         """Send a POST request asynchronously.
 
         Parameters
@@ -101,10 +114,15 @@ class HttpxAsyncClient(AsyncHTTPClient):
             The HTTP response instance returned by ``httpx``.
         """
 
-        if isinstance(data, (str | bytes)):
-            return await self._client.post(url, content=data, **kwargs)
-
-        return await self._client.post(url, data=data, **kwargs)
+        try:
+            if isinstance(data, (str | bytes)):
+                response = await self._client.post(url, content=data, **kwargs)
+            else:
+                response = await self._client.post(url, data=data, **kwargs)
+            response.raise_for_status()
+            return response
+        except httpx.HTTPError as exc:
+            raise HTTPClientError(str(exc)) from exc
 
     async def close(self) -> None:
         await self._client.aclose()

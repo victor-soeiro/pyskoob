@@ -3,7 +3,7 @@ from typing import cast
 
 from bs4 import Tag
 
-from pyskoob.exceptions import ParsingError
+from pyskoob.exceptions import HTTPClientError, ParsingError
 from pyskoob.internal.base import BaseSkoobService
 from pyskoob.models.pagination import Pagination
 from pyskoob.models.publisher import (
@@ -30,7 +30,6 @@ class PublisherService(BaseSkoobService):
         logger.info("Fetching publisher page: %s", url)
         try:
             response = self.client.get(url)
-            response.raise_for_status()
             soup = self.parse_html(response.text)
             name = get_tag_text(safe_find(soup, "h2")) or get_tag_text(soup.title)
             description = get_tag_text(safe_find(soup, "div", {"id": "historico"}))
@@ -38,10 +37,7 @@ class PublisherService(BaseSkoobService):
             website = get_tag_attr(site_link, "href")
             stats = self._parse_stats(safe_find(soup, "div", {"id": "vt_estatisticas"}))
             releases_div = safe_find(soup, "div", {"id": "livros_lancamentos"})
-            releases = [
-                self._parse_book(div)
-                for div in safe_find_all(releases_div, "div", {"class": "livro-capa-mini"})
-            ]
+            releases = [self._parse_book(div) for div in safe_find_all(releases_div, "div", {"class": "livro-capa-mini"})]
             return Publisher(
                 id=publisher_id,
                 name=name,
@@ -50,7 +46,10 @@ class PublisherService(BaseSkoobService):
                 stats=stats,
                 last_releases=releases,
             )
-        except Exception as exc:  # pragma: no cover - unexpected
+        except HTTPClientError as exc:  # pragma: no cover - network
+            logger.error("HTTP error fetching publisher page: %s", exc, exc_info=True)
+            raise
+        except (AttributeError, ValueError, TypeError) as exc:  # pragma: no cover
             logger.error("Failed to parse publisher page: %s", exc, exc_info=True)
             raise ParsingError("Failed to parse publisher page") from exc
 
@@ -59,7 +58,6 @@ class PublisherService(BaseSkoobService):
         logger.info("Fetching publisher authors: %s", url)
         try:
             response = self.client.get(url)
-            response.raise_for_status()
             soup = self.parse_html(response.text)
             authors = [self._parse_author(div) for div in safe_find_all(soup, "div", {"class": "box_autor"})]
             next_page = bool(safe_find(soup, "div", {"class": "proximo"}))
@@ -70,7 +68,10 @@ class PublisherService(BaseSkoobService):
                 total=len(authors),
                 has_next_page=next_page,
             )
-        except Exception as exc:  # pragma: no cover - unexpected
+        except HTTPClientError as exc:  # pragma: no cover - network
+            logger.error("HTTP error fetching publisher authors: %s", exc, exc_info=True)
+            raise
+        except (AttributeError, ValueError, TypeError) as exc:  # pragma: no cover
             logger.error("Failed to parse publisher authors: %s", exc, exc_info=True)
             raise ParsingError("Failed to parse publisher authors") from exc
 
@@ -79,7 +80,6 @@ class PublisherService(BaseSkoobService):
         logger.info("Fetching publisher books: %s", url)
         try:
             response = self.client.get(url)
-            response.raise_for_status()
             soup = self.parse_html(response.text)
             books = [self._parse_book(div) for div in safe_find_all(soup, "div", {"class": "box_livro"})]
             next_page = bool(safe_find(soup, "div", {"class": "proximo"}))
@@ -90,7 +90,10 @@ class PublisherService(BaseSkoobService):
                 total=len(books),
                 has_next_page=next_page,
             )
-        except Exception as exc:  # pragma: no cover - unexpected
+        except HTTPClientError as exc:  # pragma: no cover - network
+            logger.error("HTTP error fetching publisher books: %s", exc, exc_info=True)
+            raise
+        except (AttributeError, ValueError, TypeError) as exc:  # pragma: no cover
             logger.error("Failed to parse publisher books: %s", exc, exc_info=True)
             raise ParsingError("Failed to parse publisher books") from exc
 
@@ -136,8 +139,8 @@ class PublisherService(BaseSkoobService):
         img_tag = safe_find(anchor, "img")
         return PublisherItem(
             url=f"{self.base_url}{get_tag_attr(anchor, 'href')}",
-            title=get_tag_attr(anchor, 'title'),
-            img_url=get_tag_attr(img_tag, 'src'),
+            title=get_tag_attr(anchor, "title"),
+            img_url=get_tag_attr(img_tag, "src"),
         )
 
     def _parse_author(self, div: Tag) -> PublisherAuthor:
@@ -147,5 +150,5 @@ class PublisherService(BaseSkoobService):
         return PublisherAuthor(
             url=f"{self.base_url}{get_tag_attr(anchor, 'href')}",
             name=get_tag_text(name_tag),
-            img_url=get_tag_attr(img_tag, 'src'),
+            img_url=get_tag_attr(img_tag, "src"),
         )
