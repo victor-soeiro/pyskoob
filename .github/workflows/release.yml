@@ -2,6 +2,7 @@ name: Create Release Draft
 on:
   workflow_run:
     workflows: ["Bump Version"]
+    branches: [main]
     types:
       - completed
 permissions:
