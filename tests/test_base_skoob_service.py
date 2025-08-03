@@ -18,9 +18,7 @@ class DummyHttpxClient:
 
 def test_service_closes_owned_client(monkeypatch):
     dummy = DummyHttpxClient()
-    monkeypatch.setattr(
-        "pyskoob.internal.base.HttpxSyncClient", lambda: dummy, raising=False
-    )
+    monkeypatch.setattr("pyskoob.internal.base.HttpxSyncClient", lambda: dummy, raising=False)
     service = BaseSkoobService(None)
     service.close()
     assert dummy.closed is True
@@ -28,9 +26,7 @@ def test_service_closes_owned_client(monkeypatch):
 
 def test_service_context_manager(monkeypatch):
     dummy = DummyHttpxClient()
-    monkeypatch.setattr(
-        "pyskoob.internal.base.HttpxSyncClient", lambda: dummy, raising=False
-    )
+    monkeypatch.setattr("pyskoob.internal.base.HttpxSyncClient", lambda: dummy, raising=False)
     with BaseSkoobService(None):
         pass
     assert dummy.closed is True
