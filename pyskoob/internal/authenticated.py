@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+"""Utilities for services that require an authenticated session."""
+
 from typing import TYPE_CHECKING
 
 from pyskoob.http.client import SyncHTTPClient
@@ -28,7 +30,7 @@ class AuthenticatedService(BaseSkoobService):
             The authentication service responsible for login state.
         """
         super().__init__(client)
-        self._auth_service = auth_service
+        self._auth_service: AuthService = auth_service
 
     def _validate_login(self) -> None:
         """Ensure the current session is authenticated.

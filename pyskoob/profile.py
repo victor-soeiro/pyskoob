@@ -9,8 +9,10 @@ logger = logging.getLogger(__name__)
 
 
 class SkoobProfileService(AuthenticatedService):
+    """Perform profile-related actions such as labeling and rating books."""
+
     def __init__(self, client: SyncHTTPClient, auth_service: AuthService):
-        """Perform profile-related actions such as labeling and rating books.
+        """Initialize the service with dependencies.
 
         This service requires an authenticated session via
         :class:`AuthService` and is typically used alongside
