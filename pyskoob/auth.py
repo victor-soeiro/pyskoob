@@ -137,7 +137,7 @@ class AuthService(BaseSkoobService):
 
         user_data = json_data["response"]
         user_data["profile_url"] = self.base_url + user_data["url"]  # patch field for alias
-        user = User.model_validate(user_data)
+        user: User = User.model_validate(user_data)
         logger.info(f"Successfully retrieved user: '{user.name}'")
         return user
 

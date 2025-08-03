@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, cast
 
 from bs4 import BeautifulSoup, Tag
 from bs4.element import PageElement
@@ -86,7 +86,7 @@ def get_tag_text(tag: PageElement | None, strip: bool = True) -> str:
     'Hi'
     """
     if tag:
-        return tag.get_text(strip=strip)
+        return cast(str, tag.get_text(strip=strip))
     return ""
 
 
