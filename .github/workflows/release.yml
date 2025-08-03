@@ -1,7 +1,7 @@
-name: Create Release Draft
+name: Draft Release and Publish to PyPI
 on:
   workflow_run:
-    workflows: ["Bump Version"]
+    workflows: ["Automated Version Bump"]
     branches: [main]
     types:
       - completed

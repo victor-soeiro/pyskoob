@@ -1,4 +1,4 @@
-name: Docs
+name: Documentation Build and Deployment
 
 on:
   push:
@@ -44,6 +44,7 @@ jobs:
   deploy-docs:
     needs: build-docs
     runs-on: ubuntu-latest
+    if: github.event_name == 'push'
     permissions:
       contents: write
       pages: write
