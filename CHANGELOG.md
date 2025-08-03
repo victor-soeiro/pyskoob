@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - Security policy describing vulnerability reporting and secret management.
 ### Fixed
 - Avoided ``httpx`` deprecation warning when posting raw bytes or text.
+- Updated PyPI publish workflow to use the latest action release, resolving missing metadata errors.
 
 ### Changed
 - Removed the standalone lint workflow and moved Ruff earlier in the CI job.
