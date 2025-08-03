@@ -1,8 +1,9 @@
 [project]
 name = "pyskoob"
 version = "0.1.18"
-description = "Add your description here"
+description = "Python client for the Skoob website handling authentication and HTML parsing"
 readme = "README.md"
+keywords = ["skoob", "books", "client", "api", "scraping"]
 requires-python = ">=3.11"
 dependencies = [
     "bs4>=0.0.2",
