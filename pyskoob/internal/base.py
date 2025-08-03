@@ -1,3 +1,6 @@
+from types import TracebackType
+from typing import Self
+
 from bs4 import BeautifulSoup
 
 from pyskoob.http.client import SyncHTTPClient
@@ -79,18 +82,41 @@ class BaseHttpService:
 
 
 class BaseSkoobService(BaseHttpService):
+    """Base service tailored for Skoob endpoints.
+
+    Parameters
+    ----------
+    client : SyncHTTPClient | None
+        Existing synchronous HTTP client to use. If ``None``, a new
+        :class:`HttpxSyncClient` is created internally.
+
+    Notes
+    -----
+    When a client is created internally, resources are released by calling
+    :meth:`close` or by using the service as a context manager.
+    """
+
+    _owns_client: bool
+
     def __init__(self, client: SyncHTTPClient | None):
-        """
-        Initializes the BaseSkoobService.
-
-        Parameters
-        ----------
-        client : SyncHTTPClient | None
-            The HTTP client to use for requests. If None, a new client is created.
-
-        Examples
-        --------
-        >>> BaseSkoobService(httpx.Client())
-        <BaseSkoobService ...>
-        """
+        """Initialize the BaseSkoobService."""
         super().__init__(client or HttpxSyncClient(), "https://www.skoob.com.br")
+        self._owns_client = client is None
+
+    def close(self) -> None:
+        """Close the internally created HTTP client, if any."""
+        if self._owns_client:
+            self._client.close()
+
+    def __enter__(self) -> Self:
+        """Return the service instance for context manager support."""
+        return self
+
+    def __exit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc: BaseException | None,
+        tb: TracebackType | None,
+    ) -> None:
+        """Ensure the owned HTTP client is closed on context exit."""
+        self.close()
