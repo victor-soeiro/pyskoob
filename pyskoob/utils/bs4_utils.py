@@ -27,7 +27,7 @@ def safe_find(soup: BeautifulSoup | Tag | None, name: str, attrs: dict | None = 
     >>> safe_find(BeautifulSoup('<p>hi</p>', 'html.parser'), 'p').name
     'p'
     """
-    if not soup:
+    if soup is None:
         return None
     found = soup.find(name, attrs or {})
     if isinstance(found, Tag):
@@ -58,7 +58,7 @@ def safe_find_all(soup: BeautifulSoup | Tag | None, name: str, attrs: dict | Non
     >>> len(safe_find_all(BeautifulSoup('<p>a</p><p>b</p>', 'html.parser'), 'p'))
     2
     """
-    if not soup:
+    if soup is None:
         return []
     all_found = soup.find_all(name, attrs or {})
     return [tag for tag in all_found if isinstance(tag, Tag)]
