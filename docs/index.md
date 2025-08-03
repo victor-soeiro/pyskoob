@@ -5,7 +5,7 @@ Welcome to the **PySkoob** documentation. This site provides usage examples and 
 ## Installation
 
 ```bash
-pip install scraper-skoob
+pip install pyskoob
 ```
 
 ## Usage
