@@ -49,9 +49,8 @@ jobs:
           new_version=$(bump-my-version show current_version --format json | jq -r '.current_version')
           echo "version=$new_version" >> "$GITHUB_OUTPUT"
 
-      - name: Commit and tag
+      - name: Tag and push
         run: |
-          git commit -am "Bump version to ${{ steps.bump.outputs.version }}"
           git tag "v${{ steps.bump.outputs.version }}"
           git push origin HEAD
           git push origin "v${{ steps.bump.outputs.version }}"
