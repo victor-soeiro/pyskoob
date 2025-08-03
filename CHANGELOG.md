@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - Introduced ``HTTPClientError`` and moved HTTP error handling to the client layer to avoid ``httpx`` coupling.
 - Preserved ``HTTPClientError`` propagation in book services and aligned user search error handling.
 - Propagated ``HTTPClientError`` in publisher service to maintain error specificity.
+- Allowed user search HTTP errors to propagate as ``HTTPClientError`` for clearer diagnostics.
 
 ## [0.1.0] - 2025-07-30
 ### Added

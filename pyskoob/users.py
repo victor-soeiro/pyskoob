@@ -357,8 +357,10 @@ class UserService(BaseSkoobService):
 
         Raises
         ------
+        HTTPClientError
+            If the HTTP request fails.
         ParsingError
-            If an HTTP or parsing error occurs.
+            If the response cannot be parsed.
 
         Examples
         --------
@@ -430,5 +432,8 @@ class UserService(BaseSkoobService):
                 has_next_page=has_next,
             )
 
-        except (AttributeError, ValueError, IndexError, TypeError, HTTPClientError) as e:
-            raise ParsingError("Failed to parse user search results.") from e
+        except HTTPClientError as exc:  # pragma: no cover - network
+            logger.error("HTTP error searching users: %s", exc, exc_info=True)
+            raise
+        except (AttributeError, ValueError, IndexError, TypeError) as exc:
+            raise ParsingError("Failed to parse user search results.") from exc
