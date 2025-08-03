@@ -11,13 +11,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - Example script demonstrating AuthorService usage.
 - Documentation for pagination and asynchronous usage examples.
 - List of stable public API exports.
+- Security policy describing vulnerability reporting and secret management.
 ### Fixed
 - Avoided ``httpx`` deprecation warning when posting raw bytes or text.
+- Updated PyPI publish workflow to use the latest action release, resolving missing metadata errors.
 
 ### Changed
 - Removed the standalone lint workflow and moved Ruff earlier in the CI job.
 - Added a dedicated step to install Ruff before running linting.
 - Fixed installation command for Ruff to target the system environment.
+- Restricted the release workflow to run only after the Bump Version workflow succeeds on the `main` branch.
 - Standardized logging statements to use parameterized style instead of f-strings.
 
 ## [0.1.0] - 2025-07-30

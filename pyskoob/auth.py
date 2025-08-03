@@ -95,7 +95,11 @@ class AuthService(BaseSkoobService):
         try:
             json_data = response.json()
         except ValueError as exc:
-            logger.error("Login response was not valid JSON")
+            logger.error(
+                "Login response was not valid JSON: %s",
+                exc,
+                exc_info=True,
+            )
             raise ConnectionError("Invalid response format") from exc
         if not json_data.get("success", False):
             logger.error(

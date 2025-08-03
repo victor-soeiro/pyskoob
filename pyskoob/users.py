@@ -161,7 +161,11 @@ class UserService(BaseSkoobService):
             ]
             next_page_link = safe_find(soup, "div", {"class": "proximo"})
         except (AttributeError, ValueError, IndexError) as e:
-            logger.error("Failed to parse user relations: %s", e)
+            logger.error(
+                "Failed to parse user relations: %s",
+                e,
+                exc_info=True,
+            )
             raise ParsingError("Failed to parse user relations.") from e
 
         logger.info("Found %s users on page %s.", len(users_id), page)
@@ -257,7 +261,11 @@ class UserService(BaseSkoobService):
                 )
             next_page_link = safe_find(soup, "a", {"string": " Próxima"})
         except (AttributeError, ValueError, IndexError) as e:
-            logger.error("Failed to parse user reviews: %s", e)
+            logger.error(
+                "Failed to parse user reviews: %s",
+                e,
+                exc_info=True,
+            )
             raise ParsingError("Failed to parse user reviews.") from e
 
         logger.info("Found %s reviews on page %s.", len(user_reviews), page)
