@@ -62,3 +62,24 @@ jobs:
 
       - name: Run tests
         run: pytest
+
+  audit:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Install pip-audit
+        run: uv pip install --system pip-audit
+
+      - name: Run pip-audit
+        run: pip-audit --strict -r uv.lock
