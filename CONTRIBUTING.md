@@ -25,15 +25,14 @@ source .venv/bin/activate
 # Install dependencies in editable mode
 uv pip install -e .[dev]
 
-# Run the test suite
-pytest -q
+# Install pre-commit hooks
+pre-commit install
 
-# Format the code and run the linter
-ruff format .
-ruff check .
+# Run all checks
+pre-commit run --all-files
 ```
 
-Run `ruff format .` to automatically fix formatting issues. The CI workflow uses `ruff format --check .` to ensure files are already formatted.
+Run `pre-commit run --all-files` to ensure formatting, linting and tests pass locally. The CI workflow runs the same hooks to verify submitted changes.
 
 Open your PR on GitHub and fill in a brief summary of your changes. A maintainer will review it as soon as possible.
 
@@ -56,3 +55,14 @@ This project follows the [Conventional Commits](https://www.conventionalcommits.
 - Review the coding standards and commit message format above before submitting your work.
 - Add tests for any new functionality.
 - Update documentation whenever behavior changes.
+
+## Release Process
+
+To publish a new version and deploy documentation:
+
+Ensure `PYPI_API_TOKEN` is stored in the repository secrets and GitHub Pages is enabled for the `gh-pages` branch before triggering the workflow.
+
+1. Trigger the **Release** workflow from the GitHub Actions tab.
+2. Choose the desired semantic version bump (`patch`, `minor`, or `major`).
+3. The workflow will bump the version, tag the commit, publish to PyPI, build the documentation, and push it to GitHub Pages.
+
