@@ -144,7 +144,7 @@ class BookService(BaseSkoobService):
                 logger.warning(error_msg)
                 raise FileNotFoundError(error_msg)
             self._clean_book_json_data(json_data)
-            book = Book.model_validate(json_data)
+            book: Book = Book.model_validate(json_data)
             logger.info(
                 "Successfully retrieved book: '%s' (Edition ID: %s)",
                 book.title,

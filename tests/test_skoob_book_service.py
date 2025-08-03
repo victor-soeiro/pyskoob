@@ -161,7 +161,7 @@ def test_get_by_id_not_found():
 
 
 class BadClient(DummyClient):
-    def get(self, url):  # type: ignore[override]
+    def get(self, url):
         self.called.append(url)
         return DummyResponse(json_data=ValueError("bad"))
 

@@ -1,4 +1,5 @@
 import logging
+from typing import Any
 
 from pyskoob.http.client import SyncHTTPClient
 from pyskoob.internal.base import BaseSkoobService
@@ -130,14 +131,14 @@ class AuthService(BaseSkoobService):
         response = self.client.get(url)
         response.raise_for_status()
 
-        json_data = response.json()
+        json_data: dict[str, Any] = response.json()
         if not json_data.get("success"):
             logger.error("Failed to retrieve user information. The session token might be invalid.")
             raise ConnectionError("Failed to retrieve user information. The session token might be invalid.")
 
-        user_data = json_data["response"]
+        user_data: dict[str, Any] = json_data["response"]
         user_data["profile_url"] = self.base_url + user_data["url"]  # patch field for alias
-        user = User.model_validate(user_data)
+        user: User = User.model_validate(user_data)
         logger.info(f"Successfully retrieved user: '{user.name}'")
         return user
 

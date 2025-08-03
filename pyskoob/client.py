@@ -1,3 +1,5 @@
+from types import TracebackType
+
 from pyskoob.auth import AuthService
 from pyskoob.authors import AuthorService
 from pyskoob.books import BookService
@@ -28,7 +30,7 @@ class SkoobClient:
         self.me = SkoobProfileService(self._client, self.auth)
         self.publishers = PublisherService(self._client)
 
-    def __enter__(self):
+    def __enter__(self) -> "SkoobClient":
         """
         Enter the runtime context for the SkoobClient.
 
@@ -44,23 +46,22 @@ class SkoobClient:
         """
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        """
-        Exit the runtime context, closing the HTTPX client.
+    def __exit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_tb: TracebackType | None,
+    ) -> None:
+        """Exit the runtime context, closing the underlying HTTP client.
 
         Parameters
         ----------
-        exc_type : type
-            The exception type.
-        exc_val : Exception
-            The exception value.
-        exc_tb : traceback
-            The traceback object.
-
-        Examples
-        --------
-        >>> client = SkoobClient()
-        >>> client.__exit__(None, None, None)
-        None
+        exc_type : type[BaseException] | None
+            The exception type, if any.
+        exc_val : BaseException | None
+            The exception instance, if any.
+        exc_tb : TracebackType | None
+            The traceback object associated with the exception.
         """
         self._client.close()
+        return None

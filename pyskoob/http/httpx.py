@@ -3,7 +3,7 @@ from __future__ import annotations
 """httpx-based implementations of the HTTP client protocols."""
 
 from collections.abc import MutableMapping
-from typing import Any
+from typing import Any, cast
 
 import httpx
 
@@ -20,14 +20,19 @@ class HttpxSyncClient(SyncHTTPClient):
     """
 
     def __init__(self, **kwargs: Any) -> None:
-        self._client = httpx.Client(**kwargs)
+        self._client: httpx.Client = httpx.Client(**kwargs)
 
     @property
     def cookies(self) -> MutableMapping[str, Any]:
-        return self._client.cookies
+        return cast(MutableMapping[str, Any], self._client.cookies)
+
+    @cookies.setter
+    def cookies(self, value: Any) -> None:
+        self._client.cookies = value
 
     def get(self, url: str, **kwargs: Any) -> HTTPResponse:
-        return self._client.get(url, **kwargs)
+        response = self._client.get(url, **kwargs)
+        return cast(HTTPResponse, response)
 
     def post(self, url: str, data: Any | None = None, **kwargs: Any) -> HTTPResponse:
         """Send a POST request.
@@ -50,9 +55,11 @@ class HttpxSyncClient(SyncHTTPClient):
         """
 
         if isinstance(data, (str | bytes)):
-            return self._client.post(url, content=data, **kwargs)
+            response = self._client.post(url, content=data, **kwargs)
+            return cast(HTTPResponse, response)
 
-        return self._client.post(url, data=data, **kwargs)
+        response = self._client.post(url, data=data, **kwargs)
+        return cast(HTTPResponse, response)
 
     def close(self) -> None:
         self._client.close()
@@ -68,14 +75,19 @@ class HttpxAsyncClient(AsyncHTTPClient):
     """
 
     def __init__(self, **kwargs: Any) -> None:
-        self._client = httpx.AsyncClient(**kwargs)
+        self._client: httpx.AsyncClient = httpx.AsyncClient(**kwargs)
 
     @property
     def cookies(self) -> MutableMapping[str, Any]:
-        return self._client.cookies
+        return cast(MutableMapping[str, Any], self._client.cookies)
+
+    @cookies.setter
+    def cookies(self, value: Any) -> None:
+        self._client.cookies = value
 
     async def get(self, url: str, **kwargs: Any) -> HTTPResponse:
-        return await self._client.get(url, **kwargs)
+        response = await self._client.get(url, **kwargs)
+        return cast(HTTPResponse, response)
 
     async def post(self, url: str, data: Any | None = None, **kwargs: Any) -> HTTPResponse:
         """Send a POST request asynchronously.
@@ -98,9 +110,11 @@ class HttpxAsyncClient(AsyncHTTPClient):
         """
 
         if isinstance(data, (str | bytes)):
-            return await self._client.post(url, content=data, **kwargs)
+            response = await self._client.post(url, content=data, **kwargs)
+            return cast(HTTPResponse, response)
 
-        return await self._client.post(url, data=data, **kwargs)
+        response = await self._client.post(url, data=data, **kwargs)
+        return cast(HTTPResponse, response)
 
     async def close(self) -> None:
         await self._client.aclose()

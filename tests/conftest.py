@@ -63,24 +63,27 @@ def logged_auth(dummy_client: DummyClient) -> AuthService:
 
 
 def make_user() -> User:
-    return User.model_validate(
-        {
-            "id": 1,
-            "nome": "John",
-            "apelido": "john",
-            "abbr": "j",
-            "url": "/john",
-            "skoob": "john",
-            "foto_mini": "http://a",
-            "foto_pequena": "http://b",
-            "foto_media": "http://c",
-            "foto_grande": "http://d",
-            "premium": False,
-            "beta": False,
-            "about": "",
-            "ano": 2024,
-            "mes": 1,
-            "termo": datetime(2024, 1, 1),
-            "estatisticas": {},
-        }
+    return cast(
+        User,
+        User.model_validate(
+            {
+                "id": 1,
+                "nome": "John",
+                "apelido": "john",
+                "abbr": "j",
+                "url": "/john",
+                "skoob": "john",
+                "foto_mini": "http://a",
+                "foto_pequena": "http://b",
+                "foto_media": "http://c",
+                "foto_grande": "http://d",
+                "premium": False,
+                "beta": False,
+                "about": "",
+                "ano": 2024,
+                "mes": 1,
+                "termo": datetime(2024, 1, 1),
+                "estatisticas": {},
+            }
+        ),
     )
