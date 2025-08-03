@@ -2,15 +2,17 @@ import logging
 
 from pyskoob.auth import AuthService
 from pyskoob.http.client import SyncHTTPClient
-from pyskoob.internal.base import BaseSkoobService
+from pyskoob.internal.authenticated import AuthenticatedService
 from pyskoob.models.enums import BookLabel, BookShelf, BookStatus
 
 logger = logging.getLogger(__name__)
 
 
-class SkoobProfileService(BaseSkoobService):
+class SkoobProfileService(AuthenticatedService):
+    """Perform profile-related actions such as labeling and rating books."""
+
     def __init__(self, client: SyncHTTPClient, auth_service: AuthService):
-        """Perform profile-related actions such as labeling and rating books.
+        """Initialize the service with dependencies.
 
         This service requires an authenticated session via
         :class:`AuthService` and is typically used alongside
@@ -24,23 +26,7 @@ class SkoobProfileService(BaseSkoobService):
         auth_service : AuthService
             The authentication service.
         """
-        super().__init__(client)
-        self._auth_service = auth_service
-
-    def _validate_login(self) -> None:
-        """Ensure the session is authenticated before making requests.
-
-        Raises
-        ------
-        PermissionError
-            If the user is not logged in.
-
-        Examples
-        --------
-        >>> service._validate_login()
-        None
-        """
-        self._auth_service.validate_login()
+        super().__init__(client, auth_service)
 
     def add_book_label(self, edition_id: int, label: BookLabel) -> bool:
         """

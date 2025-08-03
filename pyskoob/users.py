@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 from pyskoob.auth import AuthService
 from pyskoob.exceptions import ParsingError
 from pyskoob.http.client import SyncHTTPClient
-from pyskoob.internal.base import BaseSkoobService
+from pyskoob.internal.authenticated import AuthenticatedService
 from pyskoob.models.book import BookReview
 from pyskoob.models.enums import (
     BookcaseOption,
@@ -32,9 +32,11 @@ from pyskoob.utils.skoob_parser_utils import (
 logger = logging.getLogger(__name__)
 
 
-class UserService(BaseSkoobService):
+class UserService(AuthenticatedService):
+    """Fetch user profiles, books and friends from Skoob."""
+
     def __init__(self, client: SyncHTTPClient, auth_service: AuthService):
-        """Fetch user profiles, books and friends from Skoob.
+        """Initialize the service with dependencies.
 
         The service depends on :class:`AuthService` to validate the current
         session before performing operations that require authentication such
@@ -47,23 +49,7 @@ class UserService(BaseSkoobService):
         auth_service : AuthService
             The authentication service.
         """
-        super().__init__(client)
-        self._auth_service = auth_service
-
-    def _validate_login(self) -> None:
-        """Ensure the session is authenticated before making requests.
-
-        Raises
-        ------
-        PermissionError
-            If the user is not logged in.
-
-        Examples
-        --------
-        >>> service._validate_login()
-        None
-        """
-        self._auth_service.validate_login()
+        super().__init__(client, auth_service)
 
     def get_by_id(self, user_id: int) -> User:
         """
