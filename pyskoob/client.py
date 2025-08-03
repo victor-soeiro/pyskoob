@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from pyskoob.auth import AuthService
 from pyskoob.authors import AuthorService
 from pyskoob.books import BookService
@@ -28,7 +30,7 @@ class SkoobClient:
         self.me = SkoobProfileService(self._client, self.auth)
         self.publishers = PublisherService(self._client)
 
-    def __enter__(self):
+    def __enter__(self) -> SkoobClient:
         """
         Enter the runtime context for the SkoobClient.
 
@@ -44,7 +46,7 @@ class SkoobClient:
         """
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
         """
         Exit the runtime context, closing the HTTPX client.
 
