@@ -52,7 +52,7 @@ class AuthService(BaseSkoobService):
         self.client.cookies.update({"PHPSESSID": session_token})
         user = self.get_my_info()
         self._is_logged_in = True
-        logger.info(f"Successfully logged in as user: '{user.name}'")
+        logger.info("Successfully logged in as user: '%s'", user.name)
         return user
 
     def login(self, email: str, password: str) -> User:
@@ -95,7 +95,11 @@ class AuthService(BaseSkoobService):
         try:
             json_data = response.json()
         except ValueError as exc:
-            logger.error("Login response was not valid JSON")
+            logger.error(
+                "Login response was not valid JSON: %s",
+                exc,
+                exc_info=True,
+            )
             raise ConnectionError("Invalid response format") from exc
         if not json_data.get("success", False):
             logger.error(
@@ -152,7 +156,7 @@ class AuthService(BaseSkoobService):
             self.base_url + user_data["url"]
         )  # patch field for alias
         user = User.model_validate(user_data)
-        logger.info(f"Successfully retrieved user: '{user.name}'")
+        logger.info("Successfully retrieved user: '%s'", user.name)
         return user
 
     def validate_login(self) -> None:
