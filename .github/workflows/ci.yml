@@ -1,4 +1,4 @@
-name: CI
+name: Continuous Integration
 
 # Run lint and tests on each push and pull request
 on:
