@@ -146,7 +146,7 @@ class SkoobProfileService(AuthenticatedService):
         Returns
         -------
         bool
-            True if the bookshelf was changed successfully.
+            True if the bookshelf was changed successfully, False otherwise.
 
         Examples
         --------
@@ -157,7 +157,7 @@ class SkoobProfileService(AuthenticatedService):
         url = f"{self.base_url}/estante/prateleira/{edition_id}/{bookshelf.value}"
         response = self.client.get(url)
         response.raise_for_status()
-        return True
+        return response.json().get("success", False)
 
     def rate_book(self, edition_id: int, ranking: float) -> bool:
         """

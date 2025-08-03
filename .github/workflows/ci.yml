@@ -1,18 +1,54 @@
-# GitHub Actions workflow for linting and testing the project
-# Runs on pushes and pull requests against main branch
-name: CI
+name: Continuous Integration
 
+# Run lint and tests on pull requests
 on:
-  push:
-    branches: [main]
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/uv
+          key: ${{ runner.os }}-uv-${{ hashFiles('uv.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-uv-
+
+      - name: Install ruff
+        run: uv pip install --system "ruff==0.4.5"
+
+      - name: Check formatting
+        run: ruff format --check .
+
+      - name: Lint with ruff
+        run: ruff check --no-fix --output-format=github .
+
   test:
-    # Run the job on ubuntu runners for each supported Python version
+    # Run tests on ubuntu runners for each supported Python version
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         python-version: ['3.11', '3.12']
 
@@ -28,22 +64,35 @@ jobs:
       - name: Set up uv
         uses: astral-sh/setup-uv@v6
 
-      - name: Install ruff
-        if: matrix.python-version == '3.12'
-        run: uv pip install --system ruff
-
-      - name: Lint with ruff
-        if: matrix.python-version == '3.12'
-        run: ruff check --no-fix --output-format=github .
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/uv
+          key: ${{ runner.os }}-uv-${{ hashFiles('uv.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-uv-
 
       - name: Install dependencies
         run: uv pip install --system -e .[dev]
 
       - name: Run tests with coverage
-        run: pytest --cov=pyskoob --cov-report=xml --cov-fail-under=80
+        run: pytest --cov --cov-report=xml --cov-fail-under=96
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
         with:
           name: coverage-${{ matrix.python-version }}
           path: coverage.xml
+
+      - name: Generate coverage badge
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && matrix.python-version == '3.12'
+        run: |
+          uv pip install --system coverage-badge
+          coverage-badge -o coverage.svg -f
+
+      - name: Commit coverage badge
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && matrix.python-version == '3.12'
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update coverage badge [skip ci]"
+          file_pattern: coverage.svg

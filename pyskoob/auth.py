@@ -52,7 +52,7 @@ class AuthService(BaseSkoobService):
         self.client.cookies.update({"PHPSESSID": session_token})
         user = self.get_my_info()
         self._is_logged_in = True
-        logger.info(f"Successfully logged in as user: '{user.name}'")
+        logger.info("Successfully logged in as user: '%s'", user.name)
         return user
 
     def login(self, email: str, password: str) -> User:
@@ -98,14 +98,8 @@ class AuthService(BaseSkoobService):
             logger.error("Login response was not valid JSON")
             raise ConnectionError("Invalid response format") from exc
         if not json_data.get("success", False):
-            logger.error(
-                "Login failed: %s", json_data.get("message", "Unknown error")
-            )
-            raise ConnectionError(
-                "Failed to login: {}".format(
-                    json_data.get("message", "Unknown error")
-                )
-            )
+            logger.error("Login failed: %s", json_data.get("message", "Unknown error"))
+            raise ConnectionError("Failed to login: {}".format(json_data.get("message", "Unknown error")))
 
         self._is_logged_in = True
         user = self.get_my_info()
@@ -138,21 +132,13 @@ class AuthService(BaseSkoobService):
 
         json_data = response.json()
         if not json_data.get("success"):
-            logger.error(
-                "Failed to retrieve user information. "
-                "The session token might be invalid."
-            )
-            raise ConnectionError(
-                "Failed to retrieve user information. "
-                "The session token might be invalid."
-            )
+            logger.error("Failed to retrieve user information. The session token might be invalid.")
+            raise ConnectionError("Failed to retrieve user information. The session token might be invalid.")
 
         user_data = json_data["response"]
-        user_data["profile_url"] = (
-            self.base_url + user_data["url"]
-        )  # patch field for alias
+        user_data["profile_url"] = self.base_url + user_data["url"]  # patch field for alias
         user = User.model_validate(user_data)
-        logger.info(f"Successfully retrieved user: '{user.name}'")
+        logger.info("Successfully retrieved user: '%s'", user.name)
         return user
 
     def validate_login(self) -> None:
@@ -172,8 +158,5 @@ class AuthService(BaseSkoobService):
         logger.debug("Validating login status.")
         if not self._is_logged_in:
             logger.warning("Validation failed: User is not logged in.")
-            raise PermissionError(
-                "User is not logged in. "
-                "Please call 'login_with_cookies' first."
-            )
+            raise PermissionError("User is not logged in. Please call 'login_with_cookies' first.")
         logger.debug("Validation successful: User is logged in.")

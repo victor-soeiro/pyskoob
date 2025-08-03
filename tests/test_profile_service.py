@@ -1,4 +1,3 @@
-
 from typing import cast
 
 import pytest
@@ -36,11 +35,9 @@ class DummyClient:
 
 
 def make_service(success=True):
-    client = DummyClient({'success': success})
+    client = DummyClient({"success": success})
     return (
-        SkoobProfileService(
-            cast(SyncHTTPClient, client), cast(AuthService, DummyAuth())
-        ),
+        SkoobProfileService(cast(SyncHTTPClient, client), cast(AuthService, DummyAuth())),
         client,
     )
 
@@ -71,3 +68,8 @@ def test_label_and_status_methods():
     assert service.remove_book_status(1)
     assert service.change_book_shelf(1, BookShelf.BOOK)
     assert client.called  # ensure requests were made
+
+
+def test_change_book_shelf_failure():
+    service, _ = make_service(False)
+    assert service.change_book_shelf(1, BookShelf.BOOK) is False
