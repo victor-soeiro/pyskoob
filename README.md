@@ -1,8 +1,9 @@
 # PySkoob
 
-[![PyPI](https://img.shields.io/pypi/v/scraper-skoob?color=blue)](https://pypi.org/project/scraper-skoob/)
+[![PyPI](https://img.shields.io/pypi/v/pyskoob?color=blue)](https://pypi.org/project/pyskoob/)
 [![CI](https://github.com/victor-soeiro/pyskoob/actions/workflows/ci.yml/badge.svg)](https://github.com/victor-soeiro/pyskoob/actions/workflows/ci.yml)
-[![Python Versions](https://img.shields.io/pypi/pyversions/scraper-skoob)](https://pypi.org/project/scraper-skoob/)
+[![Coverage](https://raw.githubusercontent.com/victor-soeiro/pyskoob/main/coverage.svg)](https://github.com/victor-soeiro/pyskoob/actions/workflows/ci.yml)
+[![Python Versions](https://img.shields.io/pypi/pyversions/pyskoob)](https://pypi.org/project/pyskoob/)
 [![License](https://img.shields.io/github/license/victor-soeiro/pyskoob)](LICENSE)
 
 **PySkoob** is a Python client that makes it easy to interact with the Skoob website. It takes care of authentication and HTML parsing so you can focus on your automation or data collection tasks.
@@ -19,7 +20,7 @@
 Install the latest release from PyPI:
 
 ```bash
-python -m pip install scraper-skoob
+python -m pip install pyskoob
 ```
 
 Or install the bleeding edge version from GitHub:

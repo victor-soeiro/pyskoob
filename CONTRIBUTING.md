@@ -25,15 +25,14 @@ source .venv/bin/activate
 # Install dependencies in editable mode
 uv pip install -e .[dev]
 
-# Run the test suite
-pytest -q
+# Install pre-commit hooks
+pre-commit install
 
-# Format the code and run the linter
-ruff format .
-ruff check .
+# Run all checks
+pre-commit run --all-files
 ```
 
-Run `ruff format .` to automatically fix formatting issues. The CI workflow uses `ruff format --check .` to ensure files are already formatted.
+Run `pre-commit run --all-files` to ensure formatting, linting and tests pass locally. The CI workflow runs the same hooks to verify submitted changes.
 
 Open your PR on GitHub and fill in a brief summary of your changes. A maintainer will review it as soon as possible.
 
