@@ -1,4 +1,4 @@
-name: Docs
+name: Documentation Build and Deployment
 
 on:
   push:
@@ -42,8 +42,10 @@ jobs:
           path: ./site
 
   deploy-docs:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: build-docs
     runs-on: ubuntu-latest
+    if: github.event_name == 'push'
     permissions:
       contents: write
       pages: write
