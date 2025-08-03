@@ -26,6 +26,29 @@ class PublisherService(BaseSkoobService):
     """High level operations for retrieving publishers."""
 
     def get_by_id(self, publisher_id: int) -> Publisher:
+        """Retrieve detailed information about a publisher.
+
+        Parameters
+        ----------
+        publisher_id : int
+            The identifier of the publisher on Skoob.
+
+        Returns
+        -------
+        Publisher
+            An object containing information about the publisher, including
+            statistics and recently released books.
+
+        Raises
+        ------
+        ParsingError
+            If the expected elements cannot be parsed from the page.
+
+        Examples
+        --------
+        >>> service.get_by_id(1).name
+        'Editora Exemplo'
+        """
         url = f"{self.base_url}/editora/{publisher_id}"
         logger.info("Fetching publisher page: %s", url)
         try:
@@ -38,7 +61,10 @@ class PublisherService(BaseSkoobService):
             website = get_tag_attr(site_link, "href")
             stats = self._parse_stats(safe_find(soup, "div", {"id": "vt_estatisticas"}))
             releases_div = safe_find(soup, "div", {"id": "livros_lancamentos"})
-            releases = [self._parse_book(div) for div in safe_find_all(releases_div, "div", {"class": "livro-capa-mini"})]
+            releases = [
+                self._parse_book(div)
+                for div in safe_find_all(releases_div, "div", {"class": "livro-capa-mini"})
+            ]
             return Publisher(
                 id=publisher_id,
                 name=name,
@@ -47,18 +73,54 @@ class PublisherService(BaseSkoobService):
                 stats=stats,
                 last_releases=releases,
             )
-        except Exception as exc:  # pragma: no cover - unexpected
+        except (AttributeError, TypeError, ValueError) as exc:
             logger.error("Failed to parse publisher page: %s", exc, exc_info=True)
-            raise ParsingError("Failed to parse publisher page") from exc
+            raise ParsingError("Failed to parse publisher page.") from exc
+        except Exception as exc:  # pragma: no cover - unexpected
+            logger.error(
+                "An unexpected error occurred while parsing publisher page: %s",
+                exc,
+                exc_info=True,
+            )
+            raise ParsingError(
+                "An unexpected error occurred while parsing publisher page."
+            ) from exc
 
     def get_authors(self, publisher_id: int, page: int = 1) -> Pagination[PublisherAuthor]:
+        """Retrieve authors associated with a publisher.
+
+        Parameters
+        ----------
+        publisher_id : int
+            The identifier of the publisher on Skoob.
+        page : int, optional
+            The pagination page to retrieve, by default 1.
+
+        Returns
+        -------
+        Pagination[PublisherAuthor]
+            A paginated list of authors published by the publisher.
+
+        Raises
+        ------
+        ParsingError
+            If the HTML structure for authors cannot be parsed.
+
+        Examples
+        --------
+        >>> service.get_authors(1).results[0].name
+        'Autor Exemplo'
+        """
         url = f"{self.base_url}/editora/autores/{publisher_id}/mpage:{page}"
         logger.info("Fetching publisher authors: %s", url)
         try:
             response = self.client.get(url)
             response.raise_for_status()
             soup = self.parse_html(response.text)
-            authors = [self._parse_author(div) for div in safe_find_all(soup, "div", {"class": "box_autor"})]
+            authors = [
+                self._parse_author(div)
+                for div in safe_find_all(soup, "div", {"class": "box_autor"})
+            ]
             next_page = bool(safe_find(soup, "div", {"class": "proximo"}))
             return Pagination(
                 results=authors,
@@ -67,18 +129,54 @@ class PublisherService(BaseSkoobService):
                 total=len(authors),
                 has_next_page=next_page,
             )
-        except Exception as exc:  # pragma: no cover - unexpected
+        except (AttributeError, TypeError, ValueError) as exc:
             logger.error("Failed to parse publisher authors: %s", exc, exc_info=True)
-            raise ParsingError("Failed to parse publisher authors") from exc
+            raise ParsingError("Failed to parse publisher authors.") from exc
+        except Exception as exc:  # pragma: no cover - unexpected
+            logger.error(
+                "An unexpected error occurred while parsing publisher authors: %s",
+                exc,
+                exc_info=True,
+            )
+            raise ParsingError(
+                "An unexpected error occurred while parsing publisher authors."
+            ) from exc
 
     def get_books(self, publisher_id: int, page: int = 1) -> Pagination[PublisherItem]:
+        """Retrieve books published by the publisher.
+
+        Parameters
+        ----------
+        publisher_id : int
+            The identifier of the publisher on Skoob.
+        page : int, optional
+            The pagination page to retrieve, by default 1.
+
+        Returns
+        -------
+        Pagination[PublisherItem]
+            A paginated list of books released by the publisher.
+
+        Raises
+        ------
+        ParsingError
+            If book elements cannot be parsed from the page.
+
+        Examples
+        --------
+        >>> service.get_books(1).results[0].title
+        'Livro Exemplo'
+        """
         url = f"{self.base_url}/editora/livros/{publisher_id}/mpage:{page}"
         logger.info("Fetching publisher books: %s", url)
         try:
             response = self.client.get(url)
             response.raise_for_status()
             soup = self.parse_html(response.text)
-            books = [self._parse_book(div) for div in safe_find_all(soup, "div", {"class": "box_livro"})]
+            books = [
+                self._parse_book(div)
+                for div in safe_find_all(soup, "div", {"class": "box_livro"})
+            ]
             next_page = bool(safe_find(soup, "div", {"class": "proximo"}))
             return Pagination(
                 results=books,
@@ -87,9 +185,18 @@ class PublisherService(BaseSkoobService):
                 total=len(books),
                 has_next_page=next_page,
             )
-        except Exception as exc:  # pragma: no cover - unexpected
+        except (AttributeError, TypeError, ValueError) as exc:
             logger.error("Failed to parse publisher books: %s", exc, exc_info=True)
-            raise ParsingError("Failed to parse publisher books") from exc
+            raise ParsingError("Failed to parse publisher books.") from exc
+        except Exception as exc:  # pragma: no cover - unexpected
+            logger.error(
+                "An unexpected error occurred while parsing publisher books: %s",
+                exc,
+                exc_info=True,
+            )
+            raise ParsingError(
+                "An unexpected error occurred while parsing publisher books."
+            ) from exc
 
     # Helpers
     def _parse_stats(self, div: Tag | None) -> PublisherStats:
