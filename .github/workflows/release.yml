@@ -34,7 +34,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install bump-my-version==1.2.1 build mkdocs
+          python -m pip install bump-my-version==1.2.1 build mkdocs mkdocs-material 'mkdocstrings[python]'
           sudo apt-get update && sudo apt-get install -y jq
 
       - name: Configure git
