@@ -3,9 +3,23 @@ repo_url: https://github.com/victor-soeiro/pyskoob
 docs_dir: docs
 theme:
   name: material
+  features:
+    - navigation.tabs
+    - search.highlight
+    - content.code.copy
   palette:
-    primary: indigo
-    accent: indigo
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
 nav:
   - Home: index.md
   - Services:
@@ -19,7 +33,8 @@ nav:
   - Contributing: contributing.md
 markdown_extensions:
   - admonition
-  - codehilite
+  - pymdownx.highlight
+  - pymdownx.superfences
 plugins:
   - search
   - mkdocstrings:
