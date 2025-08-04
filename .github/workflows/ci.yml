@@ -1,8 +1,10 @@
 name: Continuous Integration
 
-# Run lint and tests on pull requests
+# Run lint and tests on pull requests and update coverage badge on pushes to main
 on:
   pull_request:
+    branches: [main]
+  push:
     branches: [main]
 
 permissions:
@@ -46,6 +48,8 @@ jobs:
 
   test:
     # Run tests on ubuntu runners for each supported Python version
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
