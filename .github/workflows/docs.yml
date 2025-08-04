@@ -28,7 +28,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/uv
-          key: ${{ runner.os }}-uv-${{ hashFiles('uv.lock') }}
+          key: ${{ runner.os }}-py${{ matrix.python-version || '3.12' }}-uv-${{ hashFiles('uv.lock') }}
           restore-keys: |
             ${{ runner.os }}-uv-
 
@@ -39,7 +39,4 @@ jobs:
         run: mkdocs build --strict
 
       - name: Deploy to GitHub Pages
-        if: success()
         run: mkdocs gh-deploy --force
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

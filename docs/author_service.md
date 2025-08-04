@@ -23,6 +23,12 @@ with SkoobClient() as client:
     results = client.authors.search("Asimov")
     for author in results.results:
         print(author.name, author.id)
+    if results.has_next_page:
+        # fetch the next page of results
+        more_results = client.authors.search("Asimov", page=results.next_page)
 ```
+
+`search()` returns only the first page of results. Use `results.has_next_page` to
+fetch additional pages.
 
 ::: pyskoob.authors

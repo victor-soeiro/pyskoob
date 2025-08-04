@@ -11,7 +11,7 @@ nav:
   - Services:
       - Author Service: author_service.md
       - Books Service: books_service.md
-      - Publishers Service: publishers_service.md
+      - Publisher Service: publishers_service.md
       - Users Service: users_service.md
       - Profile Service: profile_service.md
   - Advanced Usage: advanced_usage.md

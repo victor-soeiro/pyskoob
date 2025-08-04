@@ -5,11 +5,15 @@ The `SkoobProfileService` lets you modify your Skoob profile by labeling, shelvi
 ## Example
 
 ```python
+import os
 from pyskoob import SkoobClient
 from pyskoob.models.enums import BookStatus
 
 with SkoobClient() as client:
-    client.auth.login(email="you@example.com", password="secret")
+    client.auth.login(
+        email=os.getenv("SKOOB_EMAIL"),
+        password=os.getenv("SKOOB_PASSWORD"),
+    )
     client.profile.update_book_status(10, BookStatus.READ)
 ```
 

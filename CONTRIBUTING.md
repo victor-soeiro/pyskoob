@@ -18,6 +18,9 @@ Thank you for wanting to contribute to **PySkoob**! The following guidelines wil
 ### Quick Start
 
 ```bash
+# Install uv (once)
+# pipx install uv
+
 # Create a virtual environment with uv
 uv venv .venv
 source .venv/bin/activate
@@ -66,7 +69,7 @@ mkdocs build --strict
 mkdocs serve
 ```
 
-The build step validates links and will fail if warnings are detected.
+The build step validates links and outputs the site to the `site/` directory.
 
 ## Release Process
 

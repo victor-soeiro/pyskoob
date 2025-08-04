@@ -21,11 +21,11 @@
 
 Documentation for each service is available on GitHub Pages:
 
-- [Author Service](https://victor-soeiro.github.io/pyskoob/author_service/)
-- [Books Service](https://victor-soeiro.github.io/pyskoob/books_service/)
-- [Publishers Service](https://victor-soeiro.github.io/pyskoob/publishers_service/)
-- [Users Service](https://victor-soeiro.github.io/pyskoob/users_service/)
-- [Profile Service](https://victor-soeiro.github.io/pyskoob/profile_service/)
+* [Author Service](/author_service/)
+* [Books Service](/books_service/)
+* [Publisher Service](/publishers_service/)
+* [Users Service](/users_service/)
+* [Profile Service](/profile_service/)
 
 ## Installation
 
@@ -134,6 +134,6 @@ pytest -vv
 
 ## Learn more
 
-* [Examples](https://victor-soeiro.github.io/pyskoob/advanced_usage/)
-* [Documentation](https://victor-soeiro.github.io/pyskoob/)
-* [Contributing guidelines](https://victor-soeiro.github.io/pyskoob/contributing/)
+* [Examples](/advanced_usage/)
+* [Documentation](/)
+* [Contributing guidelines](/contributing/)

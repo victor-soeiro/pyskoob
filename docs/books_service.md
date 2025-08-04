@@ -14,4 +14,4 @@ with SkoobClient() as client:
         print(book.title, book.book_id)
 ```
 
-::: pyskoob.books
+::: pyskoob.books.BookService
