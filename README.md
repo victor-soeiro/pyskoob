@@ -104,9 +104,14 @@ pytest -vv
 Before working on new features, set up a local development environment:
 
 ```bash
+# Install uv if it's not already available
+python -m pip install uv
+
 # Create and activate a virtual environment
 uv venv .venv
 source .venv/bin/activate
+# On Windows
+.\.venv\Scripts\activate
 
 # Install the project with development dependencies
 uv pip install -e .[dev]
@@ -115,8 +120,8 @@ uv pip install -e .[dev]
 pre-commit install
 
 # Verify linting, formatting, and tests
-pre-commit run --all-files
 pytest -vv
+pre-commit run --all-files
 ```
 
 Once everything is ready:
@@ -128,13 +133,12 @@ Once everything is ready:
    ```bash
    ruff format .
    ```
-4. Ensure formatting and lint checks pass:
+4. Ensure lint checks pass:
 
    ```bash
-   ruff format --check .
    ruff check .
    ```
-5. Run `pre-commit run --all-files` and `pytest -vv` and ensure everything passes.
+5. Run `pytest -vv` and `pre-commit run --all-files` and ensure everything passes.
 6. Open a pull request describing your changes.
 
 ## Learn more
