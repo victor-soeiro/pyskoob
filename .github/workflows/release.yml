@@ -34,7 +34,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install bump-my-version==1.2.1 build mkdocs
+          python -m pip install bump-my-version==1.2.1 build mkdocs mkdocs-material 'mkdocstrings[python]'
           sudo apt-get update && sudo apt-get install -y jq
 
       - name: Configure git
@@ -51,9 +51,14 @@ jobs:
 
       - name: Tag and push
         run: |
-          git tag "v${{ steps.bump.outputs.version }}"
           git push origin HEAD
-          git push origin "v${{ steps.bump.outputs.version }}"
+          git fetch --tags
+          if git rev-parse "v${{ steps.bump.outputs.version }}" >/dev/null 2>&1; then
+            echo "Tag v${{ steps.bump.outputs.version }} already exists, skipping creation"
+          else
+            git tag "v${{ steps.bump.outputs.version }}"
+            git push origin "v${{ steps.bump.outputs.version }}"
+          fi
 
       - name: Build package
         run: python -m build

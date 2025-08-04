@@ -17,6 +17,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Fixed
 - Avoided ``httpx`` deprecation warning when posting raw bytes or text.
 - Updated PyPI publish workflow to use the latest action release, resolving missing metadata errors.
+- Installed `mkdocs-material` in the release workflow to resolve missing theme errors.
+- Prevented release failures by skipping tag creation when the version tag already exists.
 
 ### Changed
 - Removed the standalone lint workflow and moved Ruff earlier in the CI job.
