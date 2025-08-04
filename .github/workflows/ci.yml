@@ -1,8 +1,10 @@
 name: Continuous Integration
 
-# Run lint and tests on pull requests
+# Run lint and tests on pull requests and update coverage badge on pushes to main
 on:
   pull_request:
+    branches: [main]
+  push:
     branches: [main]
 
 permissions:
@@ -46,6 +48,8 @@ jobs:
 
   test:
     # Run tests on ubuntu runners for each supported Python version
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -88,11 +92,12 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/main' && matrix.python-version == '3.12'
         run: |
           uv pip install --system coverage-badge
-          coverage-badge -o coverage.svg -f
+          mkdir -p docs/img
+          coverage-badge -o docs/img/coverage.svg -f
 
       - name: Commit coverage badge
         if: github.event_name == 'push' && github.ref == 'refs/heads/main' && matrix.python-version == '3.12'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: update coverage badge [skip ci]"
-          file_pattern: coverage.svg
+          file_pattern: docs/img/coverage.svg

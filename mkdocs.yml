@@ -30,6 +30,7 @@ nav:
       - Profile Service: profile_service.md
   - Advanced Usage: advanced_usage.md
   - Stable Public API: stable_api.md
+  - Changelog: changelog.md
   - Contributing: contributing.md
 markdown_extensions:
   - admonition
