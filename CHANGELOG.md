@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - Introduced `AuthenticatedService` base class to centralize login validation for services requiring authentication.
 - Pre-commit configuration for Ruff, formatting and tests.
 - Security policy describing vulnerability reporting and secret management.
+- Automated GitHub Pages workflow to build and deploy documentation.
 ### Fixed
 - Avoided ``httpx`` deprecation warning when posting raw bytes or text.
 - Updated PyPI publish workflow to use the latest action release, resolving missing metadata errors.
