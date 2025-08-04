@@ -88,11 +88,12 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/main' && matrix.python-version == '3.12'
         run: |
           uv pip install --system coverage-badge
-          coverage-badge -o coverage.svg -f
+          mkdir -p docs/img
+          coverage-badge -o docs/img/coverage.svg -f
 
       - name: Commit coverage badge
         if: github.event_name == 'push' && github.ref == 'refs/heads/main' && matrix.python-version == '3.12'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: update coverage badge [skip ci]"
-          file_pattern: coverage.svg
+          file_pattern: docs/img/coverage.svg
