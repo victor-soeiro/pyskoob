@@ -21,11 +21,6 @@ with SkoobClient() as client:
 
 ::: pyskoob.client
 ::: pyskoob.auth
-::: pyskoob.books
-::: pyskoob.authors
-::: pyskoob.users
-::: pyskoob.profile
-::: pyskoob.publishers
 
 ## Further Reading
 
