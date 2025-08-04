@@ -101,26 +101,41 @@ pytest -vv
 
 ## Contributing
 
-1. Fork the repository and create a branch for your feature.
-2. Install the dependencies in editable mode:
+Before working on new features, set up a local development environment:
 
-   ```bash
-   uv pip install -e .[dev]
-   ```
-3. Implement your change and add tests.
-4. Format your code with Ruff:
+```bash
+# Create and activate a virtual environment
+uv venv .venv
+source .venv/bin/activate
+
+# Install the project with development dependencies
+uv pip install -e .[dev]
+
+# Install pre-commit hooks
+pre-commit install
+
+# Verify linting, formatting, and tests
+pre-commit run --all-files
+pytest -vv
+```
+
+Once everything is ready:
+
+1. Fork the repository and create a branch for your feature.
+2. Implement your change and add tests.
+3. Format your code with Ruff:
 
    ```bash
    ruff format .
    ```
-5. Ensure formatting and lint checks pass:
+4. Ensure formatting and lint checks pass:
 
    ```bash
    ruff format --check .
    ruff check .
    ```
-6. Run `pytest` and ensure everything passes.
-7. Open a pull request describing your changes.
+5. Run `pre-commit run --all-files` and `pytest -vv` and ensure everything passes.
+6. Open a pull request describing your changes.
 
 ## Learn more
 
