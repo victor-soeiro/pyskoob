@@ -7,6 +7,12 @@ from conftest import DummyClient
 
 from pyskoob.books import BookService
 from pyskoob.http.client import SyncHTTPClient
+from pyskoob.parsers.books import (
+    extract_edition_id_from_reviews_page,
+    extract_publisher_and_isbn,
+    extract_review_date_and_text,
+    extract_user_ids_from_html,
+)
 
 
 def make_service(html: str = ""):
@@ -35,7 +41,7 @@ def make_service(html: str = ""):
 def test_extract_publisher_and_isbn(html, expected):
     service, _ = make_service()
     soup = BeautifulSoup(html, "html.parser")
-    result = service._extract_publisher_and_isbn(soup)
+    result = extract_publisher_and_isbn(soup)
     assert result == expected
 
 
@@ -47,14 +53,14 @@ def test_extract_user_ids_and_edition_id():
     )
     service, _ = make_service()
     soup = BeautifulSoup(html_users, "html.parser")
-    ids = service._extract_user_ids_from_html(soup)
+    ids = extract_user_ids_from_html(soup)
     assert ids == [1, 2]
 
     html_reviews = "<div id='pg-livro-menu-principal-container'><a href='/livro/10-ed5.html'></a></div>"
     soup = BeautifulSoup(html_reviews, "html.parser")
-    edition = service._extract_edition_id_from_reviews_page(soup)
+    edition = extract_edition_id_from_reviews_page(soup)
     assert edition == 5
-    assert service._extract_edition_id_from_reviews_page(BeautifulSoup("<div></div>", "html.parser")) is None
+    assert extract_edition_id_from_reviews_page(BeautifulSoup("<div></div>", "html.parser")) is None
 
 
 @pytest.mark.parametrize(
@@ -68,6 +74,6 @@ def test_extract_user_ids_and_edition_id():
 def test_extract_review_date_and_text(html, date, text):
     service, _ = make_service()
     soup = BeautifulSoup(html, "html.parser")
-    result_date, result_text = service._extract_review_date_and_text(soup.div, 1)
+    result_date, result_text = extract_review_date_and_text(soup.div, 1)
     assert result_date == date
     assert result_text == text

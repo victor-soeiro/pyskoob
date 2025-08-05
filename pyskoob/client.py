@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-from pyskoob.auth import AuthService
-from pyskoob.authors import AuthorService
-from pyskoob.books import BookService
-from pyskoob.http.httpx import HttpxSyncClient
-from pyskoob.profile import SkoobProfileService
-from pyskoob.publishers import PublisherService
-from pyskoob.users import UserService
+from pyskoob.auth import AsyncAuthService, AuthService
+from pyskoob.authors import AsyncAuthorService, AuthorService
+from pyskoob.books import AsyncBookService, BookService
+from pyskoob.http.httpx import HttpxAsyncClient, HttpxSyncClient
+from pyskoob.profile import AsyncSkoobProfileService, SkoobProfileService
+from pyskoob.publishers import AsyncPublisherService, PublisherService
+from pyskoob.users import AsyncUserService, UserService
 from pyskoob.utils import RateLimiter
 
 
@@ -79,3 +79,23 @@ class SkoobClient:
         None
         """
         self._client.close()
+
+
+class SkoobAsyncClient:
+    """Facade for interacting with Skoob services asynchronously."""
+
+    def __init__(self):
+        self._client = HttpxAsyncClient()
+        self.auth = AsyncAuthService(self._client)
+        self.books = AsyncBookService(self._client)
+        self.authors = AsyncAuthorService(self._client)
+        self.users = AsyncUserService(self._client, self.auth)
+        self.me = AsyncSkoobProfileService(self._client, self.auth)
+        self.publishers = AsyncPublisherService(self._client)
+
+    async def __aenter__(self) -> SkoobAsyncClient:
+        return self
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> bool | None:
+        await self._client.close()
+        return None

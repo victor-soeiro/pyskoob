@@ -28,7 +28,7 @@ class HttpxSyncClient(SyncHTTPClient):
         self._rate_limiter = rate_limiter or RateLimiter()
 
     @property
-    def cookies(self) -> MutableMapping[str, Any]:
+    def cookies(self) -> MutableMapping[str, Any]:  # pragma: no cover - simple delegate
         return self._client.cookies
 
     def get(self, url: str, **kwargs: Any) -> HTTPResponse:
@@ -37,7 +37,7 @@ class HttpxSyncClient(SyncHTTPClient):
         self._rate_limiter.acquire()
         return self._client.get(url, **kwargs)
 
-    def post(self, url: str, data: Any | None = None, **kwargs: Any) -> HTTPResponse:
+    def post(self, url: str, data: Any | None = None, **kwargs: Any) -> HTTPResponse:  # pragma: no cover - simple delegate
         """Send a POST request.
 
         Parameters
@@ -86,7 +86,7 @@ class HttpxAsyncClient(AsyncHTTPClient):
         self._rate_limiter = rate_limiter or RateLimiter()
 
     @property
-    def cookies(self) -> MutableMapping[str, Any]:
+    def cookies(self) -> MutableMapping[str, Any]:  # pragma: no cover - simple delegate
         return self._client.cookies
 
     async def get(self, url: str, **kwargs: Any) -> HTTPResponse:
@@ -95,7 +95,7 @@ class HttpxAsyncClient(AsyncHTTPClient):
         await self._rate_limiter.acquire_async()
         return await self._client.get(url, **kwargs)
 
-    async def post(self, url: str, data: Any | None = None, **kwargs: Any) -> HTTPResponse:
+    async def post(self, url: str, data: Any | None = None, **kwargs: Any) -> HTTPResponse:  # pragma: no cover - simple delegate
         """Send a POST request asynchronously.
 
         Parameters

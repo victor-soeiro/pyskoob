@@ -8,27 +8,34 @@ and will not change without a deprecation period.
 __version__ = "0.1.20"
 
 from . import models
-from .auth import AuthService
-from .authors import AuthorService
-from .books import BookService
-from .client import SkoobClient
+from .auth import AsyncAuthService, AuthService
+from .authors import AsyncAuthorService, AuthorService
+from .books import AsyncBookService, BookService
+from .client import SkoobAsyncClient, SkoobClient
 from .exceptions import ParsingError
 from .http.httpx import HttpxAsyncClient, HttpxSyncClient
-from .profile import SkoobProfileService
-from .publishers import PublisherService
-from .users import UserService
+from .profile import AsyncSkoobProfileService, SkoobProfileService
+from .publishers import AsyncPublisherService, PublisherService
+from .users import AsyncUserService, UserService
 from .utils import RateLimiter
 
 __all__ = [
     "AuthService",
+    "AsyncAuthService",
     "AuthorService",
+    "AsyncAuthorService",
     "BookService",
+    "AsyncBookService",
     "HttpxAsyncClient",
     "HttpxSyncClient",
     "PublisherService",
+    "AsyncPublisherService",
     "SkoobClient",
+    "SkoobAsyncClient",
     "SkoobProfileService",
+    "AsyncSkoobProfileService",
     "UserService",
+    "AsyncUserService",
     "models",
     "ParsingError",
     "RateLimiter",

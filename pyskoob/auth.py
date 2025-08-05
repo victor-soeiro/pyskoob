@@ -1,6 +1,7 @@
 import logging
 
-from pyskoob.http.client import SyncHTTPClient
+from pyskoob.http.client import AsyncHTTPClient, SyncHTTPClient
+from pyskoob.internal.async_base import AsyncBaseSkoobService
 from pyskoob.internal.base import BaseSkoobService
 from pyskoob.models.user import User
 
@@ -169,6 +170,67 @@ class AuthService(BaseSkoobService):
         >>> service.validate_login()
         None
         """
+        logger.debug("Validating login status.")
+        if not self._is_logged_in:
+            logger.warning("Validation failed: User is not logged in.")
+            raise PermissionError("User is not logged in. Please call 'login_with_cookies' first.")
+        logger.debug("Validation successful: User is logged in.")
+
+
+class AsyncAuthService(AsyncBaseSkoobService):  # pragma: no cover - thin async wrapper
+    """Asynchronous authentication service."""
+
+    def __init__(self, client: AsyncHTTPClient):
+        super().__init__(client)
+        self._is_logged_in = False
+
+    async def login_with_cookies(self, session_token: str) -> User:
+        logger.info("Attempting to log in with session token.")
+        self.client.cookies.update({"PHPSESSID": session_token})
+        user = await self.get_my_info()
+        self._is_logged_in = True
+        logger.info("Successfully logged in as user: '%s'", user.name)
+        return user
+
+    async def login(self, email: str, password: str) -> User:
+        logger.info("Attempting to log in with email and password.")
+        url = f"{self.base_url}/v1/login"
+        data = {
+            "data[Usuario][email]": email,
+            "data[Usuario][senha]": password,
+            "data[Login][automatico]": True,
+        }
+        response = await self.client.post(url, data=data)
+        response.raise_for_status()
+        try:
+            json_data = response.json()
+        except ValueError as exc:
+            logger.error("Login response was not valid JSON")
+            raise ConnectionError("Invalid response format") from exc
+        if not json_data.get("success", False):
+            logger.error("Login failed: %s", json_data.get("message", "Unknown error"))
+            raise ConnectionError("Failed to login: {}".format(json_data.get("message", "Unknown error")))
+        self._is_logged_in = True
+        user = await self.get_my_info()
+        logger.info("Successfully logged in as user: '%s'", user.name)
+        return user
+
+    async def get_my_info(self) -> User:
+        logger.info("Getting authenticated user's information.")
+        url = f"{self.base_url}/v1/user/stats:true"
+        response = await self.client.get(url)
+        response.raise_for_status()
+        json_data = response.json()
+        if not json_data.get("success"):
+            logger.error("Failed to retrieve user information. The session token might be invalid.")
+            raise ConnectionError("Failed to retrieve user information. The session token might be invalid.")
+        user_data = json_data["response"]
+        user_data["profile_url"] = self.base_url + user_data["url"]
+        user = User.model_validate(user_data)
+        logger.info("Successfully retrieved user: '%s'", user.name)
+        return user
+
+    def validate_login(self) -> None:
         logger.debug("Validating login status.")
         if not self._is_logged_in:
             logger.warning("Validation failed: User is not logged in.")
