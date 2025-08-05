@@ -22,6 +22,8 @@ class _ProfileServiceMixin:
     _validate_login: Callable[[], Any]
 
     async def _add_book_label(self, edition_id: int, label: BookLabel) -> bool:
+        """Add a label to a book."""
+
         await maybe_await(self._validate_login)
         url = f"{self.base_url}/v1/label_add/{edition_id}/{label.value}"
         response = await maybe_await(self.client.get, url)
@@ -29,6 +31,8 @@ class _ProfileServiceMixin:
         return response.json().get("success", False)
 
     async def _remove_book_label(self, edition_id: int) -> bool:
+        """Remove a label from a book."""
+
         await maybe_await(self._validate_login)
         url = f"{self.base_url}/v1/label_del/{edition_id}"
         response = await maybe_await(self.client.get, url)
@@ -36,6 +40,8 @@ class _ProfileServiceMixin:
         return response.json().get("success", False)
 
     async def _update_book_status(self, edition_id: int, status: BookStatus) -> bool:
+        """Update the user's status for a book."""
+
         await maybe_await(self._validate_login)
         url = f"{self.base_url}/v1/shelf_add/{edition_id}/{status.value}"
         response = await maybe_await(self.client.get, url)
@@ -43,6 +49,8 @@ class _ProfileServiceMixin:
         return response.json().get("success", False)
 
     async def _remove_book_status(self, edition_id: int) -> bool:
+        """Remove the user's status for a book."""
+
         await maybe_await(self._validate_login)
         url = f"{self.base_url}/v1/shelf_del/{edition_id}"
         response = await maybe_await(self.client.get, url)
@@ -50,6 +58,8 @@ class _ProfileServiceMixin:
         return response.json().get("success", False)
 
     async def _change_book_shelf(self, edition_id: int, bookshelf: BookShelf) -> bool:
+        """Move a book to a different bookshelf."""
+
         await maybe_await(self._validate_login)
         url = f"{self.base_url}/estante/prateleira/{edition_id}/{bookshelf.value}"
         response = await maybe_await(self.client.get, url)
@@ -57,6 +67,8 @@ class _ProfileServiceMixin:
         return response.json().get("success", False)
 
     async def _rate_book(self, edition_id: int, ranking: float) -> bool:
+        """Rate a book in the authenticated profile."""
+
         await maybe_await(self._validate_login)
         if not (0 <= ranking <= 5):
             raise ValueError("Rating must be between 0 and 5.")

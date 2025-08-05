@@ -44,6 +44,8 @@ class _BookServiceMixin:
         search_by: BookSearch = BookSearch.TITLE,
         page: int = 1,
     ) -> Pagination[BookSearchResult]:
+        """Search for books by ``query`` and ``search_by`` criteria."""
+
         url = f"{self.base_url}/livro/lista/busca:{query}/tipo:{search_by.value}/mpage:{page}"
         logger.info("Searching for books with query: '%s' on page %s", query, page)
         try:
@@ -89,6 +91,8 @@ class _BookServiceMixin:
         )
 
     async def _get_by_id(self, edition_id: int) -> Book:
+        """Retrieve a book by its edition identifier."""
+
         logger.info("Getting book by edition_id: %s", edition_id)
         url = f"{self.base_url}/v1/book/{edition_id}/stats:true"
         try:
@@ -130,6 +134,8 @@ class _BookServiceMixin:
             raise ParsingError(f"Failed to retrieve book for edition_id {edition_id}.") from e
 
     async def _get_reviews(self, book_id: int, edition_id: int | None = None, page: int = 1) -> Pagination[BookReview]:
+        """Fetch reviews for a given book."""
+
         url = f"{self.base_url}/livro/resenhas/{book_id}/mpage:{page}/limit:50"
         if edition_id:
             url += f"/edition:{edition_id}"
@@ -173,6 +179,8 @@ class _BookServiceMixin:
         limit: int = 500,
         page: int = 1,
     ) -> Pagination[int]:
+        """Fetch user IDs who marked the book with a given status."""
+
         url = f"{self.base_url}/livro/leitores/{status.value}/{book_id}/limit:{limit}/page:{page}"
         if edition_id:
             url += f"/edition:{edition_id}"

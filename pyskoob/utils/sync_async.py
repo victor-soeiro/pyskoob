@@ -23,5 +23,9 @@ async def maybe_await(func: Callable[..., Any], *args: Any, **kwargs: Any) -> An
 
 
 def run_sync(awaitable: Coroutine[Any, Any, T]) -> T:
-    """Synchronously run a coroutine using ``asyncio.run``."""
+    """Synchronously run a coroutine using ``asyncio.run``.
+
+    This helper should only be used when no event loop is already running.
+    """
+
     return asyncio.run(awaitable)
