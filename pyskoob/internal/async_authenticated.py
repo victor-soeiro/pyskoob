@@ -1,0 +1,21 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+from pyskoob.http.client import AsyncHTTPClient
+from pyskoob.internal.async_base import AsyncBaseSkoobService
+
+if TYPE_CHECKING:
+    from pyskoob.auth import AsyncAuthService
+
+
+class AsyncAuthenticatedService(AsyncBaseSkoobService):
+    """Base class for async services requiring authentication."""
+
+    def __init__(self, client: AsyncHTTPClient, auth_service: AsyncAuthService):
+        super().__init__(client)
+        self._auth_service = auth_service
+
+    def _validate_login(self) -> None:
+        """Ensure the current session is authenticated."""
+        self._auth_service.validate_login()

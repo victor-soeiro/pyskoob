@@ -9,6 +9,12 @@ from pyskoob.exceptions import ParsingError
 from pyskoob.http.client import SyncHTTPClient
 from pyskoob.models.book import Book
 from pyskoob.models.enums import BookUserStatus
+from pyskoob.parsers.books import (
+    clean_book_json_data,
+    extract_rating,
+    extract_total_results,
+    parse_search_result,
+)
 
 
 class DummyClient:
@@ -43,18 +49,18 @@ def test_extract_helpers():
     service, _ = make_service()
     book_div = soup.div
     assert book_div is not None
-    result = service._parse_search_result(book_div)
+    result = parse_search_result(book_div, service.base_url)
     assert result is not None
     assert result.title == "T"
     assert result.edition_id == 2
     assert result.publisher == "Pub"
     assert result.isbn == "1234567890123"
-    assert service._extract_rating(book_div, "T") == 4.0
+    assert extract_rating(book_div, "T") == 4.0
     total_html = BeautifulSoup(
         '<div class="contador">3 encontrados</div>',
         "html.parser",
     )
-    assert service._extract_total_results(total_html) == 3
+    assert extract_total_results(total_html) == 3
 
 
 def test_clean_book_json_data():
@@ -69,7 +75,7 @@ def test_clean_book_json_data():
         "img_url": "https://img",
         "generos": [],
     }
-    service._clean_book_json_data(data)
+    clean_book_json_data(data, service.base_url)
     assert data["isbn"] is None
     assert data["url"].startswith("https://")
 
