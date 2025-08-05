@@ -5,6 +5,7 @@ from collections.abc import Callable
 from typing import Any
 
 from pyskoob.auth import AsyncAuthService, AuthService
+from pyskoob.exceptions import ProfileError
 from pyskoob.http.client import AsyncHTTPClient, SyncHTTPClient
 from pyskoob.internal.async_authenticated import AsyncAuthenticatedService
 from pyskoob.internal.authenticated import AuthenticatedService
@@ -231,8 +232,8 @@ class SkoobProfileService(_ProfileServiceMixin, AuthenticatedService):
         ------
         ValueError
             If the rating is not between 0 and 5.
-        RuntimeError
-            If it fails to rate the book.
+        ProfileError
+            If Skoob rejects the rating.
 
         Examples
         --------

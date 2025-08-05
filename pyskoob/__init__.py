@@ -12,12 +12,12 @@ from .auth import AsyncAuthService, AuthService
 from .authors import AsyncAuthorService, AuthorService
 from .books import AsyncBookService, BookService
 from .client import SkoobAsyncClient, SkoobClient
-from .exceptions import ParsingError, RequestError
+from .exceptions import ParsingError, ProfileError, RequestError
 from .http.httpx import HttpxAsyncClient, HttpxSyncClient
 from .profile import AsyncSkoobProfileService, SkoobProfileService
 from .publishers import AsyncPublisherService, PublisherService
 from .users import AsyncUserService, UserService
-from .utils import RateLimiter
+from .utils import RateLimiter, Retry
 
 __all__ = [
     "AuthService",
@@ -38,7 +38,9 @@ __all__ = [
     "AsyncUserService",
     "models",
     "ParsingError",
+    "ProfileError",
     "RequestError",
     "RateLimiter",
+    "Retry",
     "__version__",
 ]

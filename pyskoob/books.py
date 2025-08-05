@@ -104,9 +104,10 @@ class _BookServiceMixin:
             raise RequestError(f"Failed to retrieve book for edition_id {edition_id}.") from e
 
         try:
-            json_data = response.json().get("response")
+            data = response.json()
+            json_data = data.get("response")
             if not json_data:
-                cod_description = response.json().get("cod_description", "No description provided.")
+                cod_description = data.get("cod_description", "No description provided.")
                 error_msg = f"No data found for edition_id {edition_id}. Description: {cod_description}"
                 logger.warning(error_msg)
                 raise FileNotFoundError(error_msg)

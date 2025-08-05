@@ -45,24 +45,24 @@ class RateLimiter:
         configured rate limit is always honoured even if the thread wakes up
         earlier than expected.
         """
-        with self._lock:
-            while True:
+        while True:
+            with self._lock:
                 now = time.monotonic()
                 self._trim(now)
                 if len(self._calls) < self._max_calls:
                     self._calls.append(now)
                     return
                 sleep_for = self._period - (now - self._calls[0])
-                time.sleep(sleep_for)
+            time.sleep(sleep_for)
 
     async def acquire_async(self) -> None:
         """Asynchronous variant of :meth:`acquire` with the same guarantees."""
-        async with self._async_lock:
-            while True:
+        while True:
+            async with self._async_lock:
                 now = time.monotonic()
                 self._trim(now)
                 if len(self._calls) < self._max_calls:
                     self._calls.append(now)
                     return
                 sleep_for = self._period - (now - self._calls[0])
-                await asyncio.sleep(sleep_for)
+            await asyncio.sleep(sleep_for)
