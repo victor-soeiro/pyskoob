@@ -3,7 +3,9 @@
 import logging
 import re
 
-from pyskoob.exceptions import ParsingError
+from pydantic import ValidationError
+
+from pyskoob.exceptions import ParsingError, RequestError
 from pyskoob.http.client import AsyncHTTPClient
 from pyskoob.internal.async_base import AsyncBaseSkoobService
 from pyskoob.internal.base import BaseSkoobService
@@ -61,6 +63,8 @@ class BookService(BaseSkoobService):
 
         Raises
         ------
+        RequestError
+            If the HTTP request fails.
         ParsingError
             If the HTML structure changes and parsing fails.
 
@@ -74,26 +78,23 @@ class BookService(BaseSkoobService):
         try:
             response = self.client.get(url)
             response.raise_for_status()
-            soup = self.parse_html(response.text)
+        except Exception as e:
+            logger.error("Request error during book search: %s", e, exc_info=True)
+            raise RequestError("Failed to search books.") from e
 
+        try:
+            soup = self.parse_html(response.text)
             limit = 30
             results = [
                 parse_search_result(book_div, self.base_url)
                 for book_div in safe_find_all(soup, "div", {"class": "box_lista_busca_vertical"})
             ]
             cleaned_results: list[BookSearchResult] = [i for i in results if i]
-
             total_results = extract_total_results(soup)
             next_page_link = True if page * limit < total_results else False
         except (AttributeError, ValueError, IndexError, TypeError) as e:  # pragma: no cover - defensive
-            logger.error(f"Failed to parse book search results: {e}", exc_info=True)
+            logger.error("Failed to parse book search results: %s", e, exc_info=True)
             raise ParsingError("Failed to parse book search results.") from e
-        except Exception as e:  # pragma: no cover - unexpected
-            logger.error(
-                f"An unexpected error occurred during book search: {e}",
-                exc_info=True,
-            )
-            raise ParsingError("An unexpected error occurred during book search.") from e
 
         logger.info(
             "Found %s books on page %s, total %s results.",
@@ -127,8 +128,10 @@ class BookService(BaseSkoobService):
         ------
         FileNotFoundError
             If no book is found with the given edition_id.
+        RequestError
+            If the HTTP request fails.
         ParsingError
-            If parsing or HTTP errors occur.
+            If parsing of the response fails.
 
         Examples
         --------
@@ -140,6 +143,16 @@ class BookService(BaseSkoobService):
         try:
             response = self.client.get(url)
             response.raise_for_status()
+        except Exception as e:
+            logger.error(
+                "Request error retrieving book for edition_id %s: %s",
+                edition_id,
+                e,
+                exc_info=True,
+            )
+            raise RequestError(f"Failed to retrieve book for edition_id {edition_id}.") from e
+
+        try:
             json_data = response.json().get("response")
             if not json_data:
                 cod_description = response.json().get("cod_description", "No description provided.")
@@ -156,9 +169,11 @@ class BookService(BaseSkoobService):
             return book
         except FileNotFoundError:
             raise
-        except Exception as e:  # pragma: no cover - unexpected
+        except (AttributeError, ValueError, IndexError, TypeError, ValidationError) as e:  # pragma: no cover - defensive
             logger.error(
-                f"Error retrieving book for edition_id {edition_id}: {e}",
+                "Failed to parse book for edition_id %s: %s",
+                edition_id,
+                e,
                 exc_info=True,
             )
             raise ParsingError(f"Failed to retrieve book for edition_id {edition_id}.") from e

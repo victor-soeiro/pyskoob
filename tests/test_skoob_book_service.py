@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 from conftest import DummyResponse
 
 from pyskoob.books import BookService
-from pyskoob.exceptions import ParsingError
+from pyskoob.exceptions import ParsingError, RequestError
 from pyskoob.http.client import SyncHTTPClient
 from pyskoob.models.book import Book
 from pyskoob.models.enums import BookUserStatus
@@ -176,6 +176,23 @@ def test_get_by_id_error():
     service = BookService(cast(SyncHTTPClient, BadClient()))
     with pytest.raises(ParsingError):
         service.get_by_id(4)
+
+
+class FailingClient(DummyClient):
+    def get(self, url):  # type: ignore[override]
+        raise RuntimeError("boom")
+
+
+def test_search_request_error():
+    service = BookService(cast(SyncHTTPClient, FailingClient()))
+    with pytest.raises(RequestError):
+        service.search("q")
+
+
+def test_get_by_id_request_error():
+    service = BookService(cast(SyncHTTPClient, FailingClient()))
+    with pytest.raises(RequestError):
+        service.get_by_id(1)
 
 
 @pytest.mark.parametrize("page,total,has_next", [(1, 60, True), (2, 60, False)])
