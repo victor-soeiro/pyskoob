@@ -37,6 +37,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-uv-
 
+      - name: Install pre-commit
+        run: uv pip install --system pre-commit
+
+      - name: Run pre-commit hooks
+        run: pre-commit run --all-files
+
       - name: Install ruff
         run: uv pip install --system "ruff==0.4.5"
 
