@@ -1,4 +1,9 @@
-from pyskoob import SkoobClient
+from typing import cast
+
+import httpx
+
+from pyskoob import RateLimiter, SkoobClient
+from pyskoob.http.httpx import HttpxSyncClient
 
 
 def test_client_context_manager(monkeypatch):
@@ -14,3 +19,11 @@ def test_client_context_manager(monkeypatch):
         assert client.auth
         assert client.books
     assert closed
+
+
+def test_client_allows_configuration():
+    limiter = RateLimiter()
+    with SkoobClient(rate_limiter=limiter, timeout=5) as client:
+        http_client = cast(HttpxSyncClient, client._client)
+        assert http_client._rate_limiter is limiter
+        assert http_client._client.timeout == httpx.Timeout(5)

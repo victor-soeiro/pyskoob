@@ -7,8 +7,6 @@ import re
 from datetime import datetime
 from typing import Any
 
-from bs4 import BeautifulSoup
-
 from pyskoob.auth import AsyncAuthService, AuthService
 from pyskoob.exceptions import ParsingError
 from pyskoob.http.client import AsyncHTTPClient, SyncHTTPClient
@@ -103,20 +101,20 @@ class UserService(AuthenticatedService):
         'Example'
         """
         self._validate_login()
-        logger.info(f"Getting user by id: {user_id}")
+        logger.info("Getting user by id: %s", user_id)
         url = f"{self.base_url}/v1/user/{user_id}/stats:true"
         response = self.client.get(url)
         response.raise_for_status()
 
         json_data = response.json()
         if not json_data.get("success"):
-            logger.warning(f"User with ID {user_id} not found.")
+            logger.warning("User with ID %s not found.", user_id)
             raise FileNotFoundError(f"User with ID {user_id} not found.")
 
         user_data = json_data["response"]
         user_data["profile_url"] = self.base_url + user_data["url"]  # patch field for alias
         user = User.model_validate(user_data)
-        logger.info(f"Successfully retrieved user: '{user.name}'")
+        logger.info("Successfully retrieved user: '%s'", user.name)
         return user
 
     def get_relations(self, user_id: int, relation: UsersRelation, page: int = 1) -> Pagination[int]:
@@ -149,7 +147,7 @@ class UserService(AuthenticatedService):
         """
         self._validate_login()
         url = f"{self.base_url}/{relation.value}/listar/{user_id}/page:{page}/limit:100"
-        logger.info(f"Getting '{relation.value}' for user_id: {user_id}, page: {page}")
+        logger.info("Getting '%s' for user_id: %s, page: %s", relation.value, user_id, page)
         response = self.client.get(url)
         response.raise_for_status()
 
@@ -159,11 +157,12 @@ class UserService(AuthenticatedService):
             users_id = [int(get_user_id_from_url(get_tag_attr(i.a, "href"))) for i in users_html if i.find("a") and getattr(i, "a", None)]
             next_page_link = safe_find(soup, "div", {"class": "proximo"})
         except (AttributeError, ValueError, IndexError) as e:  # pragma: no cover - defensive
-            logger.error(f"Failed to parse user relations: {e}")
+            logger.exception("Failed to parse user relations: %s", e)
             raise ParsingError("Failed to parse user relations.") from e
 
         total = _parse_total_from_html(soup)
         logger.info(f"Found {len(users_id)} users on page {page}.")
+
         return Pagination(
             results=users_id,
             limit=100,
@@ -195,7 +194,7 @@ class UserService(AuthenticatedService):
         """
         self._validate_login()
         url = f"{self.base_url}/estante/resenhas/{user_id}/mpage:{page}/limit:50"
-        logger.info(f"Getting reviews for user_id: {user_id}, page: {page}")
+        logger.info("Getting reviews for user_id: %s, page: %s", user_id, page)
         response = self.client.get(url)
         response.raise_for_status()
 
@@ -238,11 +237,12 @@ class UserService(AuthenticatedService):
                 )
             next_page_link = safe_find(soup, "a", {"string": " Próxima"})
         except (AttributeError, ValueError, IndexError) as e:  # pragma: no cover - defensive
-            logger.error(f"Failed to parse user reviews: {e}")
+            logger.exception("Failed to parse user reviews: %s", e)
             raise ParsingError("Failed to parse user reviews.") from e
 
         total = _parse_total_from_html(soup)
         logger.info(f"Found {len(user_reviews)} reviews on page {page}.")
+
         return Pagination(
             results=user_reviews,
             limit=50,
@@ -266,7 +266,7 @@ class UserService(AuthenticatedService):
             The user's reading statistics.
         """
         self._validate_login()
-        logger.info(f"Getting read stats for user_id: {user_id}")
+        logger.info("Getting read stats for user_id: %s", user_id)
         url = f"{self.base_url}/v1/meta_stats/{user_id}"
 
         response = self.client.get(url)
@@ -285,7 +285,7 @@ class UserService(AuthenticatedService):
             reading_speed=json_data.get("velocidade_dia"),
             ideal_reading_speed=json_data.get("velocidade_ideal"),
         )
-        logger.info(f"Successfully retrieved read stats for user_id: {user_id}")
+        logger.info("Successfully retrieved read stats for user_id: %s", user_id)
         return stats
 
     def get_bookcase(self, user_id: int, bookcase_option: BookcaseOption, page: int = 1) -> Pagination[UserBook]:
@@ -308,7 +308,7 @@ class UserService(AuthenticatedService):
         """
         self._validate_login()
         url = f"{self.base_url}/v1/bookcase/books/{user_id}/shelf_id:{bookcase_option.value}/page:{page}/limit:100"
-        logger.info(f"Getting bookcase for user_id: {user_id}, option: '{bookcase_option.name}', page: {page}")
+        logger.info("Getting bookcase for user_id: %s, option: '%s', page: %s", user_id, bookcase_option.name, page)
         response = self.client.get(url)
         response.raise_for_status()
 
@@ -335,6 +335,7 @@ class UserService(AuthenticatedService):
 
         total = _parse_total_from_paging(json_data.get("paging", {}))
         logger.info(f"Found {len(results)} books on page {page}.")
+
         return Pagination(
             limit=100,
             results=results,
@@ -392,7 +393,7 @@ class UserService(AuthenticatedService):
         response = self.client.get(url)
         response.raise_for_status()
 
-        soup = BeautifulSoup(response.text, "html.parser")
+        soup = self.parse_html(response.text)
 
         try:
             user_divs = safe_find_all(
@@ -485,18 +486,18 @@ class AsyncUserService(AsyncAuthenticatedService):  # pragma: no cover - thin as
             If the user with the given ID is not found.
         """
         await self._validate_login()
-        logger.info(f"Getting user by id: {user_id}")
+        logger.info("Getting user by id: %s", user_id)
         url = f"{self.base_url}/v1/user/{user_id}/stats:true"
         response = await self.client.get(url)
         response.raise_for_status()
         json_data = response.json()
         if not json_data.get("success"):
-            logger.warning(f"User with ID {user_id} not found.")
+            logger.warning("User with ID %s not found.", user_id)
             raise FileNotFoundError(f"User with ID {user_id} not found.")
         user_data = json_data["response"]
         user_data["profile_url"] = self.base_url + user_data["url"]
         user = User.model_validate(user_data)
-        logger.info(f"Successfully retrieved user: '{user.name}'")
+        logger.info("Successfully retrieved user: '%s'", user.name)
         return user
 
     async def get_relations(self, user_id: int, relation: UsersRelation, page: int = 1) -> Pagination[int]:
@@ -523,7 +524,7 @@ class AsyncUserService(AsyncAuthenticatedService):  # pragma: no cover - thin as
         """
         await self._validate_login()
         url = f"{self.base_url}/{relation.value}/listar/{user_id}/page:{page}/limit:100"
-        logger.info(f"Getting '{relation.value}' for user_id: {user_id}, page: {page}")
+        logger.info("Getting '%s' for user_id: %s, page: %s", relation.value, user_id, page)
         response = await self.client.get(url)
         response.raise_for_status()
         soup = self.parse_html(response.text)
@@ -532,11 +533,12 @@ class AsyncUserService(AsyncAuthenticatedService):  # pragma: no cover - thin as
             users_id = [int(get_user_id_from_url(get_tag_attr(i.a, "href"))) for i in users_html if i.find("a") and getattr(i, "a", None)]
             next_page_link = safe_find(soup, "div", {"class": "proximo"})
         except (AttributeError, ValueError, IndexError) as e:
-            logger.error(f"Failed to parse user relations: {e}")
+            logger.exception("Failed to parse user relations: %s", e)
             raise ParsingError("Failed to parse user relations.") from e
 
         total = _parse_total_from_html(soup)
         logger.info(f"Found {len(users_id)} users on page {page}.")
+
         return Pagination(
             results=users_id,
             limit=100,
@@ -567,7 +569,7 @@ class AsyncUserService(AsyncAuthenticatedService):  # pragma: no cover - thin as
         """
         await self._validate_login()
         url = f"{self.base_url}/estante/resenhas/{user_id}/mpage:{page}/limit:50"
-        logger.info(f"Getting reviews for user_id: {user_id}, page: {page}")
+        logger.info("Getting reviews for user_id: %s, page: %s", user_id, page)
         response = await self.client.get(url)
         response.raise_for_status()
         user_reviews: list[BookReview] = []
@@ -609,11 +611,12 @@ class AsyncUserService(AsyncAuthenticatedService):  # pragma: no cover - thin as
                 )
             next_page_link = safe_find(soup, "a", {"string": " Próxima"})
         except (AttributeError, ValueError, IndexError) as e:
-            logger.error(f"Failed to parse user reviews: {e}")
+            logger.exception("Failed to parse user reviews: %s", e)
             raise ParsingError("Failed to parse user reviews.") from e
 
         total = _parse_total_from_html(soup)
         logger.info(f"Found {len(user_reviews)} reviews on page {page}.")
+
         return Pagination(
             results=user_reviews,
             limit=50,
@@ -636,7 +639,7 @@ class AsyncUserService(AsyncAuthenticatedService):  # pragma: no cover - thin as
             The user's reading statistics.
         """
         await self._validate_login()
-        logger.info(f"Getting read stats for user_id: {user_id}")
+        logger.info("Getting read stats for user_id: %s", user_id)
         url = f"{self.base_url}/v1/meta_stats/{user_id}"
         response = await self.client.get(url)
         response.raise_for_status()
@@ -652,7 +655,7 @@ class AsyncUserService(AsyncAuthenticatedService):  # pragma: no cover - thin as
             reading_speed=json_data.get("velocidade_dia"),
             ideal_reading_speed=json_data.get("velocidade_ideal"),
         )
-        logger.info(f"Successfully retrieved read stats for user_id: {user_id}")
+        logger.info("Successfully retrieved read stats for user_id: %s", user_id)
         return stats
 
     async def get_bookcase(self, user_id: int, bookcase_option: BookcaseOption, page: int = 1) -> Pagination[UserBook]:
@@ -674,7 +677,7 @@ class AsyncUserService(AsyncAuthenticatedService):  # pragma: no cover - thin as
         """
         await self._validate_login()
         url = f"{self.base_url}/v1/bookcase/books/{user_id}/shelf_id:{bookcase_option.value}/page:{page}/limit:100"
-        logger.info(f"Getting bookcase for user_id: {user_id}, option: '{bookcase_option.name}', page: {page}")
+        logger.info("Getting bookcase for user_id: %s, option: '%s', page: %s", user_id, bookcase_option.name, page)
         response = await self.client.get(url)
         response.raise_for_status()
         json_data = response.json()
@@ -697,8 +700,10 @@ class AsyncUserService(AsyncAuthenticatedService):  # pragma: no cover - thin as
                     pages_read=r.get("paginas_lidas"),
                 )
             )
+        
         total = _parse_total_from_paging(json_data.get("paging", {}))
         logger.info(f"Found {len(results)} books on page {page}.")
+
         return Pagination(
             limit=100,
             results=results,
@@ -748,7 +753,7 @@ class AsyncUserService(AsyncAuthenticatedService):  # pragma: no cover - thin as
             url += f"/uf:{state.value}"
         response = await self.client.get(url)
         response.raise_for_status()
-        soup = BeautifulSoup(response.text, "html.parser")
+        soup = self.parse_html(response.text)
         try:
             user_divs = safe_find_all(
                 soup,
