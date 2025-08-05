@@ -32,8 +32,6 @@ class HttpxSyncClient(SyncHTTPClient):
         return self._client.cookies
 
     def get(self, url: str, **kwargs: Any) -> HTTPResponse:
-        if not hasattr(self, "_rate_limiter"):
-            self._rate_limiter = RateLimiter()
         self._rate_limiter.acquire()
         return self._client.get(url, **kwargs)
 
@@ -57,8 +55,6 @@ class HttpxSyncClient(SyncHTTPClient):
             The HTTP response instance returned by ``httpx``.
         """
 
-        if not hasattr(self, "_rate_limiter"):
-            self._rate_limiter = RateLimiter()
         self._rate_limiter.acquire()
         if isinstance(data, (str | bytes)):
             return self._client.post(url, content=data, **kwargs)
@@ -90,8 +86,6 @@ class HttpxAsyncClient(AsyncHTTPClient):
         return self._client.cookies
 
     async def get(self, url: str, **kwargs: Any) -> HTTPResponse:
-        if not hasattr(self, "_rate_limiter"):
-            self._rate_limiter = RateLimiter()
         await self._rate_limiter.acquire_async()
         return await self._client.get(url, **kwargs)
 
@@ -115,8 +109,6 @@ class HttpxAsyncClient(AsyncHTTPClient):
             The HTTP response instance returned by ``httpx``.
         """
 
-        if not hasattr(self, "_rate_limiter"):
-            self._rate_limiter = RateLimiter()
         await self._rate_limiter.acquire_async()
         if isinstance(data, (str | bytes)):
             return await self._client.post(url, content=data, **kwargs)
