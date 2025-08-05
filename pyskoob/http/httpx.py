@@ -3,6 +3,7 @@ from __future__ import annotations
 """httpx-based implementations of the HTTP client protocols."""
 
 from collections.abc import MutableMapping
+from types import TracebackType
 from typing import Any
 
 import httpx
@@ -125,3 +126,36 @@ class HttpxAsyncClient(AsyncHTTPClient):
 
     async def close(self) -> None:
         await self._client.aclose()
+
+    async def __aenter__(self) -> HttpxAsyncClient:
+        """Enter the asynchronous context manager.
+
+        Returns
+        -------
+        HttpxAsyncClient
+            The initialized client instance.
+        """
+
+        return self
+
+    async def __aexit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc: BaseException | None,
+        tb: TracebackType | None,
+    ) -> None:
+        """Exit the asynchronous context manager.
+
+        Ensures the underlying HTTPX client is properly closed.
+
+        Parameters
+        ----------
+        exc_type:
+            Exception type raised within the ``async with`` block, if any.
+        exc:
+            The exception instance raised within the block, if any.
+        tb:
+            Traceback information, if an exception occurred.
+        """
+
+        await self.close()

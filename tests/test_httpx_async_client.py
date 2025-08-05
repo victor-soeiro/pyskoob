@@ -23,3 +23,18 @@ def test_async_client_get_post_aclose():
         await client.close()
 
     asyncio.run(main())
+
+
+def test_async_client_context_manager_closes():
+    async def handler(request: httpx.Request) -> httpx.Response:  # pragma: no cover - simple handler
+        return httpx.Response(200, text="ok")
+
+    async def main() -> None:
+        transport = httpx.MockTransport(handler)
+        client = HttpxAsyncClient(transport=transport)
+        async with client as ctx:
+            resp = await ctx.get("https://x")
+            assert resp.text == "ok"
+        assert client._client.is_closed
+
+    asyncio.run(main())
