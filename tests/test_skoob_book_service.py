@@ -1,12 +1,12 @@
-from typing import cast
+from typing import Any, cast
 
 import pytest
 from bs4 import BeautifulSoup
 from conftest import DummyResponse
 
-from pyskoob.books import BookService
+from pyskoob.books import AsyncBookService, BookService
 from pyskoob.exceptions import ParsingError, RequestError
-from pyskoob.http.client import SyncHTTPClient
+from pyskoob.http.client import AsyncHTTPClient, SyncHTTPClient
 from pyskoob.models.book import Book
 from pyskoob.models.enums import BookUserStatus
 from pyskoob.parsers.books import (
@@ -205,3 +205,41 @@ def test_search_pagination(page: int, total: int, has_next: bool):
     service, _ = make_service(html=html)
     res = service.search("b", page=page)
     assert res.has_next_page is has_next
+
+
+# ---------------------------------------------------------------------------
+# Async tests
+
+
+@pytest.fixture
+def anyio_backend() -> str:
+    return "asyncio"
+
+
+class DummyAsyncClient:
+    async def get(self, url: str, **_: Any) -> DummyResponse:  # pragma: no cover - simple stub
+        return DummyResponse()
+
+
+class FailingAsyncClient(DummyAsyncClient):
+    async def get(self, url: str, **_: Any) -> DummyResponse:  # type: ignore[override]
+        raise RuntimeError("boom")
+
+
+@pytest.mark.anyio
+async def test_async_search_request_error() -> None:
+    service = AsyncBookService(cast(AsyncHTTPClient, FailingAsyncClient()))
+    with pytest.raises(RequestError):
+        await service.search("q")
+
+
+class BadParsingAsyncBookService(AsyncBookService):
+    def parse_html(self, html: str):  # type: ignore[override]
+        raise ValueError("bad")
+
+
+@pytest.mark.anyio
+async def test_async_search_parsing_error() -> None:
+    service = BadParsingAsyncBookService(cast(AsyncHTTPClient, DummyAsyncClient()))
+    with pytest.raises(ParsingError):
+        await service.search("q")
