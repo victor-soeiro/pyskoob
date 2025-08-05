@@ -5,6 +5,7 @@ from collections.abc import Callable
 from typing import Any
 
 from pyskoob.auth import AsyncAuthService, AuthService
+from pyskoob.exceptions import ProfileError
 from pyskoob.http.client import AsyncHTTPClient, SyncHTTPClient
 from pyskoob.internal.async_authenticated import AsyncAuthenticatedService
 from pyskoob.internal.authenticated import AuthenticatedService
@@ -67,7 +68,13 @@ class _ProfileServiceMixin:
         return response.json().get("success", False)
 
     async def _rate_book(self, edition_id: int, ranking: float) -> bool:
-        """Rate a book in the authenticated profile."""
+        """Rate a book in the authenticated profile.
+
+        Raises
+        ------
+        ProfileError
+            If the service fails to persist the rating.
+        """
 
         await maybe_await(self._validate_login)
         if not (0 <= ranking <= 5):
@@ -76,7 +83,7 @@ class _ProfileServiceMixin:
         response = await maybe_await(self.client.get, url)
         response.raise_for_status()
         if not response.json().get("success"):
-            raise RuntimeError("Failed to rate the book.")
+            raise ProfileError("Failed to rate the book.")
         return True
 
 
@@ -231,8 +238,8 @@ class SkoobProfileService(_ProfileServiceMixin, AuthenticatedService):
         ------
         ValueError
             If the rating is not between 0 and 5.
-        RuntimeError
-            If it fails to rate the book.
+        ProfileError
+            If the service fails to persist the rating.
 
         Examples
         --------

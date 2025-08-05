@@ -11,3 +11,9 @@ class RequestError(Exception):
     """Custom exception for HTTP request failures."""
 
     pass
+
+
+class ProfileError(Exception):
+    """Custom exception for profile-related operation failures."""
+
+    pass
