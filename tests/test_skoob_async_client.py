@@ -2,7 +2,7 @@ import httpx
 import pytest
 from conftest import make_user
 
-from pyskoob import SkoobAsyncClient
+from pyskoob import RateLimiter, SkoobAsyncClient
 from pyskoob.http.httpx import HttpxAsyncClient
 
 pytestmark = pytest.mark.anyio
@@ -80,3 +80,10 @@ async def test_rate_limiter_invoked(monkeypatch):
     async with SkoobAsyncClient() as client:
         await client.auth.login_with_cookies("tok")
     assert called
+
+  
+async def test_async_client_allows_configuration(anyio_backend):
+    limiter = RateLimiter()
+    async with SkoobAsyncClient(rate_limiter=limiter, timeout=5) as client:
+        assert client._client._rate_limiter is limiter
+        assert client._client._client.timeout == httpx.Timeout(5)

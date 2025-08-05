@@ -1,3 +1,5 @@
+"""Pydantic models representing books and their statistics."""
+
 from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict, Field

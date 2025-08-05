@@ -1,3 +1,6 @@
+"""Project-wide custom exceptions."""
+
+
 class ParsingError(Exception):
     """Custom exception for errors during HTML parsing."""
 
