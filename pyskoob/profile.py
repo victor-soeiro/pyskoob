@@ -3,6 +3,7 @@
 import logging
 
 from pyskoob.auth import AsyncAuthService, AuthService
+from pyskoob.exceptions import ProfileError
 from pyskoob.http.client import AsyncHTTPClient, SyncHTTPClient
 from pyskoob.internal.async_authenticated import AsyncAuthenticatedService
 from pyskoob.internal.authenticated import AuthenticatedService
@@ -182,8 +183,8 @@ class SkoobProfileService(AuthenticatedService):
         ------
         ValueError
             If the rating is not between 0 and 5.
-        RuntimeError
-            If it fails to rate the book.
+        ProfileError
+            If Skoob rejects the rating.
 
         Examples
         --------
@@ -199,7 +200,7 @@ class SkoobProfileService(AuthenticatedService):
         response.raise_for_status()
 
         if not response.json().get("success"):
-            raise RuntimeError("Failed to rate the book.")
+            raise ProfileError("Failed to rate the book.")
         return True
 
 
@@ -334,7 +335,7 @@ class AsyncSkoobProfileService(AsyncAuthenticatedService):  # pragma: no cover -
         ------
         ValueError
             If ``ranking`` is outside the 0–5 range.
-        RuntimeError
+        ProfileError
             If Skoob rejects the rating.
         """
 
@@ -345,5 +346,5 @@ class AsyncSkoobProfileService(AsyncAuthenticatedService):  # pragma: no cover -
         response = await self.client.get(url)
         response.raise_for_status()
         if not response.json().get("success"):
-            raise RuntimeError("Failed to rate the book.")
+            raise ProfileError("Failed to rate the book.")
         return True
