@@ -268,8 +268,13 @@ class AsyncAuthService(AsyncBaseSkoobService):  # pragma: no cover - thin async 
         logger.info("Successfully retrieved user: '%s'", user.name)
         return user
 
-    def validate_login(self) -> None:
-        """Validate whether the current session is authenticated.
+    async def validate_login(self) -> None:
+        """Validate that the current session is authenticated.
+
+        Notes
+        -----
+        This method performs no I/O but remains asynchronous for API
+        consistency across async services.
 
         Raises
         ------

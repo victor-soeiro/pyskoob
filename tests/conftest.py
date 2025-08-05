@@ -3,8 +3,8 @@ from typing import Any, cast
 
 import pytest
 
-from pyskoob.auth import AuthService
-from pyskoob.http.client import SyncHTTPClient
+from pyskoob.auth import AsyncAuthService, AuthService
+from pyskoob.http.client import AsyncHTTPClient, SyncHTTPClient
 from pyskoob.models.user import User
 
 
@@ -45,14 +45,43 @@ class DummyClient:
         pass
 
 
+class DummyAsyncClient:
+    def __init__(self, text: str = "", json_data: Any | None = None):
+        self.text = text
+        self.json_data = json_data or {}
+        self.cookies: dict[str, Any] = {}
+        self.called: list[Any] = []
+
+    async def get(self, url: str, **_: Any) -> DummyResponse:
+        self.called.append(url)
+        return DummyResponse(self.text, self.json_data)
+
+    async def post(self, url: str, data: Any | None = None, **_: Any) -> DummyResponse:
+        self.called.append(url)
+        return DummyResponse(self.text, self.json_data)
+
+    async def close(self) -> None:  # pragma: no cover - simple stub
+        pass
+
+
 @pytest.fixture
 def dummy_client() -> DummyClient:
     return DummyClient()
 
 
 @pytest.fixture
+def dummy_async_client() -> DummyAsyncClient:
+    return DummyAsyncClient()
+
+
+@pytest.fixture
 def dummy_auth(dummy_client: DummyClient) -> AuthService:
     return AuthService(cast(SyncHTTPClient, dummy_client))
+
+
+@pytest.fixture
+def dummy_async_auth(dummy_async_client: DummyAsyncClient) -> AsyncAuthService:
+    return AsyncAuthService(cast(AsyncHTTPClient, dummy_async_client))
 
 
 @pytest.fixture
