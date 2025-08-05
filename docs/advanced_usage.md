@@ -33,10 +33,9 @@ import asyncio
 from pyskoob import HttpxAsyncClient
 
 async def main() -> None:
-    client = HttpxAsyncClient()
-    resp = await client.get("https://www.skoob.com.br")
-    print(resp.text[:100])
-    await client.close()
+    async with HttpxAsyncClient() as client:
+        resp = await client.get("https://www.skoob.com.br")
+        print(resp.text[:100])
 
 asyncio.run(main())
 ```
