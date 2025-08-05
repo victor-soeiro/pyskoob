@@ -25,12 +25,26 @@ async def maybe_await(func: Callable[..., Any], *args: Any, **kwargs: Any) -> An
 def run_sync(awaitable: Coroutine[Any, Any, T]) -> T:
     """Synchronously run a coroutine using ``asyncio.run``.
 
-    Note
-    ----
-    This helper should only be used when no event loop is already running.
-    Calling it from within an active loop will raise :class:`RuntimeError`.
-    For such environments, consider using ``nest_asyncio`` or executing the
-    coroutine in a separate thread.
+    Notes
+    -----
+    ``asyncio.run`` raises a generic :class:`RuntimeError` when invoked while
+    an event loop is already running. This helper performs an explicit check so
+    callers receive a descriptive error message instead of the generic one.
+
+    Raises
+    ------
+    RuntimeError
+        If an event loop is currently running. In that case, consider awaiting
+        the coroutine directly or running it in a separate thread.
     """
+
+    try:
+        asyncio.get_running_loop()
+    except RuntimeError:
+        pass
+    else:
+        raise RuntimeError(
+            "run_sync() cannot be called from an active event loop. Use 'await' directly or run the coroutine in a separate thread."
+        )
 
     return asyncio.run(awaitable)
