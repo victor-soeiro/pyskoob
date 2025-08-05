@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from typing import Any
+from types import TracebackType
+from typing import Any, Literal
 
 from pyskoob.auth import AsyncAuthService, AuthService
 from pyskoob.authors import AsyncAuthorService, AuthorService
@@ -24,7 +25,7 @@ class SkoobClient:
     ...     client.auth.login_with_cookies("token")
     """
 
-    def __init__(self, rate_limiter: RateLimiter | None = None) -> None:
+    def __init__(self, rate_limiter: RateLimiter | None = None, **kwargs: Any) -> None:
         """Initializes the SkoobClient.
 
         Parameters
@@ -32,9 +33,12 @@ class SkoobClient:
         rate_limiter:
             Optional rate limiter used to throttle requests. If ``None``, a
             default limiter allowing one request per second is used.
+        **kwargs:
+            Additional keyword arguments forwarded to ``httpx.Client`` when the
+            underlying :class:`HttpxSyncClient` is constructed.
         """
 
-        self._client = HttpxSyncClient(rate_limiter=rate_limiter)
+        self._client = HttpxSyncClient(rate_limiter=rate_limiter, **kwargs)
         self.auth = AuthService(self._client)
         self.books = BookService(self._client)
         self.authors = AuthorService(self._client)
@@ -58,30 +62,45 @@ class SkoobClient:
         """
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb) -> bool | None:
+    def __exit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_tb: TracebackType | None,
+    ) -> Literal[False]:
         """
         Exit the runtime context, closing the HTTPX client.
 
         Parameters
         ----------
-        exc_type : type
+        exc_type : type[BaseException] | None
             The exception type.
-        exc_val : Exception
+        exc_val : BaseException | None
             The exception value.
-        exc_tb : traceback
+        exc_tb : TracebackType | None
             The traceback object.
 
         Returns
         -------
-        bool or None
-            ``True`` to suppress the exception; otherwise ``None`` or ``False``
-            to propagate it.
+        Literal[False]
+            Always returns ``False`` so exceptions are never suppressed.
 
         Examples
         --------
         >>> client = SkoobClient()
         >>> client.__exit__(None, None, None)
-        None
+        False
+        """
+        self.close()
+        return False
+
+    def close(self) -> None:
+        """Close the underlying HTTP client.
+
+        Examples
+        --------
+        >>> client = SkoobClient()
+        >>> client.close()
         """
         self._client.close()
 
@@ -123,9 +142,30 @@ class SkoobAsyncClient:
     async def __aenter__(self) -> SkoobAsyncClient:
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb) -> bool | None:
+    async def __aexit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_tb: TracebackType | None,
+    ) -> Literal[False]:
+        """Exit the async runtime context, closing the HTTPX client.
+
+        Parameters
+        ----------
+        exc_type : type[BaseException] | None
+            The exception type.
+        exc_val : BaseException | None
+            The exception value.
+        exc_tb : TracebackType | None
+            The traceback object.
+
+        Returns
+        -------
+        Literal[False]
+            Always returns ``False`` so exceptions are never suppressed.
+        """
         await self.close()
-        return None
+        return False
 
     async def close(self) -> None:
         """Close the underlying HTTP client.

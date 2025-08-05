@@ -63,12 +63,18 @@ dev = [
     "pytest-cov>=6.2.1",
     "requests>=2.32.4",
     "ruff>=0.12.4",
+    "mypy>=1.10.0",
 ]
 docs = [
     "mkdocs>=1.6.0",
     "mkdocs-material>=9.6.0,<10.0",
     "mkdocstrings[python]>=0.24.0",
 ]
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true
+files = ["pyskoob"]
 
 [build-system]
 requires = ["setuptools>=65", "wheel"]

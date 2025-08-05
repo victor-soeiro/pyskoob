@@ -3,6 +3,7 @@ from typing import cast
 import pytest
 
 from pyskoob.auth import AuthService
+from pyskoob.exceptions import ProfileError
 from pyskoob.http.client import SyncHTTPClient
 from pyskoob.models.enums import BookLabel, BookShelf, BookStatus
 from pyskoob.profile import SkoobProfileService
@@ -56,7 +57,7 @@ def test_rate_book_invalid_range():
 
 def test_rate_book_failure():
     service, _ = make_service(False)
-    with pytest.raises(RuntimeError):
+    with pytest.raises(ProfileError):
         service.rate_book(1, 3)
 
 

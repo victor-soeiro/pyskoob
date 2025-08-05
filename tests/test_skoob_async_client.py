@@ -52,6 +52,21 @@ async def test_async_client_close_method(monkeypatch, anyio_backend):
     assert closed
 
 
+async def test_async_client_exit_returns_false(monkeypatch, anyio_backend):
+    closed = False
+
+    async def fake_aclose(self):
+        nonlocal closed
+        closed = True
+
+    monkeypatch.setattr("httpx.AsyncClient.aclose", fake_aclose, raising=False)
+
+    client = SkoobAsyncClient()
+    result = await client.__aexit__(None, None, None)
+    assert result is False
+    assert closed
+
+
 class DummyAsyncClient:
     def __init__(self) -> None:
         self.closed = False
