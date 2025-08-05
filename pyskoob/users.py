@@ -135,7 +135,7 @@ class UserService(AuthenticatedService):
             users_id = [int(get_user_id_from_url(get_tag_attr(i.a, "href"))) for i in users_html if i.find("a") and getattr(i, "a", None)]
             next_page_link = safe_find(soup, "div", {"class": "proximo"})
         except (AttributeError, ValueError, IndexError) as e:  # pragma: no cover - defensive
-            logger.error("Failed to parse user relations: %s", e)
+            logger.exception("Failed to parse user relations: %s", e)
             raise ParsingError("Failed to parse user relations.") from e
 
         logger.info("Found %s users on page %s.", len(users_id), page)
@@ -213,7 +213,7 @@ class UserService(AuthenticatedService):
                 )
             next_page_link = safe_find(soup, "a", {"string": " Próxima"})
         except (AttributeError, ValueError, IndexError) as e:  # pragma: no cover - defensive
-            logger.error("Failed to parse user reviews: %s", e)
+            logger.exception("Failed to parse user reviews: %s", e)
             raise ParsingError("Failed to parse user reviews.") from e
 
         logger.info("Found %s reviews on page %s.", len(user_reviews), page)
@@ -505,7 +505,7 @@ class AsyncUserService(AsyncAuthenticatedService):  # pragma: no cover - thin as
             users_id = [int(get_user_id_from_url(get_tag_attr(i.a, "href"))) for i in users_html if i.find("a") and getattr(i, "a", None)]
             next_page_link = safe_find(soup, "div", {"class": "proximo"})
         except (AttributeError, ValueError, IndexError) as e:
-            logger.error("Failed to parse user relations: %s", e)
+            logger.exception("Failed to parse user relations: %s", e)
             raise ParsingError("Failed to parse user relations.") from e
         logger.info("Found %s users on page %s.", len(users_id), page)
         return Pagination(
@@ -580,7 +580,7 @@ class AsyncUserService(AsyncAuthenticatedService):  # pragma: no cover - thin as
                 )
             next_page_link = safe_find(soup, "a", {"string": " Próxima"})
         except (AttributeError, ValueError, IndexError) as e:
-            logger.error("Failed to parse user reviews: %s", e)
+            logger.exception("Failed to parse user reviews: %s", e)
             raise ParsingError("Failed to parse user reviews.") from e
         logger.info("Found %s reviews on page %s.", len(user_reviews), page)
         return Pagination(
