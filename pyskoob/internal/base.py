@@ -10,9 +10,9 @@ class BaseHttpService:
 
     Attributes
     ----------
-    _base_url : str
+    base_url : str
         The base URL for the service.
-    _client : SyncHTTPClient
+    client : SyncHTTPClient
         The HTTP client for making requests.
     """
 
@@ -80,6 +80,13 @@ class BaseHttpService:
 
 class BaseSkoobService(BaseHttpService):
     """Base class for services that talk to the Skoob website.
+
+    Attributes
+    ----------
+    base_url : str
+        The base URL for Skoob endpoints.
+    client : SyncHTTPClient
+        The HTTP client used for requests.
 
     Notes
     -----
