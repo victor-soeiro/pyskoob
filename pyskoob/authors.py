@@ -152,57 +152,15 @@ class AuthorService(_AuthorServiceMixin, BaseSkoobService):
     """High level operations for retrieving authors."""
 
     def search(self, query: str, page: int = 1) -> Pagination[AuthorSearchResult]:
-        """Search for authors by name.
-
-        Parameters
-        ----------
-        query : str
-            Text to search for in author names.
-        page : int, optional
-            Result page number, by default ``1``.
-
-        Returns
-        -------
-        Pagination[AuthorSearchResult]
-            Paginated collection of matching authors.
-
-        Examples
-        --------
-        >>> service.search("Douglas Adams").results[0].name
-        'Douglas Adams'
-        """
+        """Synchronous wrapper around :meth:`_search`."""
         return run_sync(self._search(query, page))
 
     def get_by_id(self, author_id: int) -> AuthorProfile:
-        """Retrieve detailed information about an author.
-
-        Parameters
-        ----------
-        author_id : int
-            Unique author identifier.
-
-        Returns
-        -------
-        AuthorProfile
-            Parsed author profile.
-        """
+        """Synchronous wrapper around :meth:`_get_by_id`."""
         return run_sync(self._get_by_id(author_id))
 
     def get_books(self, author_id: int, page: int = 1) -> Pagination[BookSearchResult]:
-        """Retrieve books written by the author.
-
-        Parameters
-        ----------
-        author_id : int
-            Identifier of the author whose books will be listed.
-        page : int, optional
-            Result page number, by default ``1``.
-
-        Returns
-        -------
-        Pagination[BookSearchResult]
-            Paginated list of the author's books.
-        """
+        """Synchronous wrapper around :meth:`_get_books`."""
         return run_sync(self._get_books(author_id, page))
 
 
@@ -213,53 +171,16 @@ class AsyncAuthorService(_AuthorServiceMixin, AsyncBaseSkoobService):  # pragma:
         super().__init__(client)
 
     async def search(self, query: str, page: int = 1) -> Pagination[AuthorSearchResult]:
-        """Asynchronously search for authors by name.
-
-        Parameters
-        ----------
-        query : str
-            Text to search for in author names.
-        page : int, optional
-            Result page number, by default ``1``.
-
-        Returns
-        -------
-        Pagination[AuthorSearchResult]
-            Paginated collection of matching authors.
-        """
+        """Asynchronous wrapper around :meth:`_search`."""
 
         return await self._search(query, page)
 
     async def get_by_id(self, author_id: int) -> AuthorProfile:
-        """Fetch an author's profile by identifier.
-
-        Parameters
-        ----------
-        author_id : int
-            Unique author identifier.
-
-        Returns
-        -------
-        AuthorProfile
-            Parsed author profile information.
-        """
+        """Asynchronous wrapper around :meth:`_get_by_id`."""
 
         return await self._get_by_id(author_id)
 
     async def get_books(self, author_id: int, page: int = 1) -> Pagination[BookSearchResult]:
-        """Fetch books written by the given author.
-
-        Parameters
-        ----------
-        author_id : int
-            Identifier of the author whose books will be listed.
-        page : int, optional
-            Result page number, by default ``1``.
-
-        Returns
-        -------
-        Pagination[BookSearchResult]
-            Paginated list of the author's books.
-        """
+        """Asynchronous wrapper around :meth:`_get_books`."""
 
         return await self._get_books(author_id, page)

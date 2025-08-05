@@ -48,6 +48,11 @@ class _PublisherServiceMixin:
         -------
         Publisher
             Parsed publisher information including latest releases and stats.
+
+        Raises
+        ------
+        httpx.HTTPStatusError
+            If the request returns a non-2xx status code.
         """
 
         url = f"{self.base_url}/editora/{publisher_id}"
@@ -138,52 +143,15 @@ class PublisherService(_PublisherServiceMixin, BaseSkoobService):
     """High level operations for retrieving publishers."""
 
     def get_by_id(self, publisher_id: int) -> Publisher:
-        """Retrieve detailed information about a publisher.
-
-        Parameters
-        ----------
-        publisher_id : int
-            Unique publisher identifier.
-
-        Returns
-        -------
-        Publisher
-            Parsed publisher information including latest releases and stats.
-        """
+        """Synchronous wrapper around :meth:`_get_by_id`."""
         return run_sync(self._get_by_id(publisher_id))
 
     def get_authors(self, publisher_id: int, page: int = 1) -> Pagination[PublisherAuthor]:
-        """Retrieve authors associated with a publisher.
-
-        Parameters
-        ----------
-        publisher_id : int
-            Identifier of the publisher.
-        page : int, optional
-            Result page number, by default ``1``.
-
-        Returns
-        -------
-        Pagination[PublisherAuthor]
-            Paginated list of publisher authors.
-        """
+        """Synchronous wrapper around :meth:`_get_authors`."""
         return run_sync(self._get_authors(publisher_id, page))
 
     def get_books(self, publisher_id: int, page: int = 1) -> Pagination[PublisherItem]:
-        """Retrieve books published by a publisher.
-
-        Parameters
-        ----------
-        publisher_id : int
-            Identifier of the publisher.
-        page : int, optional
-            Result page number, by default ``1``.
-
-        Returns
-        -------
-        Pagination[PublisherItem]
-            Paginated list of books from the publisher.
-        """
+        """Synchronous wrapper around :meth:`_get_books`."""
         return run_sync(self._get_books(publisher_id, page))
 
 
@@ -194,53 +162,16 @@ class AsyncPublisherService(_PublisherServiceMixin, AsyncBaseSkoobService):  # p
         super().__init__(client)
 
     async def get_by_id(self, publisher_id: int) -> Publisher:
-        """Retrieve detailed information about a publisher.
-
-        Parameters
-        ----------
-        publisher_id : int
-            Unique publisher identifier.
-
-        Returns
-        -------
-        Publisher
-            Parsed publisher information including latest releases and stats.
-        """
+        """Asynchronous wrapper around :meth:`_get_by_id`."""
 
         return await self._get_by_id(publisher_id)
 
     async def get_authors(self, publisher_id: int, page: int = 1) -> Pagination[PublisherAuthor]:
-        """Retrieve authors associated with a publisher.
-
-        Parameters
-        ----------
-        publisher_id : int
-            Identifier of the publisher.
-        page : int, optional
-            Result page number, by default ``1``.
-
-        Returns
-        -------
-        Pagination[PublisherAuthor]
-            Paginated list of publisher authors.
-        """
+        """Asynchronous wrapper around :meth:`_get_authors`."""
 
         return await self._get_authors(publisher_id, page)
 
     async def get_books(self, publisher_id: int, page: int = 1) -> Pagination[PublisherItem]:
-        """Retrieve books published by a publisher.
-
-        Parameters
-        ----------
-        publisher_id : int
-            Identifier of the publisher.
-        page : int, optional
-            Result page number, by default ``1``.
-
-        Returns
-        -------
-        Pagination[PublisherItem]
-            Paginated list of books from the publisher.
-        """
+        """Asynchronous wrapper around :meth:`_get_books`."""
 
         return await self._get_books(publisher_id, page)

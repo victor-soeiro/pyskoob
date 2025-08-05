@@ -49,8 +49,8 @@ class _BookServiceMixin:
         Parameters
         ----------
         query : str
-            Text to search for in book titles, ISBNs or authors depending on
-            ``search_by``.
+            Free-text to match against titles, ISBNs, authors, publishers or tags,
+            depending on ``search_by``.
         search_by : BookSearch, optional
             Criteria used for searching, by default ``BookSearch.TITLE``.
         page : int, optional

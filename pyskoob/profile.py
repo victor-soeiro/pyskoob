@@ -128,14 +128,14 @@ class _ProfileServiceMixin:
         response.raise_for_status()
         return response.json().get("success", False)
 
-    async def _rate_book(self, edition_id: int, ranking: float) -> bool:
+    async def _rate_book(self, edition_id: int, rating: float) -> bool:
         """Rate a book in the authenticated profile.
 
         Parameters
         ----------
         edition_id : int
             Edition identifier of the book.
-        ranking : float
+        rating : float
             Rating between ``0`` and ``5``.
 
         Returns
@@ -146,15 +146,15 @@ class _ProfileServiceMixin:
         Raises
         ------
         ValueError
-            If ``ranking`` is outside the ``0``-``5`` range.
+            If ``rating`` is outside the ``0``-``5`` range.
         ProfileError
             If the service fails to persist the rating.
         """
 
         await maybe_await(self._validate_login)
-        if not (0 <= ranking <= 5):
+        if not (0 <= rating <= 5):
             raise ValueError("Rating must be between 0 and 5.")
-        url = f"{self.base_url}/v1/book_rate/{edition_id}/{ranking}"
+        url = f"{self.base_url}/v1/book_rate/{edition_id}/{rating}"
         response = await maybe_await(self.client.get, url)
         response.raise_for_status()
         if not response.json().get("success"):
@@ -288,20 +288,19 @@ class SkoobProfileService(_ProfileServiceMixin, AuthenticatedService):
 
         Examples
         --------
-        >>> service.change_book_shelf(10, BookShelf.FAVORITES)
+        >>> service.change_book_shelf(10, BookShelf.BOOK)
         True
         """
         return run_sync(self._change_book_shelf(edition_id, bookshelf))
 
-    def rate_book(self, edition_id: int, ranking: float) -> bool:
-        """
-        Rates a book.
+    def rate_book(self, edition_id: int, rating: float) -> bool:
+        """Rates a book.
 
         Parameters
         ----------
         edition_id : int
             The edition ID of the book.
-        ranking : float
+        rating : float
             The rating to give to the book (from 0 to 5).
 
         Returns
@@ -321,7 +320,7 @@ class SkoobProfileService(_ProfileServiceMixin, AuthenticatedService):
         >>> service.rate_book(10, 4.5)
         True
         """
-        return run_sync(self._rate_book(edition_id, ranking))
+        return run_sync(self._rate_book(edition_id, rating))
 
 
 class AsyncSkoobProfileService(_ProfileServiceMixin, AsyncAuthenticatedService):  # pragma: no cover - thin async wrapper
@@ -416,14 +415,14 @@ class AsyncSkoobProfileService(_ProfileServiceMixin, AsyncAuthenticatedService):
 
         return await self._change_book_shelf(edition_id, bookshelf)
 
-    async def rate_book(self, edition_id: int, ranking: float) -> bool:
+    async def rate_book(self, edition_id: int, rating: float) -> bool:
         """Rate a book in the authenticated profile.
 
         Parameters
         ----------
         edition_id : int
             Edition identifier of the book.
-        ranking : float
+        rating : float
             Rating between ``0`` and ``5``.
 
         Returns
@@ -432,4 +431,4 @@ class AsyncSkoobProfileService(_ProfileServiceMixin, AsyncAuthenticatedService):
             ``True`` if the rating was stored successfully.
         """
 
-        return await self._rate_book(edition_id, ranking)
+        return await self._rate_book(edition_id, rating)

@@ -34,6 +34,11 @@ class _AuthServiceMixin:
         -------
         User
             Authenticated user information.
+
+        Raises
+        ------
+        ConnectionError
+            If the session token is invalid or user information cannot be retrieved.
         """
 
         logger.info("Attempting to log in with session token.")
@@ -126,7 +131,7 @@ class _AuthServiceMixin:
         logger.debug("Validating login status.")
         if not self._is_logged_in:
             logger.warning("Validation failed: User is not logged in.")
-            raise PermissionError("User is not logged in. Please call 'login_with_cookies' first.")
+            raise PermissionError("User is not logged in. Please authenticate first using 'login' or 'login_with_cookies'.")
         logger.debug("Validation successful: User is logged in.")
 
 
