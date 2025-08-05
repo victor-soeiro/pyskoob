@@ -37,7 +37,7 @@ def test_sync_client_retries_on_transport_error(monkeypatch: pytest.MonkeyPatch)
     retry = Retry(max_attempts=3, base_delay=0, exceptions=(httpx.TransportError,))
     client = HttpxSyncClient(rate_limiter=DummyLimiter(), retry=retry)
 
-    response = client.get("https://example.com")
+    response: httpx.Response = client.get("https://example.com")
 
     assert attempts == 3
     assert response.status_code == 200
@@ -61,7 +61,7 @@ async def test_async_client_retries_on_transport_error(monkeypatch: pytest.Monke
     retry = Retry(max_attempts=3, base_delay=0, exceptions=(httpx.TransportError,))
     client = HttpxAsyncClient(rate_limiter=DummyLimiter(), retry=retry)
 
-    response = await client.get("https://example.com")
+    response: httpx.Response = await client.get("https://example.com")
 
     assert attempts == 3
     assert response.status_code == 200
