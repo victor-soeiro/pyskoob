@@ -7,6 +7,7 @@ from typing import Any
 from pyskoob.auth import AsyncAuthService, AuthService
 from pyskoob.authors import AsyncAuthorService, AuthorService
 from pyskoob.books import AsyncBookService, BookService
+from pyskoob.http.client import AsyncHTTPClient
 from pyskoob.http.httpx import HttpxAsyncClient, HttpxSyncClient
 from pyskoob.profile import AsyncSkoobProfileService, SkoobProfileService
 from pyskoob.publishers import AsyncPublisherService, PublisherService
@@ -90,15 +91,28 @@ class SkoobAsyncClient:
 
     Parameters
     ----------
+    http_client:
+        Optional pre-configured HTTP client implementing :class:`AsyncHTTPClient`.
+        When provided, ``rate_limiter`` and ``client_kwargs`` are ignored.
     rate_limiter:
-        Optional rate limiter used to throttle requests. If ``None``, a
-        default limiter allowing one request per second is used.
+        Optional rate limiter used to throttle requests. When ``http_client`` is
+        ``None``, a default limiter allowing one request per second is used.
     **client_kwargs:
-        Additional keyword arguments forwarded to ``httpx.AsyncClient``.
+        Additional keyword arguments forwarded to ``httpx.AsyncClient`` when the
+        default client is constructed.
     """
 
-    def __init__(self, rate_limiter: RateLimiter | None = None, **client_kwargs: Any) -> None:
-        self._client = HttpxAsyncClient(rate_limiter=rate_limiter, **client_kwargs)
+    def __init__(
+        self,
+        http_client: AsyncHTTPClient | None = None,
+        *,
+        rate_limiter: RateLimiter | None = None,
+        **client_kwargs: Any,
+    ) -> None:
+        if http_client is not None:
+            self._client = http_client
+        else:
+            self._client = HttpxAsyncClient(rate_limiter=rate_limiter, **client_kwargs)
         self.auth = AsyncAuthService(self._client)
         self.books = AsyncBookService(self._client)
         self.authors = AsyncAuthorService(self._client)
@@ -110,5 +124,15 @@ class SkoobAsyncClient:
         return self
 
     async def __aexit__(self, exc_type, exc_val, exc_tb) -> bool | None:
-        await self._client.close()
+        await self.close()
         return None
+
+    async def close(self) -> None:
+        """Close the underlying HTTP client.
+
+        Examples
+        --------
+        >>> client = SkoobAsyncClient()
+        >>> await client.close()
+        """
+        await self._client.close()
