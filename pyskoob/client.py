@@ -132,16 +132,21 @@ class SkoobAsyncClient:
     async def __aenter__(self) -> SkoobAsyncClient:
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb) -> Literal[False]:
+    async def __aexit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_tb: TracebackType | None,
+    ) -> Literal[False]:
         """Exit the async runtime context, closing the HTTPX client.
 
         Parameters
         ----------
-        exc_type : type
+        exc_type : type[BaseException] | None
             The exception type.
-        exc_val : Exception
+        exc_val : BaseException | None
             The exception value.
-        exc_tb : traceback
+        exc_tb : TracebackType | None
             The traceback object.
 
         Returns
