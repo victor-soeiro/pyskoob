@@ -97,6 +97,22 @@ with SkoobClient() as client:
     print(me.name)
 ```
 
+## Rate limiting
+
+Skoob may block clients that issue too many requests in a short period of
+time. PySkoob includes a basic rate limiter that throttles requests to **one**
+per second by default. Adjusting this limit is possible but done entirely at
+your own risk—Skoob may block or ban your account. Provide a custom
+:class:`pyskoob.utils.RateLimiter` instance to change or disable the limit:
+
+```python
+from pyskoob import RateLimiter, SkoobClient
+
+limiter = RateLimiter(max_calls=2, period=1)  # two requests per second (use at your own risk)
+with SkoobClient(rate_limiter=limiter) as client:
+    ...
+```
+
 ## Running tests
 
 Install the project in editable mode and run the test suite:

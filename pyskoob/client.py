@@ -7,6 +7,7 @@ from pyskoob.http.httpx import HttpxSyncClient
 from pyskoob.profile import SkoobProfileService
 from pyskoob.publishers import PublisherService
 from pyskoob.users import UserService
+from pyskoob.utils import RateLimiter
 
 
 class SkoobClient:
@@ -18,11 +19,17 @@ class SkoobClient:
     ...     client.auth.login_with_cookies("token")
     """
 
-    def __init__(self):
+    def __init__(self, rate_limiter: RateLimiter | None = None) -> None:
+        """Initializes the SkoobClient.
+
+        Parameters
+        ----------
+        rate_limiter:
+            Optional rate limiter used to throttle requests. If ``None``, a
+            default limiter allowing one request per second is used.
         """
-        Initializes the SkoobClient.
-        """
-        self._client = HttpxSyncClient()
+
+        self._client = HttpxSyncClient(rate_limiter=rate_limiter)
         self.auth = AuthService(self._client)
         self.books = BookService(self._client)
         self.authors = AuthorService(self._client)
