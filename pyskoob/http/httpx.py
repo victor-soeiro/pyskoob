@@ -32,6 +32,10 @@ class HttpxSyncClient(SyncHTTPClient):
     def cookies(self) -> MutableMapping[str, Any]:  # pragma: no cover - simple delegate
         return self._client.cookies
 
+    @cookies.setter
+    def cookies(self, value: Any) -> None:  # pragma: no cover - simple delegate
+        self._client.cookies = value
+
     def get(self, url: str, **kwargs: Any) -> HTTPResponse:
         self._rate_limiter.acquire()
         return self._client.get(url, **kwargs)
@@ -85,6 +89,10 @@ class HttpxAsyncClient(AsyncHTTPClient):
     @property
     def cookies(self) -> MutableMapping[str, Any]:  # pragma: no cover - simple delegate
         return self._client.cookies
+
+    @cookies.setter
+    def cookies(self, value: Any) -> None:  # pragma: no cover - simple delegate
+        self._client.cookies = value
 
     async def get(self, url: str, **kwargs: Any) -> HTTPResponse:
         await self._rate_limiter.acquire_async()
