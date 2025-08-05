@@ -58,9 +58,8 @@ class SkoobClient:
         """
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb) -> bool | None:
-        """
-        Exit the runtime context, closing the HTTPX client.
+    def __exit__(self, exc_type, exc_val, exc_tb) -> bool:
+        """Exit the runtime context, closing the HTTPX client.
 
         Parameters
         ----------
@@ -73,17 +72,17 @@ class SkoobClient:
 
         Returns
         -------
-        bool or None
-            ``True`` to suppress the exception; otherwise ``None`` or ``False``
-            to propagate it.
+        bool
+            ``True`` to suppress the exception; ``False`` to propagate it.
 
         Examples
         --------
         >>> client = SkoobClient()
         >>> client.__exit__(None, None, None)
-        None
+        False
         """
         self._client.close()
+        return False
 
 
 class SkoobAsyncClient:
