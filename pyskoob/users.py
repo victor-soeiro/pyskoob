@@ -4,8 +4,6 @@ import logging
 import re
 from datetime import datetime
 
-from bs4 import BeautifulSoup
-
 from pyskoob.auth import AsyncAuthService, AuthService
 from pyskoob.exceptions import ParsingError
 from pyskoob.http.client import AsyncHTTPClient, SyncHTTPClient
@@ -365,7 +363,7 @@ class UserService(AuthenticatedService):
         response = self.client.get(url)
         response.raise_for_status()
 
-        soup = BeautifulSoup(response.text, "html.parser")
+        soup = self.parse_html(response.text)
 
         try:
             user_divs = safe_find_all(
@@ -716,7 +714,7 @@ class AsyncUserService(AsyncAuthenticatedService):  # pragma: no cover - thin as
             url += f"/uf:{state.value}"
         response = await self.client.get(url)
         response.raise_for_status()
-        soup = BeautifulSoup(response.text, "html.parser")
+        soup = self.parse_html(response.text)
         try:
             user_divs = safe_find_all(
                 soup,
