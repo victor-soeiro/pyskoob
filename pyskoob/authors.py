@@ -68,7 +68,11 @@ class AuthorService(BaseSkoobService):
             if "border-bottom:#ccc" in style and "margin-bottom:10px" in style:
                 author_blocks.append(div)
 
-        results = [r for div in author_blocks if (r := parse_author_block(div, self.base_url))]
+        results: list[AuthorSearchResult] = []
+        for div in author_blocks:
+            author = parse_author_block(div, self.base_url)
+            if author is not None:
+                results.append(author)
         total = extract_total_results(soup)
         has_next = bool(safe_find(soup, "div", {"class": "proximo"}))
         return Pagination(
@@ -136,8 +140,11 @@ class AuthorService(BaseSkoobService):
         response.raise_for_status()
         soup = self.parse_html(response.text)
 
-        books = [parse_author_book_div(div, self.base_url) for div in safe_find_all(soup, "div", {"class": "clivro livro-capa-mini"})]
-        books = [b for b in books if b]
+        books: list[BookSearchResult] = []
+        for div in safe_find_all(soup, "div", {"class": "clivro livro-capa-mini"}):
+            book = parse_author_book_div(div, self.base_url)
+            if book is not None:
+                books.append(book)
 
         total_span = safe_find(soup, "span", {"class": "badge badge-ativa"})
         total_text = get_tag_text(total_span).replace(".", "")
@@ -187,7 +194,11 @@ class AsyncAuthorService(AsyncBaseSkoobService):  # pragma: no cover - thin asyn
                 style = str(div.get("style") or "")
                 if "border-bottom:#ccc" in style and "margin-bottom:10px" in style:
                     author_blocks.append(div)
-            results = [r for div in author_blocks if (r := parse_author_block(div, self.base_url))]
+            results: list[AuthorSearchResult] = []
+            for div in author_blocks:
+                author = parse_author_block(div, self.base_url)
+                if author is not None:
+                    results.append(author)
             total = extract_total_results(soup)
             has_next = bool(safe_find(soup, "div", {"class": "proximo"}))
             return Pagination(
@@ -254,8 +265,11 @@ class AsyncAuthorService(AsyncBaseSkoobService):  # pragma: no cover - thin asyn
             response = await self.client.get(url)
             response.raise_for_status()
             soup = self.parse_html(response.text)
-            books = [parse_author_book_div(div, self.base_url) for div in safe_find_all(soup, "div", {"class": "clivro livro-capa-mini"})]
-            books = [b for b in books if b]
+            books: list[BookSearchResult] = []
+            for div in safe_find_all(soup, "div", {"class": "clivro livro-capa-mini"}):
+                book = parse_author_book_div(div, self.base_url)
+                if book is not None:
+                    books.append(book)
             total_span = safe_find(soup, "span", {"class": "badge badge-ativa"})
             total_text = get_tag_text(total_span).replace(".", "")
             total = int(total_text) if total_text.isdigit() else len(books)

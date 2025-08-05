@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from types import TracebackType
 from typing import Any
 
 from pyskoob.auth import AsyncAuthService, AuthService
@@ -58,17 +59,22 @@ class SkoobClient:
         """
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb) -> bool | None:
+    def __exit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_tb: TracebackType | None,
+    ) -> bool | None:
         """
         Exit the runtime context, closing the HTTPX client.
 
         Parameters
         ----------
-        exc_type : type
+        exc_type : type[BaseException] | None
             The exception type.
-        exc_val : Exception
+        exc_val : BaseException | None
             The exception value.
-        exc_tb : traceback
+        exc_tb : TracebackType | None
             The traceback object.
 
         Returns
@@ -84,6 +90,7 @@ class SkoobClient:
         None
         """
         self._client.close()
+        return None
 
 
 class SkoobAsyncClient:
