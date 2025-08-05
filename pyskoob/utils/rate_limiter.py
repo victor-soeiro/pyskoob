@@ -39,25 +39,30 @@ class RateLimiter:
             self._calls.popleft()
 
     def acquire(self) -> None:
-        """Block until the next call is permitted."""
+        """Block until the next call is permitted.
+
+        The method re-checks the call timestamps after each sleep to ensure the
+        configured rate limit is always honoured even if the thread wakes up
+        earlier than expected.
+        """
         with self._lock:
-            now = time.monotonic()
-            self._trim(now)
-            if len(self._calls) >= self._max_calls:
+            while True:
+                now = time.monotonic()
+                self._trim(now)
+                if len(self._calls) < self._max_calls:
+                    self._calls.append(now)
+                    return
                 sleep_for = self._period - (now - self._calls[0])
                 time.sleep(sleep_for)
-                now = time.monotonic()
-                self._trim(now)
-            self._calls.append(now)
 
     async def acquire_async(self) -> None:
-        """Asynchronous variant of :meth:`acquire`."""
+        """Asynchronous variant of :meth:`acquire` with the same guarantees."""
         async with self._async_lock:
-            now = time.monotonic()
-            self._trim(now)
-            if len(self._calls) >= self._max_calls:
-                sleep_for = self._period - (now - self._calls[0])
-                await asyncio.sleep(sleep_for)
+            while True:
                 now = time.monotonic()
                 self._trim(now)
-            self._calls.append(now)
+                if len(self._calls) < self._max_calls:
+                    self._calls.append(now)
+                    return
+                sleep_for = self._period - (now - self._calls[0])
+                await asyncio.sleep(sleep_for)
