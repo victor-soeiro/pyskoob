@@ -80,19 +80,22 @@ def test_get_read_stats_and_bookcase():
     }
     client.json_data = bookcase_json
     books = service.get_bookcase(5, BookcaseOption.READ)
-    assert books.results[0].book_id == 1 and books.total == 1
+    assert books.results[0].book_id == 1
+    assert books.total == 1
 
 
 def test_search_and_relations_and_reviews():
     html = '<div style="border: 1px solid #e4e4e4"><a href="/usuario/10-john">John</a></div><div class="contador">1 encontrados</div>'
     service, client = make_service(html=html)
     res = service.search("john")
-    assert res.total == 1 and res.results[0].id == 10
+    assert res.total == 1
+    assert res.results[0].id == 10
 
     relations_html = '<div class="usuarios-mini-lista-txt"><a href="/usuario/20-doe"></a></div><div class="contador">1 amigos</div>'
     client.text = relations_html
     rel = service.get_relations(10, UsersRelation.FOLLOWERS)
-    assert rel.results == [20] and rel.total == 1
+    assert rel.results == [20]
+    assert rel.total == 1
 
     reviews_html = (
         "<div id='resenha1'><a href='/usuario/u'></a>"
@@ -103,7 +106,8 @@ def test_search_and_relations_and_reviews():
     )
     client.text = reviews_html
     rev = service.get_reviews(10)
-    assert rev.results[0].rating == 5 and rev.total == 1
+    assert rev.results[0].rating == 5
+    assert rev.total == 1
 
 
 @pytest.mark.parametrize(
@@ -120,7 +124,8 @@ def test_search_filters(logged_auth: AuthService, dummy_client: DummyClient, gen
     service = UserService(cast(SyncHTTPClient, dummy_client), logged_auth)
     res = service.search("a", gender=gender, state=state)
     assert frag in dummy_client.called[-1]
-    assert res.total == 1 and res.results[0].id == 1
+    assert res.total == 1
+    assert res.results[0].id == 1
 
 
 def test_get_by_id_success(dummy_client: DummyClient):
