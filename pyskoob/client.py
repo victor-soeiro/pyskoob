@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from types import TracebackType
-from typing import Any
+from typing import Any, Literal
 
 from pyskoob.auth import AsyncAuthService, AuthService
 from pyskoob.authors import AsyncAuthorService, AuthorService
@@ -67,7 +67,7 @@ class SkoobClient:
         exc_type: type[BaseException] | None,
         exc_val: BaseException | None,
         exc_tb: TracebackType | None,
-    ) -> bool | None:
+    ) -> Literal[False]:
         """
         Exit the runtime context, closing the HTTPX client.
 
@@ -82,18 +82,17 @@ class SkoobClient:
 
         Returns
         -------
-        bool or None
-            ``True`` to suppress the exception; otherwise ``None`` or ``False``
-            to propagate it.
+        Literal[False]
+            Always returns ``False`` so exceptions are never suppressed.
 
         Examples
         --------
         >>> client = SkoobClient()
         >>> client.__exit__(None, None, None)
-        None
+        False
         """
         self._client.close()
-        return None
+        return False
 
 
 class SkoobAsyncClient:
@@ -133,9 +132,25 @@ class SkoobAsyncClient:
     async def __aenter__(self) -> SkoobAsyncClient:
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb) -> bool | None:
+    async def __aexit__(self, exc_type, exc_val, exc_tb) -> Literal[False]:
+        """Exit the async runtime context, closing the HTTPX client.
+
+        Parameters
+        ----------
+        exc_type : type
+            The exception type.
+        exc_val : Exception
+            The exception value.
+        exc_tb : traceback
+            The traceback object.
+
+        Returns
+        -------
+        Literal[False]
+            Always returns ``False`` so exceptions are never suppressed.
+        """
         await self.close()
-        return None
+        return False
 
     async def close(self) -> None:
         """Close the underlying HTTP client.
