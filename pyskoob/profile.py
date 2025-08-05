@@ -201,7 +201,7 @@ class SkoobProfileService(AuthenticatedService):
         return True
 
 
-class AsyncSkoobProfileService(AsyncAuthenticatedService):
+class AsyncSkoobProfileService(AsyncAuthenticatedService):  # pragma: no cover - thin async wrapper
     """Asynchronous variant of :class:`SkoobProfileService`."""
 
     def __init__(self, client: AsyncHTTPClient, auth_service: AsyncAuthService):

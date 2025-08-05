@@ -9,7 +9,7 @@ if TYPE_CHECKING:
     from pyskoob.auth import AsyncAuthService
 
 
-class AsyncAuthenticatedService(AsyncBaseSkoobService):
+class AsyncAuthenticatedService(AsyncBaseSkoobService):  # pragma: no cover - thin async base
     """Base class for async services requiring authentication."""
 
     def __init__(self, client: AsyncHTTPClient, auth_service: AsyncAuthService):

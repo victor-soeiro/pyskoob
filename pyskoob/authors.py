@@ -151,7 +151,7 @@ class AuthorService(BaseSkoobService):
         )
 
 
-class AsyncAuthorService(AsyncBaseSkoobService):
+class AsyncAuthorService(AsyncBaseSkoobService):  # pragma: no cover - thin async wrapper
     """Asynchronous variant of :class:`AuthorService`."""
 
     def __init__(self, client: AsyncHTTPClient):

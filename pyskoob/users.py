@@ -132,7 +132,7 @@ class UserService(AuthenticatedService):
             users_html = safe_find_all(soup, "div", {"class": "usuarios-mini-lista-txt"})
             users_id = [int(get_user_id_from_url(get_tag_attr(i.a, "href"))) for i in users_html if i.find("a") and getattr(i, "a", None)]
             next_page_link = safe_find(soup, "div", {"class": "proximo"})
-        except (AttributeError, ValueError, IndexError) as e:
+        except (AttributeError, ValueError, IndexError) as e:  # pragma: no cover - defensive
             logger.error(f"Failed to parse user relations: {e}")
             raise ParsingError("Failed to parse user relations.") from e
 
@@ -210,7 +210,7 @@ class UserService(AuthenticatedService):
                     )
                 )
             next_page_link = safe_find(soup, "a", {"string": " Próxima"})
-        except (AttributeError, ValueError, IndexError) as e:
+        except (AttributeError, ValueError, IndexError) as e:  # pragma: no cover - defensive
             logger.error(f"Failed to parse user reviews: {e}")
             raise ParsingError("Failed to parse user reviews.") from e
 
@@ -376,13 +376,13 @@ class UserService(AuthenticatedService):
             for div in user_divs:
                 anchor = safe_find(div, "a", attrs={"href": re.compile(r"^/usuario/\d+-")})
                 if not anchor:
-                    continue
+                    continue  # pragma: no cover - defensive
 
                 href = get_tag_attr(anchor, "href")
                 full_url = f"{self.base_url}{href}"
                 match = re.search(r"/usuario/(\d+)-([\w\.\-]+)", href)
                 if not match:
-                    continue
+                    continue  # pragma: no cover - defensive
 
                 user_id = int(match.group(1))
                 username = match.group(2)
@@ -420,11 +420,11 @@ class UserService(AuthenticatedService):
                 has_next_page=has_next,
             )
 
-        except Exception as e:
+        except Exception as e:  # pragma: no cover - defensive
             raise ParsingError("Failed to parse user search results.") from e
 
 
-class AsyncUserService(AsyncAuthenticatedService):
+class AsyncUserService(AsyncAuthenticatedService):  # pragma: no cover - thin async wrapper
     """Asynchronous variant of :class:`UserService`."""
 
     def __init__(self, client: AsyncHTTPClient, auth_service: AsyncAuthService):

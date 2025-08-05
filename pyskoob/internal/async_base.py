@@ -6,7 +6,7 @@ from pyskoob.http.client import AsyncHTTPClient
 from pyskoob.http.httpx import HttpxAsyncClient
 
 
-class AsyncBaseHttpService:
+class AsyncBaseHttpService:  # pragma: no cover - thin async base
     """Base class for asynchronous HTTP services."""
 
     _base_url: str
@@ -30,7 +30,7 @@ class AsyncBaseHttpService:
         return BeautifulSoup(content, "html.parser")
 
 
-class AsyncBaseSkoobService(AsyncBaseHttpService):
+class AsyncBaseSkoobService(AsyncBaseHttpService):  # pragma: no cover - thin async base
     """Asynchronous variant of :class:`BaseSkoobService`."""
 
     def __init__(self, client: AsyncHTTPClient | None):

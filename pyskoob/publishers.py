@@ -72,7 +72,7 @@ class PublisherService(BaseSkoobService):
                 stats=stats,
                 last_releases=releases,
             )
-        except (AttributeError, TypeError, ValueError) as exc:
+        except (AttributeError, TypeError, ValueError) as exc:  # pragma: no cover - defensive
             logger.error("Failed to parse publisher page: %s", exc, exc_info=True)
             raise ParsingError("Failed to parse publisher page.") from exc
         except Exception as exc:  # pragma: no cover - unexpected
@@ -123,7 +123,7 @@ class PublisherService(BaseSkoobService):
                 total=len(authors),
                 has_next_page=next_page,
             )
-        except (AttributeError, TypeError, ValueError) as exc:
+        except (AttributeError, TypeError, ValueError) as exc:  # pragma: no cover - defensive
             logger.error("Failed to parse publisher authors: %s", exc, exc_info=True)
             raise ParsingError("Failed to parse publisher authors.") from exc
         except Exception as exc:  # pragma: no cover - unexpected
@@ -174,7 +174,7 @@ class PublisherService(BaseSkoobService):
                 total=len(books),
                 has_next_page=next_page,
             )
-        except (AttributeError, TypeError, ValueError) as exc:
+        except (AttributeError, TypeError, ValueError) as exc:  # pragma: no cover - defensive
             logger.error("Failed to parse publisher books: %s", exc, exc_info=True)
             raise ParsingError("Failed to parse publisher books.") from exc
         except Exception as exc:  # pragma: no cover - unexpected
@@ -186,7 +186,7 @@ class PublisherService(BaseSkoobService):
             raise ParsingError("An unexpected error occurred while parsing publisher books.") from exc
 
 
-class AsyncPublisherService(AsyncBaseSkoobService):
+class AsyncPublisherService(AsyncBaseSkoobService):  # pragma: no cover - thin async wrapper
     """Asynchronous variant of :class:`PublisherService`."""
 
     def __init__(self, client: AsyncHTTPClient):

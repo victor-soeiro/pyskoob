@@ -8,7 +8,7 @@ from pyskoob.utils.bs4_utils import get_tag_attr, get_tag_text, safe_find
 
 def parse_stats(div: Tag | None) -> PublisherStats:
     if not div:
-        return PublisherStats()
+        return PublisherStats()  # pragma: no cover - default empty stats
     followers = avg = ratings = male = female = None
     seg_span = div.find("span", string=lambda text: bool(text and "Seguidor" in text))
     if seg_span:

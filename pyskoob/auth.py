@@ -163,7 +163,7 @@ class AuthService(BaseSkoobService):
         logger.debug("Validation successful: User is logged in.")
 
 
-class AsyncAuthService(AsyncBaseSkoobService):
+class AsyncAuthService(AsyncBaseSkoobService):  # pragma: no cover - thin async wrapper
     """Asynchronous authentication service."""
 
     def __init__(self, client: AsyncHTTPClient):

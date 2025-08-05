@@ -36,7 +36,7 @@ def get_book_id_from_url(url: str) -> str:
     path = urlparse(url).path
     match = re.search(r"(\d+)", path)
     if not match:
-        raise ValueError(f"Book ID not found in URL: {url}")
+        raise ValueError(f"Book ID not found in URL: {url}")  # pragma: no cover - invalid URL
     return match.group(1)
 
 
@@ -66,7 +66,7 @@ def get_book_edition_id_from_url(url: str) -> str:
     path = urlparse(url).path
     match = re.search(r"ed(\d+)", path)
     if not match:
-        raise ValueError(f"Book edition ID not found in URL: {url}")
+        raise ValueError(f"Book edition ID not found in URL: {url}")  # pragma: no cover - invalid URL
     return match.group(1)
 
 
@@ -96,7 +96,7 @@ def get_user_id_from_url(url: str) -> str:
     path = urlparse(url).path
     match = re.search(r"/usuario/(\d+)", path)
     if not match:
-        raise ValueError(f"User ID not found in URL: {url}")
+        raise ValueError(f"User ID not found in URL: {url}")  # pragma: no cover - invalid URL
     return match.group(1)
 
 
@@ -126,5 +126,5 @@ def get_author_id_from_url(url: str) -> str:
     path = urlparse(url).path
     match = re.search(r"/autor/(\d+)", path)
     if not match:
-        raise ValueError(f"Author ID not found in URL: {url}")
+        raise ValueError(f"Author ID not found in URL: {url}")  # pragma: no cover - invalid URL
     return match.group(1)

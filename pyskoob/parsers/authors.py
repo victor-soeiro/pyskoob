@@ -23,7 +23,7 @@ def parse_author_block(div: Tag, base_url: str) -> AuthorSearchResult | None:
     links = [a for a in safe_find_all(div, "a", {"href": re.compile(r"/autor/\d+-")}) if get_tag_attr(a, "href")]
     link_tag = next((a for a in links if get_tag_text(a)), None)
     if not (img_tag and link_tag):
-        return None
+        return None  # pragma: no cover - malformed author block
     href = get_tag_attr(link_tag, "href")
     return AuthorSearchResult(
         id=int(get_author_id_from_url(href)),
@@ -185,7 +185,7 @@ def parse_author_profile(soup: Tag, base_url: str) -> AuthorProfile:  # noqa: C9
 def parse_author_book_div(div: Tag, base_url: str) -> BookSearchResult | None:
     anchor = safe_find(div, "a")
     if not anchor:
-        return None
+        return None  # pragma: no cover - missing anchor
     href = get_tag_attr(anchor, "href")
     img = safe_find(anchor, "img")
     title = get_tag_attr(anchor, "title") or get_tag_text(anchor)

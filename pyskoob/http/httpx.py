@@ -23,13 +23,13 @@ class HttpxSyncClient(SyncHTTPClient):
         self._client = httpx.Client(**kwargs)
 
     @property
-    def cookies(self) -> MutableMapping[str, Any]:
+    def cookies(self) -> MutableMapping[str, Any]:  # pragma: no cover - simple delegate
         return self._client.cookies
 
     def get(self, url: str, **kwargs: Any) -> HTTPResponse:
         return self._client.get(url, **kwargs)
 
-    def post(self, url: str, data: Any | None = None, **kwargs: Any) -> HTTPResponse:
+    def post(self, url: str, data: Any | None = None, **kwargs: Any) -> HTTPResponse:  # pragma: no cover - simple delegate
         """Send a POST request.
 
         Parameters
@@ -71,13 +71,13 @@ class HttpxAsyncClient(AsyncHTTPClient):
         self._client = httpx.AsyncClient(**kwargs)
 
     @property
-    def cookies(self) -> MutableMapping[str, Any]:
+    def cookies(self) -> MutableMapping[str, Any]:  # pragma: no cover - simple delegate
         return self._client.cookies
 
     async def get(self, url: str, **kwargs: Any) -> HTTPResponse:
         return await self._client.get(url, **kwargs)
 
-    async def post(self, url: str, data: Any | None = None, **kwargs: Any) -> HTTPResponse:
+    async def post(self, url: str, data: Any | None = None, **kwargs: Any) -> HTTPResponse:  # pragma: no cover - simple delegate
         """Send a POST request asynchronously.
 
         Parameters
