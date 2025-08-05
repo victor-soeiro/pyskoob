@@ -113,6 +113,17 @@ with SkoobClient(rate_limiter=limiter) as client:
     ...
 ```
 
+``SkoobAsyncClient`` accepts the same configuration options and forwards any
+extra keyword arguments to ``httpx.AsyncClient``:
+
+```python
+from pyskoob import RateLimiter, SkoobAsyncClient
+
+limiter = RateLimiter(max_calls=2, period=1)
+async with SkoobAsyncClient(rate_limiter=limiter, timeout=5) as client:
+    ...
+```
+
 ## Running tests
 
 Install the project in editable mode and run the test suite:
