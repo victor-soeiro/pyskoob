@@ -115,9 +115,20 @@ with SkoobClient(rate_limiter=limiter) as client:
 
 Both ``SkoobClient`` and ``SkoobAsyncClient`` accept the same configuration options
 and forward any extra keyword arguments to ``httpx.Client`` and
-``httpx.AsyncClient`` respectively. ``SkoobAsyncClient`` also allows providing a
-pre-configured HTTP client or managing the lifecycle manually using the explicit
-``close`` method:
+``httpx.AsyncClient`` respectively. They also expose a ``close`` method for
+manual lifecycle management outside a context manager:
+
+```python
+from pyskoob import SkoobClient
+
+client = SkoobClient(timeout=5)
+try:
+    ...
+finally:
+    client.close()
+```
+
+``SkoobAsyncClient`` additionally allows providing a pre-configured HTTP client:
 
 ```python
 from pyskoob import RateLimiter, SkoobAsyncClient

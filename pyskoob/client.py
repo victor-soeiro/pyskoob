@@ -91,8 +91,18 @@ class SkoobClient:
         >>> client.__exit__(None, None, None)
         False
         """
-        self._client.close()
+        self.close()
         return False
+
+    def close(self) -> None:
+        """Close the underlying HTTP client.
+
+        Examples
+        --------
+        >>> client = SkoobClient()
+        >>> client.close()
+        """
+        self._client.close()
 
 
 class SkoobAsyncClient:

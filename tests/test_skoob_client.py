@@ -21,6 +21,20 @@ def test_client_context_manager(monkeypatch):
     assert closed
 
 
+def test_client_explicit_close(monkeypatch):
+    closed = False
+
+    def fake_close(self):
+        nonlocal closed
+        closed = True
+
+    monkeypatch.setattr("httpx.Client.close", fake_close, raising=False)
+
+    client = SkoobClient()
+    client.close()
+    assert closed
+
+
 def test_client_allows_configuration():
     limiter = RateLimiter()
     with SkoobClient(rate_limiter=limiter, timeout=5) as client:
