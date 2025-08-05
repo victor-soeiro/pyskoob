@@ -9,9 +9,8 @@ repos:
     hooks:
       - id: pytest
         name: pytest
-        entry: pytest
-        language: python
+        # Run tests in an isolated environment with Python 3.11 and dev extras
+        entry: uv run --python 3.11 --no-project --isolated --with-editable .[dev] pytest
+        language: system
         types: [python]
         pass_filenames: false
-        additional_dependencies:
-          - .[dev]
