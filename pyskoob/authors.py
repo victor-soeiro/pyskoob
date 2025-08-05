@@ -1,5 +1,6 @@
 import logging
 
+from pyskoob.exceptions import ParsingError
 from pyskoob.http.client import AsyncHTTPClient
 from pyskoob.internal.async_base import AsyncBaseSkoobService
 from pyskoob.internal.base import BaseSkoobService
@@ -160,49 +161,78 @@ class AsyncAuthorService(AsyncBaseSkoobService):  # pragma: no cover - thin asyn
     async def search(self, query: str, page: int = 1) -> Pagination[AuthorSearchResult]:
         url = f"{self.base_url}/autor/lista/busca:{query}/mpage:{page}"
         logger.info("Searching authors with query '%s' page %s", query, page)
-        response = await self.client.get(url)
-        response.raise_for_status()
-        soup = self.parse_html(response.text)
-        author_blocks = []
-        for div in safe_find_all(soup, "div"):
-            style = str(div.get("style") or "")
-            if "border-bottom:#ccc" in style and "margin-bottom:10px" in style:
-                author_blocks.append(div)
-        results = [r for div in author_blocks if (r := parse_author_block(div, self.base_url))]
-        total = extract_total_results(soup)
-        has_next = bool(safe_find(soup, "div", {"class": "proximo"}))
-        return Pagination(
-            results=results,
-            limit=len(results),
-            page=page,
-            total=total,
-            has_next_page=has_next,
-        )
+        try:
+            response = await self.client.get(url)
+            response.raise_for_status()
+            soup = self.parse_html(response.text)
+            author_blocks = []
+            for div in safe_find_all(soup, "div"):
+                style = str(div.get("style") or "")
+                if "border-bottom:#ccc" in style and "margin-bottom:10px" in style:
+                    author_blocks.append(div)
+            results = [r for div in author_blocks if (r := parse_author_block(div, self.base_url))]
+            total = extract_total_results(soup)
+            has_next = bool(safe_find(soup, "div", {"class": "proximo"}))
+            return Pagination(
+                results=results,
+                limit=len(results),
+                page=page,
+                total=total,
+                has_next_page=has_next,
+            )
+        except Exception as exc:  # pragma: no cover - defensive
+            logger.error("Failed to search authors: %s", exc, exc_info=True)
+            return Pagination(
+                results=[],
+                limit=0,
+                page=page,
+                total=0,
+                has_next_page=False,
+            )
 
     async def get_by_id(self, author_id: int) -> AuthorProfile:
         url = f"{self.base_url}/autor/{author_id}"
         logger.info("Fetching author profile: %s", url)
-        response = await self.client.get(url)
-        response.raise_for_status()
-        soup = self.parse_html(response.text)
-        return parse_author_profile(soup, self.base_url)
+        try:
+            response = await self.client.get(url)
+            response.raise_for_status()
+            soup = self.parse_html(response.text)
+            return parse_author_profile(soup, self.base_url)
+        except Exception as exc:  # pragma: no cover - defensive
+            logger.error("Failed to fetch author profile %s: %s", author_id, exc, exc_info=True)
+            raise ParsingError("Failed to fetch author profile.") from exc
 
     async def get_books(self, author_id: int, page: int = 1) -> Pagination[BookSearchResult]:
         url = f"{self.base_url}/autor/livros/{author_id}/page:{page}"
         logger.info("Fetching books for author %s page %s", author_id, page)
-        response = await self.client.get(url)
-        response.raise_for_status()
-        soup = self.parse_html(response.text)
-        books = [parse_author_book_div(div, self.base_url) for div in safe_find_all(soup, "div", {"class": "clivro livro-capa-mini"})]
-        books = [b for b in books if b]
-        total_span = safe_find(soup, "span", {"class": "badge badge-ativa"})
-        total_text = get_tag_text(total_span).replace(".", "")
-        total = int(total_text) if total_text.isdigit() else len(books)
-        has_next = bool(safe_find(soup, "div", {"class": "proximo"}))
-        return Pagination(
-            results=books,
-            total=total,
-            page=page,
-            limit=len(books),
-            has_next_page=has_next,
-        )
+        try:
+            response = await self.client.get(url)
+            response.raise_for_status()
+            soup = self.parse_html(response.text)
+            books = [parse_author_book_div(div, self.base_url) for div in safe_find_all(soup, "div", {"class": "clivro livro-capa-mini"})]
+            books = [b for b in books if b]
+            total_span = safe_find(soup, "span", {"class": "badge badge-ativa"})
+            total_text = get_tag_text(total_span).replace(".", "")
+            total = int(total_text) if total_text.isdigit() else len(books)
+            has_next = bool(safe_find(soup, "div", {"class": "proximo"}))
+            return Pagination(
+                results=books,
+                total=total,
+                page=page,
+                limit=len(books),
+                has_next_page=has_next,
+            )
+        except Exception as exc:  # pragma: no cover - defensive
+            logger.error(
+                "Failed to fetch books for author %s: %s",
+                author_id,
+                exc,
+                exc_info=True,
+            )
+            return Pagination(
+                results=[],
+                total=0,
+                page=page,
+                limit=0,
+                has_next_page=False,
+            )

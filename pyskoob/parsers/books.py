@@ -3,6 +3,7 @@ from __future__ import annotations
 import logging
 import re
 from datetime import datetime
+from urllib.parse import urlparse, urlunparse
 
 from bs4 import Tag
 
@@ -112,7 +113,7 @@ def parse_search_result(book_div: Tag, base_url: str) -> BookSearchResult | None
     try:
         book_id = int(get_book_id_from_url(book_url))
         edition_id = int(get_book_edition_id_from_url(book_url))
-    except Exception:  # pragma: no cover - defensive
+    except (ValueError, TypeError):  # pragma: no cover - defensive
         logger.warning("Skipping book_div due to invalid book/edition id in url: %s", book_url)
         return None
     publisher, isbn = extract_publisher_and_isbn(book_div)
@@ -129,11 +130,19 @@ def parse_search_result(book_div: Tag, base_url: str) -> BookSearchResult | None
     )
 
 
-def extract_img_url(container: Tag) -> str:
-    if container.img and isinstance(container.img, Tag):
-        src = get_tag_attr(container.img, "src")
-        if src and "https" in src:
-            return f"https{src.split('https')[-1].strip()}"
+def extract_img_url(container: Tag | str) -> str:
+    """Normalize image URL from a tag or raw string."""
+    src = ""
+    if isinstance(container, Tag) and container.img and isinstance(container.img, Tag):
+        src = get_tag_attr(container.img, "src") or ""
+    elif isinstance(container, str):
+        src = container
+    if src:
+        parsed = urlparse(src, scheme="https")
+        if parsed.netloc:
+            return urlunparse(parsed)
+        if src.startswith("//"):
+            return f"https:{src}"
     return ""
 
 
@@ -176,14 +185,30 @@ def extract_total_results(soup: Tag) -> int:
     return 0  # pragma: no cover - default when pattern missing
 
 
-def clean_book_json_data(json_data: dict, base_url: str) -> None:
-    json_data["url"] = f"{base_url}{json_data['url']}"
-    json_data["isbn"] = None if str(json_data.get("isbn", "0")) == "0" else json_data["isbn"]
-    json_data["autor"] = None if json_data.get("autor", "").lower() == "não especificado" else json_data["autor"]
-    json_data["serie"] = json_data.get("serie") or None
-    json_data["volume"] = None if not json_data.get("volume") or str(json_data["volume"]) == "0" else str(json_data["volume"])
-    json_data["mes"] = None if not json_data.get("mes") or str(json_data["mes"]).strip() == "" else json_data["mes"]
-    img_url = json_data.get("img_url", "")
-    json_data["cover_url"] = f"https{img_url.split('https')[-1].strip()}" if img_url and "https" in img_url else ""
-    generos = json_data.get("generos")
-    json_data["generos"] = generos if generos else None
+def clean_book_json_data(json_data: dict, base_url: str) -> dict:
+    """Return a cleaned copy of raw book data.
+
+    Parameters
+    ----------
+    json_data : dict
+        Raw book data as returned by the Skoob API.
+    base_url : str
+        Base URL used to convert relative links to absolute ones.
+
+    Returns
+    -------
+    dict
+        A new dictionary with normalized fields and cleaned values.
+    """
+    data = json_data.copy()
+    data["url"] = f"{base_url}{data['url']}"
+    data["isbn"] = None if str(data.get("isbn", "0")) == "0" else data["isbn"]
+    data["autor"] = None if data.get("autor", "").lower() == "não especificado" else data["autor"]
+    data["serie"] = data.get("serie") or None
+    data["volume"] = None if not data.get("volume") or str(data["volume"]) == "0" else str(data["volume"])
+    data["mes"] = None if not data.get("mes") or str(data["mes"]).strip() == "" else data["mes"]
+    img_url = data.get("img_url", "")
+    data["cover_url"] = extract_img_url(img_url)
+    generos = data.get("generos")
+    data["generos"] = generos if generos else None
+    return data

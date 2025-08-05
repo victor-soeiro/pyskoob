@@ -144,7 +144,7 @@ class BookService(BaseSkoobService):
                 error_msg = f"No data found for edition_id {edition_id}. Description: {cod_description}"
                 logger.warning(error_msg)
                 raise FileNotFoundError(error_msg)
-            clean_book_json_data(json_data, self.base_url)
+            json_data = clean_book_json_data(json_data, self.base_url)
             book = Book.model_validate(json_data)
             logger.info(
                 "Successfully retrieved book: '%s' (Edition ID: %s)",
@@ -310,82 +310,113 @@ class AsyncBookService(AsyncBaseSkoobService):  # pragma: no cover - thin async 
     async def search(self, query: str, search_by: BookSearch = BookSearch.TITLE, page: int = 1) -> Pagination[BookSearchResult]:
         url = f"{self.base_url}/livro/lista/busca:{query}/tipo:{search_by.value}/mpage:{page}"
         logger.info("Searching for books with query: '%s' on page %s", query, page)
-        response = await self.client.get(url)
-        response.raise_for_status()
-        soup = self.parse_html(response.text)
-        limit = 30
-        results = [
-            parse_search_result(book_div, self.base_url) for book_div in safe_find_all(soup, "div", {"class": "box_lista_busca_vertical"})
-        ]
-        cleaned_results: list[BookSearchResult] = [i for i in results if i]
-        total_results = extract_total_results(soup)
-        next_page_link = True if page * limit < total_results else False
-        logger.info(
-            "Found %s books on page %s, total %s results.",
-            len(results),
-            page,
-            total_results,
-        )
-        return Pagination[BookSearchResult](
-            results=cleaned_results,
-            limit=30,
-            page=page,
-            total=total_results,
-            has_next_page=next_page_link,
-        )
+        try:
+            response = await self.client.get(url)
+            response.raise_for_status()
+            soup = self.parse_html(response.text)
+            limit = 30
+            results = [
+                parse_search_result(book_div, self.base_url)
+                for book_div in safe_find_all(soup, "div", {"class": "box_lista_busca_vertical"})
+            ]
+            cleaned_results: list[BookSearchResult] = [i for i in results if i]
+            total_results = extract_total_results(soup)
+            next_page_link = True if page * limit < total_results else False
+            logger.info(
+                "Found %s books on page %s, total %s results.",
+                len(results),
+                page,
+                total_results,
+            )
+            return Pagination[BookSearchResult](
+                results=cleaned_results,
+                limit=30,
+                page=page,
+                total=total_results,
+                has_next_page=next_page_link,
+            )
+        except Exception as exc:  # pragma: no cover - defensive
+            logger.error("Failed to search books: %s", exc, exc_info=True)
+            return Pagination[BookSearchResult](
+                results=[],
+                limit=30,
+                page=page,
+                total=0,
+                has_next_page=False,
+            )
 
     async def get_by_id(self, edition_id: int) -> Book:
         logger.info("Getting book by edition_id: %s", edition_id)
         url = f"{self.base_url}/v1/book/{edition_id}/stats:true"
-        response = await self.client.get(url)
-        response.raise_for_status()
-        json_data = response.json().get("response")
-        if not json_data:
-            cod_description = response.json().get("cod_description", "No description provided.")
-            error_msg = f"No data found for edition_id {edition_id}. Description: {cod_description}"
-            logger.warning(error_msg)
-            raise FileNotFoundError(error_msg)
-        clean_book_json_data(json_data, self.base_url)
-        book = Book.model_validate(json_data)
-        logger.info(
-            "Successfully retrieved book: '%s' (Edition ID: %s)",
-            book.title,
-            edition_id,
-        )
-        return book
+        try:
+            response = await self.client.get(url)
+            response.raise_for_status()
+            json_data = response.json().get("response")
+            if not json_data:
+                cod_description = response.json().get("cod_description", "No description provided.")
+                error_msg = f"No data found for edition_id {edition_id}. Description: {cod_description}"
+                logger.warning(error_msg)
+                raise FileNotFoundError(error_msg)
+            json_data = clean_book_json_data(json_data, self.base_url)
+            book = Book.model_validate(json_data)
+            logger.info(
+                "Successfully retrieved book: '%s' (Edition ID: %s)",
+                book.title,
+                edition_id,
+            )
+            return book
+        except FileNotFoundError:
+            raise
+        except Exception as exc:  # pragma: no cover - defensive
+            logger.error(
+                "Failed to retrieve book for edition_id %s: %s",
+                edition_id,
+                exc,
+                exc_info=True,
+            )
+            raise ParsingError("Failed to retrieve book.") from exc
 
     async def get_reviews(self, book_id: int, edition_id: int | None = None, page: int = 1) -> Pagination[BookReview]:
         url = f"{self.base_url}/livro/resenhas/{book_id}/mpage:{page}/limit:50"
         if edition_id:
             url += f"/edition:{edition_id}"
         logger.info("Getting reviews for book_id: %s, page: %s", book_id, page)
-        response = await self.client.get(url)
-        response.raise_for_status()
-        soup = self.parse_html(response.text)
-        if edition_id is None:
-            edition_id = extract_edition_id_from_reviews_page(soup)
-        book_reviews = [
-            review
-            for review in (parse_review(r, book_id, edition_id) for r in safe_find_all(soup, "div", {"id": re.compile(r"resenha\d+")}))
-            if review is not None
-        ]
-        next_page_link = safe_find(soup, "a", {"class": "proximo"})
-        logger.info("Found %s reviews on page %s.", len(book_reviews), page)
-        return Pagination[BookReview](
-            results=book_reviews,
-            limit=50,
-            page=page,
-            total=len(book_reviews),
-            has_next_page=next_page_link is not None,
-        )
+        try:
+            response = await self.client.get(url)
+            response.raise_for_status()
+            soup = self.parse_html(response.text)
+            if edition_id is None:
+                edition_id = extract_edition_id_from_reviews_page(soup)
+            book_reviews = [
+                review
+                for review in (parse_review(r, book_id, edition_id) for r in safe_find_all(soup, "div", {"id": re.compile(r"resenha\d+")}))
+                if review is not None
+            ]
+            next_page_link = safe_find(soup, "a", {"class": "proximo"})
+            logger.info("Found %s reviews on page %s.", len(book_reviews), page)
+            return Pagination[BookReview](
+                results=book_reviews,
+                limit=50,
+                page=page,
+                total=len(book_reviews),
+                has_next_page=next_page_link is not None,
+            )
+        except Exception as exc:  # pragma: no cover - defensive
+            logger.error(
+                "Failed to retrieve book reviews for book_id %s: %s",
+                book_id,
+                exc,
+                exc_info=True,
+            )
+            raise ParsingError("Failed to retrieve book reviews.") from exc
 
     async def get_users_by_status(
         self,
         book_id: int,
         status: BookUserStatus,
         edition_id: int | None = None,
+        limit: int = 500,
         page: int = 1,
-        limit: int = 100,
     ) -> Pagination[int]:
         url = f"{self.base_url}/livro/leitores/{status.value}/{book_id}/limit:{limit}/page:{page}"
         if edition_id:
@@ -396,16 +427,27 @@ class AsyncBookService(AsyncBaseSkoobService):  # pragma: no cover - thin async 
             status.value,
             page,
         )
-        response = await self.client.get(url)
-        response.raise_for_status()
-        soup = self.parse_html(response.text)
-        users_id = extract_user_ids_from_html(soup)
-        next_page_link = safe_find(soup, "a", {"class": "proximo"})
-        logger.info("Found %s users on page %s.", len(users_id), page)
-        return Pagination[int](
-            results=users_id,
-            limit=limit,
-            page=page,
-            total=len(users_id),
-            has_next_page=next_page_link is not None,
-        )
+        try:
+            response = await self.client.get(url)
+            response.raise_for_status()
+            soup = self.parse_html(response.text)
+            users_id = extract_user_ids_from_html(soup)
+            next_page_link = safe_find(soup, "a", {"class": "proximo"})
+            logger.info("Found %s users on page %s.", len(users_id), page)
+            return Pagination[int](
+                results=users_id,
+                limit=limit,
+                page=page,
+                total=len(users_id),
+                has_next_page=next_page_link is not None,
+            )
+        except (AttributeError, ValueError, IndexError, TypeError) as exc:  # pragma: no cover - defensive
+            logger.error("Failed to parse users by status: %s", exc, exc_info=True)
+            raise ParsingError("Failed to parse users by status.") from exc
+        except Exception as exc:  # pragma: no cover - unexpected
+            logger.error(
+                "An unexpected error occurred while retrieving users by status: %s",
+                exc,
+                exc_info=True,
+            )
+            raise ParsingError("An unexpected error occurred while retrieving users by status.") from exc

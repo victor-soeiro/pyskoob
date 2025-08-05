@@ -172,7 +172,7 @@ class UserService(AuthenticatedService):
         response = self.client.get(url)
         response.raise_for_status()
 
-        user_reviews = []
+        user_reviews: list[BookReview] = []
         soup = self.parse_html(response.text)
         try:
             reviews_html = safe_find_all(soup, "div", {"id": re.compile(r"resenha\d+")})
@@ -425,12 +425,36 @@ class UserService(AuthenticatedService):
 
 
 class AsyncUserService(AsyncAuthenticatedService):  # pragma: no cover - thin async wrapper
-    """Asynchronous variant of :class:`UserService`."""
+    """Asynchronous variant of :class:`UserService`.
+
+    Fetch user profiles, books and friends from Skoob asynchronously.
+
+    The service depends on :class:`AsyncAuthService` to validate the current
+    session before performing operations that require authentication such as
+    retrieving your own profile or editing bookshelf information.
+    """
 
     def __init__(self, client: AsyncHTTPClient, auth_service: AsyncAuthService):
         super().__init__(client, auth_service)
 
     async def get_by_id(self, user_id: int) -> User:
+        """Retrieve a user by their ID asynchronously.
+
+        Parameters
+        ----------
+        user_id : int
+            The ID of the user.
+
+        Returns
+        -------
+        User
+            The user's information.
+
+        Raises
+        ------
+        FileNotFoundError
+            If the user with the given ID is not found.
+        """
         self._validate_login()
         logger.info(f"Getting user by id: {user_id}")
         url = f"{self.base_url}/v1/user/{user_id}/stats:true"
@@ -447,6 +471,27 @@ class AsyncUserService(AsyncAuthenticatedService):  # pragma: no cover - thin as
         return user
 
     async def get_relations(self, user_id: int, relation: UsersRelation, page: int = 1) -> Pagination[int]:
+        """Retrieve a user's relations (friends, followers, following).
+
+        Parameters
+        ----------
+        user_id : int
+            The ID of the user.
+        relation : UsersRelation
+            The type of relation to retrieve.
+        page : int, optional
+            The page number for pagination, by default ``1``.
+
+        Returns
+        -------
+        Pagination[int]
+            A paginated list of user IDs.
+
+        Raises
+        ------
+        ParsingError
+            If the HTML structure of the page changes and parsing fails.
+        """
         self._validate_login()
         url = f"{self.base_url}/{relation.value}/listar/{user_id}/page:{page}/limit:100"
         logger.info(f"Getting '{relation.value}' for user_id: {user_id}, page: {page}")
@@ -470,6 +515,25 @@ class AsyncUserService(AsyncAuthenticatedService):  # pragma: no cover - thin as
         )
 
     async def get_reviews(self, user_id: int, page: int = 1) -> Pagination[BookReview]:
+        """Retrieve reviews made by a user.
+
+        Parameters
+        ----------
+        user_id : int
+            The ID of the user.
+        page : int, optional
+            The page number for pagination, by default ``1``.
+
+        Returns
+        -------
+        Pagination[BookReview]
+            A paginated list of book reviews.
+
+        Raises
+        ------
+        ParsingError
+            If the HTML structure of the page changes and parsing fails.
+        """
         self._validate_login()
         url = f"{self.base_url}/estante/resenhas/{user_id}/mpage:{page}/limit:50"
         logger.info(f"Getting reviews for user_id: {user_id}, page: {page}")
@@ -526,6 +590,18 @@ class AsyncUserService(AsyncAuthenticatedService):  # pragma: no cover - thin as
         )
 
     async def get_read_stats(self, user_id: int) -> UserReadStats:
+        """Retrieve reading statistics for a user.
+
+        Parameters
+        ----------
+        user_id : int
+            The ID of the user.
+
+        Returns
+        -------
+        UserReadStats
+            The user's reading statistics.
+        """
         self._validate_login()
         logger.info(f"Getting read stats for user_id: {user_id}")
         url = f"{self.base_url}/v1/meta_stats/{user_id}"
@@ -547,6 +623,22 @@ class AsyncUserService(AsyncAuthenticatedService):  # pragma: no cover - thin as
         return stats
 
     async def get_bookcase(self, user_id: int, bookcase_option: BookcaseOption, page: int = 1) -> Pagination[UserBook]:
+        """Retrieve a user's bookcase.
+
+        Parameters
+        ----------
+        user_id : int
+            The ID of the user.
+        bookcase_option : BookcaseOption
+            The type of bookcase to retrieve.
+        page : int, optional
+            The page number for pagination, by default ``1``.
+
+        Returns
+        -------
+        Pagination[UserBook]
+            A paginated list of books in the user's bookcase.
+        """
         self._validate_login()
         url = f"{self.base_url}/v1/bookcase/books/{user_id}/shelf_id:{bookcase_option.value}/page:{page}/limit:100"
         logger.info(f"Getting bookcase for user_id: {user_id}, option: '{bookcase_option.name}', page: {page}")
@@ -589,6 +681,31 @@ class AsyncUserService(AsyncAuthenticatedService):  # pragma: no cover - thin as
         page: int = 1,
         limit: int = 100,
     ) -> Pagination[UserSearch]:
+        """Search for users on Skoob.
+
+        Parameters
+        ----------
+        query : str
+            The search query for usernames or names.
+        gender : UserGender, optional
+            Optional gender filter (M/F), by default ``None``.
+        state : BrazilianState, optional
+            Optional state filter, by default ``None``.
+        page : int, optional
+            Page number to fetch, by default ``1``.
+        limit : int, optional
+            Number of users per page, by default ``100``.
+
+        Returns
+        -------
+        Pagination[UserSearch]
+            A paginated list of users matching the criteria.
+
+        Raises
+        ------
+        ParsingError
+            If the HTML structure is invalid or parsing fails.
+        """
         self._validate_login()
         url = f"{self.base_url}/usuario/lista/busca:{query}/mpage:{page}/limit:{limit}"
         if gender:

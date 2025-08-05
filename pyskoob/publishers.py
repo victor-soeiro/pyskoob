@@ -195,53 +195,86 @@ class AsyncPublisherService(AsyncBaseSkoobService):  # pragma: no cover - thin a
     async def get_by_id(self, publisher_id: int) -> Publisher:
         url = f"{self.base_url}/editora/{publisher_id}"
         logger.info("Fetching publisher page: %s", url)
-        response = await self.client.get(url)
-        response.raise_for_status()
-        soup = self.parse_html(response.text)
-        name = get_tag_text(safe_find(soup, "h2")) or get_tag_text(soup.title)
-        description = get_tag_text(safe_find(soup, "div", {"id": "historico"}))
-        site_link = cast(Tag | None, soup.find("a", string="Site oficial"))
-        website = get_tag_attr(site_link, "href")
-        stats = parse_stats(safe_find(soup, "div", {"id": "vt_estatisticas"}))
-        releases_div = safe_find(soup, "div", {"id": "livros_lancamentos"})
-        releases = [parse_book(div, self.base_url) for div in safe_find_all(releases_div, "div", {"class": "livro-capa-mini"})]
-        return Publisher(
-            id=publisher_id,
-            name=name,
-            description=description,
-            website=website,
-            stats=stats,
-            last_releases=releases,
-        )
+        try:
+            response = await self.client.get(url)
+            response.raise_for_status()
+            soup = self.parse_html(response.text)
+            name = get_tag_text(safe_find(soup, "h2")) or get_tag_text(soup.title)
+            description = get_tag_text(safe_find(soup, "div", {"id": "historico"}))
+            site_link = cast(Tag | None, soup.find("a", string="Site oficial"))
+            website = get_tag_attr(site_link, "href")
+            stats = parse_stats(safe_find(soup, "div", {"id": "vt_estatisticas"}))
+            releases_div = safe_find(soup, "div", {"id": "livros_lancamentos"})
+            releases = [parse_book(div, self.base_url) for div in safe_find_all(releases_div, "div", {"class": "livro-capa-mini"})]
+            return Publisher(
+                id=publisher_id,
+                name=name,
+                description=description,
+                website=website,
+                stats=stats,
+                last_releases=releases,
+            )
+        except (AttributeError, TypeError, ValueError) as exc:  # pragma: no cover - defensive
+            logger.error("Failed to parse publisher page: %s", exc, exc_info=True)
+            raise ParsingError("Failed to parse publisher page.") from exc
+        except Exception as exc:  # pragma: no cover - unexpected
+            logger.error(
+                "An unexpected error occurred while parsing publisher page: %s",
+                exc,
+                exc_info=True,
+            )
+            raise ParsingError("An unexpected error occurred while parsing publisher page.") from exc
 
     async def get_authors(self, publisher_id: int, page: int = 1) -> Pagination[PublisherAuthor]:
         url = f"{self.base_url}/editora/autores/{publisher_id}/mpage:{page}"
         logger.info("Fetching publisher authors: %s", url)
-        response = await self.client.get(url)
-        response.raise_for_status()
-        soup = self.parse_html(response.text)
-        authors = [parse_author(div, self.base_url) for div in safe_find_all(soup, "div", {"class": "box_autor"})]
-        next_page = bool(safe_find(soup, "div", {"class": "proximo"}))
-        return Pagination(
-            results=authors,
-            limit=len(authors),
-            page=page,
-            total=len(authors),
-            has_next_page=next_page,
-        )
+        try:
+            response = await self.client.get(url)
+            response.raise_for_status()
+            soup = self.parse_html(response.text)
+            authors = [parse_author(div, self.base_url) for div in safe_find_all(soup, "div", {"class": "box_autor"})]
+            next_page = bool(safe_find(soup, "div", {"class": "proximo"}))
+            return Pagination(
+                results=authors,
+                limit=len(authors),
+                page=page,
+                total=len(authors),
+                has_next_page=next_page,
+            )
+        except (AttributeError, TypeError, ValueError) as exc:  # pragma: no cover - defensive
+            logger.error("Failed to parse publisher authors: %s", exc, exc_info=True)
+            raise ParsingError("Failed to parse publisher authors.") from exc
+        except Exception as exc:  # pragma: no cover - unexpected
+            logger.error(
+                "An unexpected error occurred while parsing publisher authors: %s",
+                exc,
+                exc_info=True,
+            )
+            raise ParsingError("An unexpected error occurred while parsing publisher authors.") from exc
 
     async def get_books(self, publisher_id: int, page: int = 1) -> Pagination[PublisherItem]:
         url = f"{self.base_url}/editora/livros/{publisher_id}/mpage:{page}"
         logger.info("Fetching publisher books: %s", url)
-        response = await self.client.get(url)
-        response.raise_for_status()
-        soup = self.parse_html(response.text)
-        books = [parse_book(div, self.base_url) for div in safe_find_all(soup, "div", {"class": "box_livro"})]
-        next_page = bool(safe_find(soup, "div", {"class": "proximo"}))
-        return Pagination(
-            results=books,
-            limit=len(books),
-            page=page,
-            total=len(books),
-            has_next_page=next_page,
-        )
+        try:
+            response = await self.client.get(url)
+            response.raise_for_status()
+            soup = self.parse_html(response.text)
+            books = [parse_book(div, self.base_url) for div in safe_find_all(soup, "div", {"class": "box_livro"})]
+            next_page = bool(safe_find(soup, "div", {"class": "proximo"}))
+            return Pagination(
+                results=books,
+                limit=len(books),
+                page=page,
+                total=len(books),
+                has_next_page=next_page,
+            )
+        except (AttributeError, TypeError, ValueError) as exc:  # pragma: no cover - defensive
+            logger.error("Failed to parse publisher books: %s", exc, exc_info=True)
+            raise ParsingError("Failed to parse publisher books.") from exc
+        except Exception as exc:  # pragma: no cover - unexpected
+            logger.error(
+                "An unexpected error occurred while parsing publisher books: %s",
+                exc,
+                exc_info=True,
+            )
+            raise ParsingError("An unexpected error occurred while parsing publisher books.") from exc

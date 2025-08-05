@@ -75,9 +75,9 @@ def test_clean_book_json_data():
         "img_url": "https://img",
         "generos": [],
     }
-    clean_book_json_data(data, service.base_url)
-    assert data["isbn"] is None
-    assert data["url"].startswith("https://")
+    cleaned = clean_book_json_data(data, service.base_url)
+    assert cleaned["isbn"] is None
+    assert cleaned["url"].startswith("https://")
 
 
 def test_search_and_reviews_and_users():

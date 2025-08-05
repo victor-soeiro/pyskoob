@@ -40,12 +40,10 @@ def extract_total_results(soup: Tag) -> int:
     return int(match.group(1)) if match else 0
 
 
-def parse_author_profile(soup: Tag, base_url: str) -> AuthorProfile:  # noqa: C901
-    name = get_tag_text(safe_find(soup, "h1", {"class": "given-name"}))
-    photo_url = get_tag_attr(safe_find(soup, "img", {"class": "img-rounded"}), "src")
-
+def extract_author_links(soup: Tag) -> dict[str, str]:
     links: dict[str, str] = {}
-    for a in safe_find_all(safe_find(soup, "div", {"id": "autor-icones"}), "a"):
+    icons_div = safe_find(soup, "div", {"id": "autor-icones"})
+    for a in safe_find_all(icons_div, "a"):
         span = safe_find(a, "span")
         cls = get_tag_attr(span, "class", "")
         if isinstance(cls, list):
@@ -54,7 +52,10 @@ def parse_author_profile(soup: Tag, base_url: str) -> AuthorProfile:  # noqa: C9
         href = get_tag_attr(a, "href")
         if href:
             links[key] = href
+    return links
 
+
+def extract_author_info(soup: Tag) -> tuple[str | None, str | None]:
     box_generos = safe_find(soup, "div", {"id": "box-generos"})
     birth_date = None
     location = None
@@ -65,14 +66,11 @@ def parse_author_profile(soup: Tag, base_url: str) -> AuthorProfile:  # noqa: C9
         loc_b = box_generos.find("b", string=lambda s: s and "Local" in s)
         if loc_b and loc_b.next_sibling:
             loc_tag = loc_b.next_sibling
-            if isinstance(loc_tag, Tag):
-                location = get_tag_text(loc_tag)
-            else:  # pragma: no cover - defensive
-                location = str(loc_tag).strip()
+            location = get_tag_text(loc_tag) if isinstance(loc_tag, Tag) else str(loc_tag).strip()
+    return birth_date, location
 
-    description = get_tag_text(safe_find(soup, "div", {"id": "livro-perfil-sinopse-txt"}))
-    tags = [get_tag_text(t) for t in safe_find_all(soup, "div", {"class": "genero-item"})]
 
+def extract_author_stats(soup: Tag) -> AuthorStats:
     stats_div = safe_find(soup, "div", {"id": "livro-perfil-status02"})
     followers = readers = ratings = None
     average_rating = None
@@ -92,30 +90,38 @@ def parse_author_profile(soup: Tag, base_url: str) -> AuthorProfile:  # noqa: C9
                 readers = value
             elif "seguidores" in label:
                 followers = value
-
     star_ratings: dict[str, float] = {}
     for img in safe_find_all(soup, "img", {"src": re.compile("estrela")}):
         alt = get_tag_attr(img, "alt")
         percent_tag = img.find_next("div", string=re.compile("%"))
         if alt and percent_tag:
             star_ratings[alt] = float(get_tag_text(percent_tag).replace("%", ""))
+    return AuthorStats(
+        followers=followers,
+        readers=readers,
+        ratings=ratings,
+        average_rating=average_rating,
+        star_ratings=star_ratings,
+    )
 
-    male = female = None
+
+def extract_gender_percentages(soup: Tag) -> dict[str, float]:
+    gender: dict[str, float] = {}
     male_icon = safe_find(soup, "i", {"class": re.compile("icon-male")})
     if male_icon:
         male_text = get_tag_text(male_icon.find_next("span")).replace("%", "")
-        male = float(male_text) if male_text else None
+        if male_text:
+            gender["male"] = float(male_text)
     female_icon = safe_find(soup, "i", {"class": re.compile("icon-female")})
     if female_icon:
         female_text = get_tag_text(female_icon.find_next("span")).replace("%", "")
-        female = float(female_text) if female_text else None
-    gender: dict[str, float] = {}
-    if male is not None:
-        gender["male"] = male
-    if female is not None:
-        gender["female"] = female
+        if female_text:
+            gender["female"] = float(female_text)
+    return gender
 
-    books = [
+
+def extract_author_books(soup: Tag, base_url: str) -> list[AuthorBook]:
+    return [
         AuthorBook(
             url=f"{base_url}{get_tag_attr(a, 'href')}",
             title=get_tag_attr(a, "title"),
@@ -125,7 +131,9 @@ def parse_author_profile(soup: Tag, base_url: str) -> AuthorProfile:  # noqa: C9
         if (a := safe_find(div, "a"))
     ]
 
-    videos = [
+
+def extract_author_videos(soup: Tag, base_url: str) -> list[AuthorVideo]:
+    return [
         AuthorVideo(
             url=f"{base_url}{get_tag_attr(a, 'href')}",
             thumbnail_url=get_tag_attr(safe_find(a, "img"), "src"),
@@ -135,6 +143,10 @@ def parse_author_profile(soup: Tag, base_url: str) -> AuthorProfile:  # noqa: C9
         if a
     ]
 
+
+def extract_author_metadata(
+    soup: Tag,
+) -> tuple[str | None, str | None, str | None, str | None, str | None, str | None]:
     created_at = created_by = edited_at = edited_by = approved_at = approved_by = None
     info_div = safe_find(soup, "div", {"id": "box-info-cad"})
     if info_div:
@@ -152,15 +164,21 @@ def parse_author_profile(soup: Tag, base_url: str) -> AuthorProfile:  # noqa: C9
             elif "aprovou" in text:
                 approved_by = user_name
                 approved_at = text.split("aprovou em:")[-1].strip()
+    return created_at, created_by, edited_at, edited_by, approved_at, approved_by
 
-    stats = AuthorStats(
-        followers=followers,
-        readers=readers,
-        ratings=ratings,
-        average_rating=average_rating,
-        star_ratings=star_ratings,
-    )
 
+def parse_author_profile(soup: Tag, base_url: str) -> AuthorProfile:
+    name = get_tag_text(safe_find(soup, "h1", {"class": "given-name"}))
+    photo_url = get_tag_attr(safe_find(soup, "img", {"class": "img-rounded"}), "src")
+    links = extract_author_links(soup)
+    birth_date, location = extract_author_info(soup)
+    description = get_tag_text(safe_find(soup, "div", {"id": "livro-perfil-sinopse-txt"}))
+    tags = [get_tag_text(t) for t in safe_find_all(soup, "div", {"class": "genero-item"})]
+    stats = extract_author_stats(soup)
+    gender = extract_gender_percentages(soup)
+    books = extract_author_books(soup, base_url)
+    videos = extract_author_videos(soup, base_url)
+    (created_at, created_by, edited_at, edited_by, approved_at, approved_by) = extract_author_metadata(soup)
     return AuthorProfile(
         name=name,
         photo_url=photo_url,
