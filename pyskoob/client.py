@@ -25,7 +25,7 @@ class SkoobClient:
     ...     client.auth.login_with_cookies("token")
     """
 
-    def __init__(self, rate_limiter: RateLimiter | None = None) -> None:
+    def __init__(self, rate_limiter: RateLimiter | None = None, **kwargs: Any) -> None:
         """Initializes the SkoobClient.
 
         Parameters
@@ -33,9 +33,12 @@ class SkoobClient:
         rate_limiter:
             Optional rate limiter used to throttle requests. If ``None``, a
             default limiter allowing one request per second is used.
+        **kwargs:
+            Additional keyword arguments forwarded to ``httpx.Client`` when the
+            underlying :class:`HttpxSyncClient` is constructed.
         """
 
-        self._client = HttpxSyncClient(rate_limiter=rate_limiter)
+        self._client = HttpxSyncClient(rate_limiter=rate_limiter, **kwargs)
         self.auth = AuthService(self._client)
         self.books = BookService(self._client)
         self.authors = AuthorService(self._client)
