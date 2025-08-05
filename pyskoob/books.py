@@ -333,7 +333,12 @@ class AsyncBookService(AsyncBaseSkoobService):  # pragma: no cover - thin async 
     def __init__(self, client: AsyncHTTPClient):
         super().__init__(client)
 
-    async def search(self, query: str, search_by: BookSearch = BookSearch.TITLE, page: int = 1) -> Pagination[BookSearchResult]:
+    async def search(
+        self,
+        query: str,
+        search_by: BookSearch = BookSearch.TITLE,
+        page: int = 1,
+    ) -> Pagination[BookSearchResult]:
         """Asynchronously search for books by query and type.
 
         Parameters
@@ -349,6 +354,13 @@ class AsyncBookService(AsyncBaseSkoobService):  # pragma: no cover - thin async 
         -------
         Pagination[BookSearchResult]
             Paginated list of search results.
+
+        Raises
+        ------
+        RequestError
+            If the HTTP request fails.
+        ParsingError
+            If the HTML structure changes and parsing fails.
         """
 
         url = f"{self.base_url}/livro/lista/busca:{query}/tipo:{search_by.value}/mpage:{page}"
@@ -356,6 +368,11 @@ class AsyncBookService(AsyncBaseSkoobService):  # pragma: no cover - thin async 
         try:
             response = await self.client.get(url)
             response.raise_for_status()
+        except Exception as exc:  # pragma: no cover - defensive
+            logger.error("Request error during book search: %s", exc, exc_info=True)
+            raise RequestError("Failed to search books.") from exc
+
+        try:
             soup = self.parse_html(response.text)
             limit = 30
             results = [
@@ -365,28 +382,30 @@ class AsyncBookService(AsyncBaseSkoobService):  # pragma: no cover - thin async 
             cleaned_results: list[BookSearchResult] = [i for i in results if i]
             total_results = extract_total_results(soup)
             next_page_link = True if page * limit < total_results else False
-            logger.info(
-                "Found %s books on page %s, total %s results.",
-                len(results),
-                page,
-                total_results,
+        except (AttributeError, ValueError, IndexError, TypeError) as exc:  # pragma: no cover - defensive
+            logger.error("Failed to parse book search results: %s", exc, exc_info=True)
+            raise ParsingError("Failed to parse book search results.") from exc
+        except Exception as exc:  # pragma: no cover - unexpected
+            logger.error(
+                "An unexpected error occurred during book search: %s",
+                exc,
+                exc_info=True,
             )
-            return Pagination[BookSearchResult](
-                results=cleaned_results,
-                limit=30,
-                page=page,
-                total=total_results,
-                has_next_page=next_page_link,
-            )
-        except Exception as exc:  # pragma: no cover - defensive
-            logger.error("Failed to search books: %s", exc, exc_info=True)
-            return Pagination[BookSearchResult](
-                results=[],
-                limit=30,
-                page=page,
-                total=0,
-                has_next_page=False,
-            )
+            raise ParsingError("An unexpected error occurred during book search.") from exc
+
+        logger.info(
+            "Found %s books on page %s, total %s results.",
+            len(results),
+            page,
+            total_results,
+        )
+        return Pagination[BookSearchResult](
+            results=cleaned_results,
+            limit=30,
+            page=page,
+            total=total_results,
+            has_next_page=next_page_link,
+        )
 
     async def get_by_id(self, edition_id: int) -> Book:
         """Retrieve a book by its edition ID asynchronously.
