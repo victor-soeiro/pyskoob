@@ -10,9 +10,9 @@ class BaseHttpService:
 
     Attributes
     ----------
-    _base_url : str
+    base_url : str
         The base URL for the service.
-    _client : SyncHTTPClient
+    client : SyncHTTPClient
         The HTTP client for making requests.
     """
 
@@ -79,6 +79,23 @@ class BaseHttpService:
 
 
 class BaseSkoobService(BaseHttpService):
+    """Base class for services that talk to the Skoob website.
+
+    Attributes
+    ----------
+    base_url : str
+        The base URL for Skoob endpoints.
+    client : SyncHTTPClient
+        The HTTP client used for requests.
+
+    Notes
+    -----
+    This class preconfigures the base URL for Skoob endpoints and allows
+    subclasses to reuse a shared synchronous HTTP client. If no client is
+    provided, a :class:`~pyskoob.http.httpx.HttpxSyncClient` instance is
+    created automatically.
+    """
+
     def __init__(self, client: SyncHTTPClient | None):
         """
         Initializes the BaseSkoobService.

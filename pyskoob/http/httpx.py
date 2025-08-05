@@ -7,6 +7,7 @@ from typing import Any
 
 import httpx
 
+from ..utils import RateLimiter
 from .client import AsyncHTTPClient, HTTPResponse, SyncHTTPClient
 
 
@@ -15,18 +16,25 @@ class HttpxSyncClient(SyncHTTPClient):
 
     Parameters
     ----------
-    **kwargs : Any
-        Optional arguments passed directly to ``httpx.Client``.
+    rate_limiter:
+        Optional rate limiter used to throttle requests. If not provided a
+        default limiter allowing one request per second is used.
+    **kwargs:
+        Additional arguments passed directly to ``httpx.Client``.
     """
 
-    def __init__(self, **kwargs: Any) -> None:
+    def __init__(self, rate_limiter: RateLimiter | None = None, **kwargs: Any) -> None:
         self._client = httpx.Client(**kwargs)
+        self._rate_limiter = rate_limiter or RateLimiter()
 
     @property
     def cookies(self) -> MutableMapping[str, Any]:  # pragma: no cover - simple delegate
         return self._client.cookies
 
     def get(self, url: str, **kwargs: Any) -> HTTPResponse:
+        if not hasattr(self, "_rate_limiter"):
+            self._rate_limiter = RateLimiter()
+        self._rate_limiter.acquire()
         return self._client.get(url, **kwargs)
 
     def post(self, url: str, data: Any | None = None, **kwargs: Any) -> HTTPResponse:  # pragma: no cover - simple delegate
@@ -49,6 +57,9 @@ class HttpxSyncClient(SyncHTTPClient):
             The HTTP response instance returned by ``httpx``.
         """
 
+        if not hasattr(self, "_rate_limiter"):
+            self._rate_limiter = RateLimiter()
+        self._rate_limiter.acquire()
         if isinstance(data, (str | bytes)):
             return self._client.post(url, content=data, **kwargs)
 
@@ -63,18 +74,25 @@ class HttpxAsyncClient(AsyncHTTPClient):
 
     Parameters
     ----------
-    **kwargs : Any
-        Optional arguments passed directly to ``httpx.AsyncClient``.
+    rate_limiter:
+        Optional rate limiter used to throttle requests. If not provided a
+        default limiter allowing one request per second is used.
+    **kwargs:
+        Additional arguments passed directly to ``httpx.AsyncClient``.
     """
 
-    def __init__(self, **kwargs: Any) -> None:
+    def __init__(self, rate_limiter: RateLimiter | None = None, **kwargs: Any) -> None:
         self._client = httpx.AsyncClient(**kwargs)
+        self._rate_limiter = rate_limiter or RateLimiter()
 
     @property
     def cookies(self) -> MutableMapping[str, Any]:  # pragma: no cover - simple delegate
         return self._client.cookies
 
     async def get(self, url: str, **kwargs: Any) -> HTTPResponse:
+        if not hasattr(self, "_rate_limiter"):
+            self._rate_limiter = RateLimiter()
+        await self._rate_limiter.acquire_async()
         return await self._client.get(url, **kwargs)
 
     async def post(self, url: str, data: Any | None = None, **kwargs: Any) -> HTTPResponse:  # pragma: no cover - simple delegate
@@ -97,6 +115,9 @@ class HttpxAsyncClient(AsyncHTTPClient):
             The HTTP response instance returned by ``httpx``.
         """
 
+        if not hasattr(self, "_rate_limiter"):
+            self._rate_limiter = RateLimiter()
+        await self._rate_limiter.acquire_async()
         if isinstance(data, (str | bytes)):
             return await self._client.post(url, content=data, **kwargs)
 
