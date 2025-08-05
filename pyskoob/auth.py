@@ -50,6 +50,13 @@ class AuthService(BaseSkoobService):
         User
             The authenticated user's information.
 
+        Raises
+        ------
+        ConnectionError
+            If retrieving user information fails.
+        PermissionError
+            If the provided session token is invalid or expired.
+
         Examples
         --------
         >>> service.login_with_cookies("PHPSESSID=abc123")
