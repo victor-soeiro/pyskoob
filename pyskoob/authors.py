@@ -42,6 +42,21 @@ class _AuthorServiceMixin:
     parse_html: Callable[[str], Any]
 
     async def _search(self, query: str, page: int = 1) -> Pagination[AuthorSearchResult]:
+        """Fetch authors that match ``query``.
+
+        Parameters
+        ----------
+        query : str
+            Text to search for in author names.
+        page : int, optional
+            Result page number, by default ``1``.
+
+        Returns
+        -------
+        Pagination[AuthorSearchResult]
+            Paginated collection of matching authors.
+        """
+
         url = f"{self.base_url}/autor/lista/busca:{query}/mpage:{page}"
         logger.info("Searching authors with query '%s' page %s", query, page)
         response = await maybe_await(self.client.get, url)
@@ -70,6 +85,19 @@ class _AuthorServiceMixin:
         )
 
     async def _get_by_id(self, author_id: int) -> AuthorProfile:
+        """Retrieve an author's profile by ``author_id``.
+
+        Parameters
+        ----------
+        author_id : int
+            Unique author identifier.
+
+        Returns
+        -------
+        AuthorProfile
+            Parsed author profile information.
+        """
+
         url = f"{self.base_url}/autor/{author_id}"
         logger.info("Fetching author profile: %s", url)
         response = await maybe_await(self.client.get, url)
@@ -78,6 +106,21 @@ class _AuthorServiceMixin:
         return parse_author_profile(soup, self.base_url)
 
     async def _get_books(self, author_id: int, page: int = 1) -> Pagination[BookSearchResult]:
+        """Retrieve books written by the author.
+
+        Parameters
+        ----------
+        author_id : int
+            Identifier of the author whose books will be listed.
+        page : int, optional
+            Result page number, by default ``1``.
+
+        Returns
+        -------
+        Pagination[BookSearchResult]
+            Paginated list of the author's books.
+        """
+
         url = f"{self.base_url}/autor/livros/{author_id}/page:{page}"
         logger.info("Fetching books for author %s page %s", author_id, page)
         response = await maybe_await(self.client.get, url)
@@ -109,15 +152,57 @@ class AuthorService(_AuthorServiceMixin, BaseSkoobService):
     """High level operations for retrieving authors."""
 
     def search(self, query: str, page: int = 1) -> Pagination[AuthorSearchResult]:
-        """Search for authors by name."""
+        """Search for authors by name.
+
+        Parameters
+        ----------
+        query : str
+            Text to search for in author names.
+        page : int, optional
+            Result page number, by default ``1``.
+
+        Returns
+        -------
+        Pagination[AuthorSearchResult]
+            Paginated collection of matching authors.
+
+        Examples
+        --------
+        >>> service.search("Douglas Adams").results[0].name
+        'Douglas Adams'
+        """
         return run_sync(self._search(query, page))
 
     def get_by_id(self, author_id: int) -> AuthorProfile:
-        """Retrieve detailed information about an author."""
+        """Retrieve detailed information about an author.
+
+        Parameters
+        ----------
+        author_id : int
+            Unique author identifier.
+
+        Returns
+        -------
+        AuthorProfile
+            Parsed author profile.
+        """
         return run_sync(self._get_by_id(author_id))
 
     def get_books(self, author_id: int, page: int = 1) -> Pagination[BookSearchResult]:
-        """Retrieve books written by the author."""
+        """Retrieve books written by the author.
+
+        Parameters
+        ----------
+        author_id : int
+            Identifier of the author whose books will be listed.
+        page : int, optional
+            Result page number, by default ``1``.
+
+        Returns
+        -------
+        Pagination[BookSearchResult]
+            Paginated list of the author's books.
+        """
         return run_sync(self._get_books(author_id, page))
 
 
@@ -128,13 +213,53 @@ class AsyncAuthorService(_AuthorServiceMixin, AsyncBaseSkoobService):  # pragma:
         super().__init__(client)
 
     async def search(self, query: str, page: int = 1) -> Pagination[AuthorSearchResult]:
-        """Asynchronously search for authors by name."""
+        """Asynchronously search for authors by name.
+
+        Parameters
+        ----------
+        query : str
+            Text to search for in author names.
+        page : int, optional
+            Result page number, by default ``1``.
+
+        Returns
+        -------
+        Pagination[AuthorSearchResult]
+            Paginated collection of matching authors.
+        """
+
         return await self._search(query, page)
 
     async def get_by_id(self, author_id: int) -> AuthorProfile:
-        """Fetch an author's profile by identifier."""
+        """Fetch an author's profile by identifier.
+
+        Parameters
+        ----------
+        author_id : int
+            Unique author identifier.
+
+        Returns
+        -------
+        AuthorProfile
+            Parsed author profile information.
+        """
+
         return await self._get_by_id(author_id)
 
     async def get_books(self, author_id: int, page: int = 1) -> Pagination[BookSearchResult]:
-        """Fetch books written by the given author."""
+        """Fetch books written by the given author.
+
+        Parameters
+        ----------
+        author_id : int
+            Identifier of the author whose books will be listed.
+        page : int, optional
+            Result page number, by default ``1``.
+
+        Returns
+        -------
+        Pagination[BookSearchResult]
+            Paginated list of the author's books.
+        """
+
         return await self._get_books(author_id, page)

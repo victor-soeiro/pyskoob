@@ -47,6 +47,24 @@ class _UserServiceMixin:
     _validate_login: Callable[[], Any]
 
     async def _get_by_id(self, user_id: int) -> User:
+        """Retrieve a user by identifier.
+
+        Parameters
+        ----------
+        user_id : int
+            Identifier of the user to fetch.
+
+        Returns
+        -------
+        User
+            Parsed user information.
+
+        Raises
+        ------
+        FileNotFoundError
+            If the user does not exist.
+        """
+
         await maybe_await(self._validate_login)
         logger.info("Getting user by id: %s", user_id)
         url = f"{self.base_url}/v1/user/{user_id}/stats:true"
@@ -63,6 +81,23 @@ class _UserServiceMixin:
         return user
 
     async def _get_relations(self, user_id: int, relation: UsersRelation, page: int = 1) -> Pagination[int]:
+        """Retrieve user IDs related to ``user_id``.
+
+        Parameters
+        ----------
+        user_id : int
+            Identifier of the source user.
+        relation : UsersRelation
+            Type of relation to retrieve (e.g. friends or followers).
+        page : int, optional
+            Result page number, by default ``1``.
+
+        Returns
+        -------
+        Pagination[int]
+            Paginated list of related user IDs.
+        """
+
         await maybe_await(self._validate_login)
         url = f"{self.base_url}/{relation.value}/listar/{user_id}/page:{page}/limit:100"
         logger.info("Getting '%s' for user_id: %s, page: %s", relation.value, user_id, page)
@@ -86,6 +121,21 @@ class _UserServiceMixin:
         )
 
     async def _get_reviews(self, user_id: int, page: int = 1) -> Pagination[BookReview]:
+        """Retrieve reviews written by ``user_id``.
+
+        Parameters
+        ----------
+        user_id : int
+            Identifier of the user whose reviews will be retrieved.
+        page : int, optional
+            Result page number, by default ``1``.
+
+        Returns
+        -------
+        Pagination[BookReview]
+            Paginated list of book reviews.
+        """
+
         await maybe_await(self._validate_login)
         url = f"{self.base_url}/estante/resenhas/{user_id}/mpage:{page}/limit:50"
         logger.info("Getting reviews for user_id: %s, page: %s", user_id, page)
@@ -142,6 +192,19 @@ class _UserServiceMixin:
         )
 
     async def _get_read_stats(self, user_id: int) -> UserReadStats:
+        """Retrieve reading statistics for ``user_id``.
+
+        Parameters
+        ----------
+        user_id : int
+            Identifier of the user whose stats will be retrieved.
+
+        Returns
+        -------
+        UserReadStats
+            Reading statistics for the given user.
+        """
+
         await maybe_await(self._validate_login)
         logger.info("Getting read stats for user_id: %s", user_id)
         url = f"{self.base_url}/v1/meta_stats/{user_id}"
@@ -163,6 +226,23 @@ class _UserServiceMixin:
         return stats
 
     async def _get_bookcase(self, user_id: int, bookcase_option: BookcaseOption, page: int = 1) -> Pagination[UserBook]:
+        """Retrieve books from a user's bookcase.
+
+        Parameters
+        ----------
+        user_id : int
+            Identifier of the user whose bookcase will be retrieved.
+        bookcase_option : BookcaseOption
+            Shelf option to fetch (e.g. read or wishlist).
+        page : int, optional
+            Result page number, by default ``1``.
+
+        Returns
+        -------
+        Pagination[UserBook]
+            Paginated list of books in the user's bookcase.
+        """
+
         await maybe_await(self._validate_login)
         url = f"{self.base_url}/v1/bookcase/books/{user_id}/shelf_id:{bookcase_option.value}/page:{page}/limit:100"
         logger.info(
@@ -210,6 +290,27 @@ class _UserServiceMixin:
         page: int = 1,
         limit: int = 100,
     ) -> Pagination[UserSearch]:
+        """Search for users using the Skoob search page.
+
+        Parameters
+        ----------
+        query : str
+            Text to search for in usernames or real names.
+        gender : UserGender, optional
+            Filter by gender.
+        state : BrazilianState, optional
+            Filter by Brazilian state.
+        page : int, optional
+            Result page number, by default ``1``.
+        limit : int, optional
+            Maximum number of results per page, by default ``100``.
+
+        Returns
+        -------
+        Pagination[UserSearch]
+            Paginated list of user search results.
+        """
+
         await maybe_await(self._validate_login)
         url = f"{self.base_url}/usuario/lista/busca:{query}/mpage:{page}/limit:{limit}"
         if gender:
@@ -271,27 +372,92 @@ class UserService(_UserServiceMixin, AuthenticatedService):
         super().__init__(client, auth_service)
 
     def get_by_id(self, user_id: int) -> User:
-        """Retrieve a user by their ID."""
+        """Retrieve a user by their ID.
+
+        Parameters
+        ----------
+        user_id : int
+            Identifier of the user to fetch.
+
+        Returns
+        -------
+        User
+            Parsed user information.
+        """
 
         return run_sync(self._get_by_id(user_id))
 
     def get_relations(self, user_id: int, relation: UsersRelation, page: int = 1) -> Pagination[int]:
-        """Retrieve a user's relations."""
+        """Retrieve a user's relations.
+
+        Parameters
+        ----------
+        user_id : int
+            Identifier of the source user.
+        relation : UsersRelation
+            Type of relation to retrieve.
+        page : int, optional
+            Result page number, by default ``1``.
+
+        Returns
+        -------
+        Pagination[int]
+            Paginated list of related user IDs.
+        """
 
         return run_sync(self._get_relations(user_id, relation, page))
 
     def get_reviews(self, user_id: int, page: int = 1) -> Pagination[BookReview]:
-        """Retrieve reviews made by a user."""
+        """Retrieve reviews made by a user.
+
+        Parameters
+        ----------
+        user_id : int
+            Identifier of the user whose reviews will be retrieved.
+        page : int, optional
+            Result page number, by default ``1``.
+
+        Returns
+        -------
+        Pagination[BookReview]
+            Paginated list of book reviews.
+        """
 
         return run_sync(self._get_reviews(user_id, page))
 
     def get_read_stats(self, user_id: int) -> UserReadStats:
-        """Retrieve reading statistics for a user."""
+        """Retrieve reading statistics for a user.
+
+        Parameters
+        ----------
+        user_id : int
+            Identifier of the user whose stats will be retrieved.
+
+        Returns
+        -------
+        UserReadStats
+            Reading statistics for the given user.
+        """
 
         return run_sync(self._get_read_stats(user_id))
 
     def get_bookcase(self, user_id: int, bookcase_option: BookcaseOption, page: int = 1) -> Pagination[UserBook]:
-        """Retrieve a user's bookcase."""
+        """Retrieve a user's bookcase.
+
+        Parameters
+        ----------
+        user_id : int
+            Identifier of the user whose bookcase will be retrieved.
+        bookcase_option : BookcaseOption
+            Shelf option to fetch (e.g. read or wishlist).
+        page : int, optional
+            Result page number, by default ``1``.
+
+        Returns
+        -------
+        Pagination[UserBook]
+            Paginated list of books in the user's bookcase.
+        """
 
         return run_sync(self._get_bookcase(user_id, bookcase_option, page))
 
@@ -303,7 +469,31 @@ class UserService(_UserServiceMixin, AuthenticatedService):
         page: int = 1,
         limit: int = 100,
     ) -> Pagination[UserSearch]:
-        """Search for users on Skoob."""
+        """Search for users on Skoob.
+
+        Parameters
+        ----------
+        query : str
+            Text to search for in usernames or real names.
+        gender : UserGender, optional
+            Filter by gender.
+        state : BrazilianState, optional
+            Filter by Brazilian state.
+        page : int, optional
+            Result page number, by default ``1``.
+        limit : int, optional
+            Maximum number of results per page, by default ``100``.
+
+        Returns
+        -------
+        Pagination[UserSearch]
+            Paginated list of user search results.
+
+        Examples
+        --------
+        >>> service.search("Maria").results[0].name
+        'Maria'
+        """
 
         return run_sync(self._search(query, gender, state, page, limit))
 
@@ -315,27 +505,92 @@ class AsyncUserService(_UserServiceMixin, AsyncAuthenticatedService):  # pragma:
         super().__init__(client, auth_service)
 
     async def get_by_id(self, user_id: int) -> User:
-        """Retrieve a user by their ID."""
+        """Retrieve a user by their ID.
+
+        Parameters
+        ----------
+        user_id : int
+            Identifier of the user to fetch.
+
+        Returns
+        -------
+        User
+            Parsed user information.
+        """
 
         return await self._get_by_id(user_id)
 
     async def get_relations(self, user_id: int, relation: UsersRelation, page: int = 1) -> Pagination[int]:
-        """Retrieve a user's relations."""
+        """Retrieve a user's relations.
+
+        Parameters
+        ----------
+        user_id : int
+            Identifier of the source user.
+        relation : UsersRelation
+            Type of relation to retrieve.
+        page : int, optional
+            Result page number, by default ``1``.
+
+        Returns
+        -------
+        Pagination[int]
+            Paginated list of related user IDs.
+        """
 
         return await self._get_relations(user_id, relation, page)
 
     async def get_reviews(self, user_id: int, page: int = 1) -> Pagination[BookReview]:
-        """Retrieve reviews made by a user."""
+        """Retrieve reviews made by a user.
+
+        Parameters
+        ----------
+        user_id : int
+            Identifier of the user whose reviews will be retrieved.
+        page : int, optional
+            Result page number, by default ``1``.
+
+        Returns
+        -------
+        Pagination[BookReview]
+            Paginated list of book reviews.
+        """
 
         return await self._get_reviews(user_id, page)
 
     async def get_read_stats(self, user_id: int) -> UserReadStats:
-        """Retrieve reading statistics for a user."""
+        """Retrieve reading statistics for a user.
+
+        Parameters
+        ----------
+        user_id : int
+            Identifier of the user whose stats will be retrieved.
+
+        Returns
+        -------
+        UserReadStats
+            Reading statistics for the given user.
+        """
 
         return await self._get_read_stats(user_id)
 
     async def get_bookcase(self, user_id: int, bookcase_option: BookcaseOption, page: int = 1) -> Pagination[UserBook]:
-        """Retrieve a user's bookcase."""
+        """Retrieve a user's bookcase.
+
+        Parameters
+        ----------
+        user_id : int
+            Identifier of the user whose bookcase will be retrieved.
+        bookcase_option : BookcaseOption
+            Shelf option to fetch (e.g. read or wishlist).
+        page : int, optional
+            Result page number, by default ``1``.
+
+        Returns
+        -------
+        Pagination[UserBook]
+            Paginated list of books in the user's bookcase.
+        """
 
         return await self._get_bookcase(user_id, bookcase_option, page)
 
@@ -347,6 +602,25 @@ class AsyncUserService(_UserServiceMixin, AsyncAuthenticatedService):  # pragma:
         page: int = 1,
         limit: int = 100,
     ) -> Pagination[UserSearch]:
-        """Search for users on Skoob."""
+        """Search for users on Skoob.
+
+        Parameters
+        ----------
+        query : str
+            Text to search for in usernames or real names.
+        gender : UserGender, optional
+            Filter by gender.
+        state : BrazilianState, optional
+            Filter by Brazilian state.
+        page : int, optional
+            Result page number, by default ``1``.
+        limit : int, optional
+            Maximum number of results per page, by default ``100``.
+
+        Returns
+        -------
+        Pagination[UserSearch]
+            Paginated list of user search results.
+        """
 
         return await self._search(query, gender, state, page, limit)

@@ -23,6 +23,19 @@ class _AuthServiceMixin:
     _is_logged_in: bool
 
     async def _login_with_cookies(self, session_token: str) -> User:
+        """Authenticate using an existing session token.
+
+        Parameters
+        ----------
+        session_token : str
+            Value of the ``PHPSESSID`` cookie obtained from the browser.
+
+        Returns
+        -------
+        User
+            Authenticated user information.
+        """
+
         logger.info("Attempting to log in with session token.")
         self.client.cookies.update({"PHPSESSID": session_token})
         user = await self._get_my_info()
@@ -31,6 +44,26 @@ class _AuthServiceMixin:
         return user
 
     async def _login(self, email: str, password: str) -> User:
+        """Authenticate using email and password.
+
+        Parameters
+        ----------
+        email : str
+            Account email address.
+        password : str
+            Account password.
+
+        Returns
+        -------
+        User
+            Authenticated user information.
+
+        Raises
+        ------
+        ConnectionError
+            If the credentials are invalid or the response cannot be parsed.
+        """
+
         logger.info("Attempting to log in with email and password.")
         url = f"{self.base_url}/v1/login"
         data = {
@@ -54,6 +87,19 @@ class _AuthServiceMixin:
         return user
 
     async def _get_my_info(self) -> User:
+        """Retrieve information about the authenticated user.
+
+        Returns
+        -------
+        User
+            Authenticated user details.
+
+        Raises
+        ------
+        ConnectionError
+            If the service cannot retrieve the user information.
+        """
+
         logger.info("Getting authenticated user's information.")
         url = f"{self.base_url}/v1/user/stats:true"
         response = await maybe_await(self.client.get, url)
@@ -69,6 +115,14 @@ class _AuthServiceMixin:
         return user
 
     def _validate_login(self) -> None:
+        """Ensure that a user has been authenticated.
+
+        Raises
+        ------
+        PermissionError
+            If the service has not been authenticated yet.
+        """
+
         logger.debug("Validating login status.")
         if not self._is_logged_in:
             logger.warning("Validation failed: User is not logged in.")
@@ -86,22 +140,58 @@ class AuthService(_AuthServiceMixin, BaseSkoobService):
         self._is_logged_in = False
 
     def login_with_cookies(self, session_token: str) -> User:
-        """Log in using a pre-existing session token."""
+        """Log in using a pre-existing session token.
+
+        Parameters
+        ----------
+        session_token : str
+            Value of the ``PHPSESSID`` cookie obtained from the browser.
+
+        Returns
+        -------
+        User
+            Authenticated user information.
+        """
 
         return run_sync(self._login_with_cookies(session_token))
 
     def login(self, email: str, password: str) -> User:
-        """Log in with email and password."""
+        """Log in with email and password.
+
+        Parameters
+        ----------
+        email : str
+            Account email address.
+        password : str
+            Account password.
+
+        Returns
+        -------
+        User
+            Authenticated user information.
+        """
 
         return run_sync(self._login(email, password))
 
     def get_my_info(self) -> User:
-        """Retrieve information about the authenticated user."""
+        """Retrieve information about the authenticated user.
+
+        Returns
+        -------
+        User
+            Authenticated user details.
+        """
 
         return run_sync(self._get_my_info())
 
     def validate_login(self) -> None:
-        """Validate that the current session is authenticated."""
+        """Validate that the current session is authenticated.
+
+        Raises
+        ------
+        PermissionError
+            If the service has not been authenticated yet.
+        """
 
         self._validate_login()
 
@@ -114,21 +204,57 @@ class AsyncAuthService(_AuthServiceMixin, AsyncBaseSkoobService):  # pragma: no 
         self._is_logged_in = False
 
     async def login_with_cookies(self, session_token: str) -> User:
-        """Log in using a pre-existing session token."""
+        """Log in using a pre-existing session token.
+
+        Parameters
+        ----------
+        session_token : str
+            Value of the ``PHPSESSID`` cookie obtained from the browser.
+
+        Returns
+        -------
+        User
+            Authenticated user information.
+        """
 
         return await self._login_with_cookies(session_token)
 
     async def login(self, email: str, password: str) -> User:
-        """Log in with email and password."""
+        """Log in with email and password.
+
+        Parameters
+        ----------
+        email : str
+            Account email address.
+        password : str
+            Account password.
+
+        Returns
+        -------
+        User
+            Authenticated user information.
+        """
 
         return await self._login(email, password)
 
     async def get_my_info(self) -> User:
-        """Retrieve information about the authenticated user."""
+        """Retrieve information about the authenticated user.
+
+        Returns
+        -------
+        User
+            Authenticated user details.
+        """
 
         return await self._get_my_info()
 
     async def validate_login(self) -> None:
-        """Validate that the current session is authenticated."""
+        """Validate that the current session is authenticated.
+
+        Raises
+        ------
+        PermissionError
+            If the service has not been authenticated yet.
+        """
 
         self._validate_login()

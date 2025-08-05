@@ -44,7 +44,23 @@ class _BookServiceMixin:
         search_by: BookSearch = BookSearch.TITLE,
         page: int = 1,
     ) -> Pagination[BookSearchResult]:
-        """Search for books by ``query`` and ``search_by`` criteria."""
+        """Search for books.
+
+        Parameters
+        ----------
+        query : str
+            Text to search for in book titles, ISBNs or authors depending on
+            ``search_by``.
+        search_by : BookSearch, optional
+            Criteria used for searching, by default ``BookSearch.TITLE``.
+        page : int, optional
+            Result page number, by default ``1``.
+
+        Returns
+        -------
+        Pagination[BookSearchResult]
+            Paginated collection of matching books.
+        """
 
         url = f"{self.base_url}/livro/lista/busca:{query}/tipo:{search_by.value}/mpage:{page}"
         logger.info("Searching for books with query: '%s' on page %s", query, page)
@@ -87,7 +103,18 @@ class _BookServiceMixin:
         )
 
     async def _get_by_id(self, edition_id: int) -> Book:
-        """Retrieve a book by its edition identifier."""
+        """Retrieve a book by its edition identifier.
+
+        Parameters
+        ----------
+        edition_id : int
+            Edition identifier from Skoob.
+
+        Returns
+        -------
+        Book
+            Fully parsed book information.
+        """
 
         logger.info("Getting book by edition_id: %s", edition_id)
         url = f"{self.base_url}/v1/book/{edition_id}/stats:true"
@@ -131,7 +158,23 @@ class _BookServiceMixin:
             raise ParsingError(f"Failed to retrieve book for edition_id {edition_id}.") from e
 
     async def _get_reviews(self, book_id: int, edition_id: int | None = None, page: int = 1) -> Pagination[BookReview]:
-        """Fetch reviews for a given book."""
+        """Fetch reviews for a given book.
+
+        Parameters
+        ----------
+        book_id : int
+            Identifier of the book whose reviews will be retrieved.
+        edition_id : int, optional
+            Specific edition identifier. When ``None`` the edition is inferred
+            from the reviews page.
+        page : int, optional
+            Review page number, by default ``1``.
+
+        Returns
+        -------
+        Pagination[BookReview]
+            Paginated list of book reviews.
+        """
 
         url = f"{self.base_url}/livro/resenhas/{book_id}/mpage:{page}/limit:50"
         if edition_id:
@@ -176,7 +219,26 @@ class _BookServiceMixin:
         limit: int = 500,
         page: int = 1,
     ) -> Pagination[int]:
-        """Fetch user IDs who marked the book with a given status."""
+        """Fetch user IDs who marked the book with a given status.
+
+        Parameters
+        ----------
+        book_id : int
+            Identifier of the book to inspect.
+        status : BookUserStatus
+            Desired user status for the book.
+        edition_id : int, optional
+            Specific edition identifier to filter by.
+        limit : int, optional
+            Maximum number of IDs per page, by default ``500``.
+        page : int, optional
+            Page number to retrieve, by default ``1``.
+
+        Returns
+        -------
+        Pagination[int]
+            Paginated list of user IDs.
+        """
 
         url = f"{self.base_url}/livro/leitores/{status.value}/{book_id}/limit:{limit}/page:{page}"
         if edition_id:
@@ -226,15 +288,63 @@ class BookService(_BookServiceMixin, BaseSkoobService):
         search_by: BookSearch = BookSearch.TITLE,
         page: int = 1,
     ) -> Pagination[BookSearchResult]:
-        """Searches for books by query and type."""
+        """Search for books by query and type.
+
+        Parameters
+        ----------
+        query : str
+            Text to search for in book titles, ISBNs or authors depending on
+            ``search_by``.
+        search_by : BookSearch, optional
+            Criteria used for searching, by default ``BookSearch.TITLE``.
+        page : int, optional
+            Result page number, by default ``1``.
+
+        Returns
+        -------
+        Pagination[BookSearchResult]
+            Paginated collection of matching books.
+
+        Examples
+        --------
+        >>> service.search("Duna").results[0].title
+        'Duna'
+        """
         return run_sync(self._search(query, search_by, page))
 
     def get_by_id(self, edition_id: int) -> Book:
-        """Retrieves a book by its edition ID."""
+        """Retrieve a book by its edition ID.
+
+        Parameters
+        ----------
+        edition_id : int
+            Edition identifier from Skoob.
+
+        Returns
+        -------
+        Book
+            Fully parsed book information.
+        """
         return run_sync(self._get_by_id(edition_id))
 
     def get_reviews(self, book_id: int, edition_id: int | None = None, page: int = 1) -> Pagination[BookReview]:
-        """Retrieves reviews for a book."""
+        """Retrieve reviews for a book.
+
+        Parameters
+        ----------
+        book_id : int
+            Identifier of the book whose reviews will be retrieved.
+        edition_id : int, optional
+            Specific edition identifier. When ``None`` the edition is inferred
+            from the reviews page.
+        page : int, optional
+            Review page number, by default ``1``.
+
+        Returns
+        -------
+        Pagination[BookReview]
+            Paginated list of book reviews.
+        """
         return run_sync(self._get_reviews(book_id, edition_id, page))
 
     def get_users_by_status(
@@ -245,7 +355,26 @@ class BookService(_BookServiceMixin, BaseSkoobService):
         limit: int = 500,
         page: int = 1,
     ) -> Pagination[int]:
-        """Retrieves users who have a book with a specific status."""
+        """Retrieve users who have a book with a specific status.
+
+        Parameters
+        ----------
+        book_id : int
+            Identifier of the book to inspect.
+        status : BookUserStatus
+            Desired user status for the book.
+        edition_id : int, optional
+            Specific edition identifier to filter by.
+        limit : int, optional
+            Maximum number of IDs per page, by default ``500``.
+        page : int, optional
+            Page number to retrieve, by default ``1``.
+
+        Returns
+        -------
+        Pagination[int]
+            Paginated list of user IDs.
+        """
         return run_sync(self._get_users_by_status(book_id, status, edition_id, limit, page))
 
 
@@ -255,16 +384,67 @@ class AsyncBookService(_BookServiceMixin, AsyncBaseSkoobService):  # pragma: no 
     def __init__(self, client: AsyncHTTPClient):
         super().__init__(client)
 
-    async def search(self, query: str, search_by: BookSearch = BookSearch.TITLE, page: int = 1) -> Pagination[BookSearchResult]:
-        """Asynchronously search for books by query and type."""
+    async def search(
+        self,
+        query: str,
+        search_by: BookSearch = BookSearch.TITLE,
+        page: int = 1,
+    ) -> Pagination[BookSearchResult]:
+        """Asynchronously search for books by query and type.
+
+        Parameters
+        ----------
+        query : str
+            Text to search for in book titles, ISBNs or authors depending on
+            ``search_by``.
+        search_by : BookSearch, optional
+            Criteria used for searching, by default ``BookSearch.TITLE``.
+        page : int, optional
+            Result page number, by default ``1``.
+
+        Returns
+        -------
+        Pagination[BookSearchResult]
+            Paginated collection of matching books.
+        """
+
         return await self._search(query, search_by, page)
 
     async def get_by_id(self, edition_id: int) -> Book:
-        """Retrieve a book by its edition ID asynchronously."""
+        """Retrieve a book by its edition ID asynchronously.
+
+        Parameters
+        ----------
+        edition_id : int
+            Edition identifier from Skoob.
+
+        Returns
+        -------
+        Book
+            Fully parsed book information.
+        """
+
         return await self._get_by_id(edition_id)
 
     async def get_reviews(self, book_id: int, edition_id: int | None = None, page: int = 1) -> Pagination[BookReview]:
-        """Retrieve book reviews asynchronously."""
+        """Retrieve book reviews asynchronously.
+
+        Parameters
+        ----------
+        book_id : int
+            Identifier of the book whose reviews will be retrieved.
+        edition_id : int, optional
+            Specific edition identifier. When ``None`` the edition is inferred
+            from the reviews page.
+        page : int, optional
+            Review page number, by default ``1``.
+
+        Returns
+        -------
+        Pagination[BookReview]
+            Paginated list of book reviews.
+        """
+
         return await self._get_reviews(book_id, edition_id, page)
 
     async def get_users_by_status(
@@ -275,5 +455,25 @@ class AsyncBookService(_BookServiceMixin, AsyncBaseSkoobService):  # pragma: no 
         limit: int = 500,
         page: int = 1,
     ) -> Pagination[int]:
-        """Retrieve user IDs who marked the book with a given status."""
+        """Retrieve user IDs who marked the book with a given status.
+
+        Parameters
+        ----------
+        book_id : int
+            Identifier of the book to inspect.
+        status : BookUserStatus
+            Desired user status for the book.
+        edition_id : int, optional
+            Specific edition identifier to filter by.
+        limit : int, optional
+            Maximum number of IDs per page, by default ``500``.
+        page : int, optional
+            Page number to retrieve, by default ``1``.
+
+        Returns
+        -------
+        Pagination[int]
+            Paginated list of user IDs.
+        """
+
         return await self._get_users_by_status(book_id, status, edition_id, limit, page)

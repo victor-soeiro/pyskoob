@@ -23,7 +23,20 @@ class _ProfileServiceMixin:
     _validate_login: Callable[[], Any]
 
     async def _add_book_label(self, edition_id: int, label: BookLabel) -> bool:
-        """Add a label to a book."""
+        """Add a label to a book.
+
+        Parameters
+        ----------
+        edition_id : int
+            Edition identifier of the book.
+        label : BookLabel
+            Label to associate with the book.
+
+        Returns
+        -------
+        bool
+            ``True`` if the label was added successfully.
+        """
 
         await maybe_await(self._validate_login)
         url = f"{self.base_url}/v1/label_add/{edition_id}/{label.value}"
@@ -32,7 +45,18 @@ class _ProfileServiceMixin:
         return response.json().get("success", False)
 
     async def _remove_book_label(self, edition_id: int) -> bool:
-        """Remove a label from a book."""
+        """Remove a label from a book.
+
+        Parameters
+        ----------
+        edition_id : int
+            Edition identifier of the book.
+
+        Returns
+        -------
+        bool
+            ``True`` if the label was removed successfully.
+        """
 
         await maybe_await(self._validate_login)
         url = f"{self.base_url}/v1/label_del/{edition_id}"
@@ -41,7 +65,20 @@ class _ProfileServiceMixin:
         return response.json().get("success", False)
 
     async def _update_book_status(self, edition_id: int, status: BookStatus) -> bool:
-        """Update the user's status for a book."""
+        """Update the user's status for a book.
+
+        Parameters
+        ----------
+        edition_id : int
+            Edition identifier of the book.
+        status : BookStatus
+            New status to assign to the book.
+
+        Returns
+        -------
+        bool
+            ``True`` if the status was updated successfully.
+        """
 
         await maybe_await(self._validate_login)
         url = f"{self.base_url}/v1/shelf_add/{edition_id}/{status.value}"
@@ -50,7 +87,18 @@ class _ProfileServiceMixin:
         return response.json().get("success", False)
 
     async def _remove_book_status(self, edition_id: int) -> bool:
-        """Remove the user's status for a book."""
+        """Remove the user's status for a book.
+
+        Parameters
+        ----------
+        edition_id : int
+            Edition identifier of the book.
+
+        Returns
+        -------
+        bool
+            ``True`` if the status was removed successfully.
+        """
 
         await maybe_await(self._validate_login)
         url = f"{self.base_url}/v1/shelf_del/{edition_id}"
@@ -59,7 +107,20 @@ class _ProfileServiceMixin:
         return response.json().get("success", False)
 
     async def _change_book_shelf(self, edition_id: int, bookshelf: BookShelf) -> bool:
-        """Move a book to a different bookshelf."""
+        """Move a book to a different bookshelf.
+
+        Parameters
+        ----------
+        edition_id : int
+            Edition identifier of the book.
+        bookshelf : BookShelf
+            Destination bookshelf.
+
+        Returns
+        -------
+        bool
+            ``True`` if the book was moved successfully.
+        """
 
         await maybe_await(self._validate_login)
         url = f"{self.base_url}/estante/prateleira/{edition_id}/{bookshelf.value}"
@@ -70,8 +131,22 @@ class _ProfileServiceMixin:
     async def _rate_book(self, edition_id: int, ranking: float) -> bool:
         """Rate a book in the authenticated profile.
 
+        Parameters
+        ----------
+        edition_id : int
+            Edition identifier of the book.
+        ranking : float
+            Rating between ``0`` and ``5``.
+
+        Returns
+        -------
+        bool
+            ``True`` if the rating was stored successfully.
+
         Raises
         ------
+        ValueError
+            If ``ranking`` is outside the ``0``-``5`` range.
         ProfileError
             If the service fails to persist the rating.
         """
@@ -256,31 +331,105 @@ class AsyncSkoobProfileService(_ProfileServiceMixin, AsyncAuthenticatedService):
         super().__init__(client, auth_service)
 
     async def add_book_label(self, edition_id: int, label: BookLabel) -> bool:
-        """Add a label to a book in the authenticated profile."""
+        """Add a label to a book in the authenticated profile.
+
+        Parameters
+        ----------
+        edition_id : int
+            Edition identifier of the book.
+        label : BookLabel
+            Label to associate with the book.
+
+        Returns
+        -------
+        bool
+            ``True`` if the label was added successfully.
+        """
 
         return await self._add_book_label(edition_id, label)
 
     async def remove_book_label(self, edition_id: int) -> bool:
-        """Remove a label from a book in the authenticated profile."""
+        """Remove a label from a book in the authenticated profile.
+
+        Parameters
+        ----------
+        edition_id : int
+            Edition identifier of the book.
+
+        Returns
+        -------
+        bool
+            ``True`` if the label was removed successfully.
+        """
 
         return await self._remove_book_label(edition_id)
 
     async def update_book_status(self, edition_id: int, status: BookStatus) -> bool:
-        """Update the user's status for a book."""
+        """Update the user's status for a book.
+
+        Parameters
+        ----------
+        edition_id : int
+            Edition identifier of the book.
+        status : BookStatus
+            New status to assign to the book.
+
+        Returns
+        -------
+        bool
+            ``True`` if the status was updated successfully.
+        """
 
         return await self._update_book_status(edition_id, status)
 
     async def remove_book_status(self, edition_id: int) -> bool:
-        """Remove the user's status for a book."""
+        """Remove the user's status for a book.
+
+        Parameters
+        ----------
+        edition_id : int
+            Edition identifier of the book.
+
+        Returns
+        -------
+        bool
+            ``True`` if the status was removed successfully.
+        """
 
         return await self._remove_book_status(edition_id)
 
     async def change_book_shelf(self, edition_id: int, bookshelf: BookShelf) -> bool:
-        """Move a book to a different bookshelf."""
+        """Move a book to a different bookshelf.
+
+        Parameters
+        ----------
+        edition_id : int
+            Edition identifier of the book.
+        bookshelf : BookShelf
+            Destination bookshelf.
+
+        Returns
+        -------
+        bool
+            ``True`` if the book was moved successfully.
+        """
 
         return await self._change_book_shelf(edition_id, bookshelf)
 
     async def rate_book(self, edition_id: int, ranking: float) -> bool:
-        """Rate a book in the authenticated profile."""
+        """Rate a book in the authenticated profile.
+
+        Parameters
+        ----------
+        edition_id : int
+            Edition identifier of the book.
+        ranking : float
+            Rating between ``0`` and ``5``.
+
+        Returns
+        -------
+        bool
+            ``True`` if the rating was stored successfully.
+        """
 
         return await self._rate_book(edition_id, ranking)
