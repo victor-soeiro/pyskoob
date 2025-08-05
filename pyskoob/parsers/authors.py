@@ -70,18 +70,37 @@ def extract_author_info(soup: Tag) -> tuple[str | None, str | None]:
     return birth_date, location
 
 
-def extract_author_stats(soup: Tag) -> AuthorStats:
-    stats_div = safe_find(soup, "div", {"id": "livro-perfil-status02"})
+def _parse_rating_summary(
+    stats_div: Tag | None,
+) -> tuple[int | None, int | None, int | None, float | None]:
+    """Extract high-level rating numbers from the author stats block.
+
+    Parameters
+    ----------
+    stats_div : Tag | None
+        Container holding the rating information. May be ``None`` when the
+        profile lacks a stats section.
+
+    Returns
+    -------
+    tuple[int | None, int | None, int | None, float | None]
+        A tuple containing, respectively, the number of followers, readers,
+        ratings and the average rating. Each element is ``None`` when the
+        corresponding value cannot be determined.
+    """
+
     followers = readers = ratings = None
     average_rating = None
     if stats_div:
         rating_span = safe_find(stats_div, "span", {"class": "rating"})
         rating_text = get_tag_text(rating_span).replace(",", ".")
         average_rating = float(rating_text) if rating_text else None
+
         aval_span = stats_div.find("span", string=lambda t: t and "avalia" in t.lower())
         if aval_span:
             aval_match = re.search(r"(\d+)", get_tag_text(aval_span).replace(".", ""))
             ratings = int(aval_match.group(1)) if aval_match else None
+
         for bar in safe_find_all(stats_div, "div", {"class": "bar"}):
             label = get_tag_text(safe_find(bar, "a")).lower()
             value_text = get_tag_text(safe_find(bar, "b")).replace(".", "")
@@ -90,12 +109,52 @@ def extract_author_stats(soup: Tag) -> AuthorStats:
                 readers = value
             elif "seguidores" in label:
                 followers = value
+
+    return followers, readers, ratings, average_rating
+
+
+def _parse_star_distribution(soup: Tag) -> dict[str, float]:
+    """Extract the percentage distribution for each star rating.
+
+    Parameters
+    ----------
+    soup : Tag
+        Parsed HTML of the author profile page.
+
+    Returns
+    -------
+    dict[str, float]
+        Mapping of the star label (e.g., ``"5 estrelas"``) to the percentage of
+        ratings with that value.
+    """
+
     star_ratings: dict[str, float] = {}
     for img in safe_find_all(soup, "img", {"src": re.compile("estrela")}):
         alt = get_tag_attr(img, "alt")
         percent_tag = img.find_next("div", string=re.compile("%"))
         if alt and percent_tag:
             star_ratings[alt] = float(get_tag_text(percent_tag).replace("%", ""))
+    return star_ratings
+
+
+def extract_author_stats(soup: Tag) -> AuthorStats:
+    """Parse follower counts and rating information from the profile.
+
+    Parameters
+    ----------
+    soup : Tag
+        Parsed HTML of the author profile page.
+
+    Returns
+    -------
+    AuthorStats
+        Data model containing follower counts, reader counts, number of
+        ratings, average rating and star distribution.
+    """
+
+    stats_div = safe_find(soup, "div", {"id": "livro-perfil-status02"})
+    followers, readers, ratings, average_rating = _parse_rating_summary(stats_div)
+    star_ratings = _parse_star_distribution(soup)
     return AuthorStats(
         followers=followers,
         readers=readers,
@@ -168,6 +227,21 @@ def extract_author_metadata(
 
 
 def parse_author_profile(soup: Tag, base_url: str) -> AuthorProfile:
+    """Parse an author profile page into a data model.
+
+    Parameters
+    ----------
+    soup : Tag
+        Parsed HTML of the author profile page.
+    base_url : str
+        Base URL used to convert relative links to absolute ones.
+
+    Returns
+    -------
+    AuthorProfile
+        Structured representation of the author profile.
+    """
+
     name = get_tag_text(safe_find(soup, "h1", {"class": "given-name"}))
     photo_url = get_tag_attr(safe_find(soup, "img", {"class": "img-rounded"}), "src")
     links = extract_author_links(soup)
@@ -178,7 +252,14 @@ def parse_author_profile(soup: Tag, base_url: str) -> AuthorProfile:
     gender = extract_gender_percentages(soup)
     books = extract_author_books(soup, base_url)
     videos = extract_author_videos(soup, base_url)
-    (created_at, created_by, edited_at, edited_by, approved_at, approved_by) = extract_author_metadata(soup)
+    (
+        created_at,
+        created_by,
+        edited_at,
+        edited_by,
+        approved_at,
+        approved_by,
+    ) = extract_author_metadata(soup)
     return AuthorProfile(
         name=name,
         photo_url=photo_url,
