@@ -1,7 +1,7 @@
 import httpx
 from conftest import make_user
 
-from pyskoob import SkoobClient
+from pyskoob import RateLimiter, SkoobClient
 from pyskoob.http.httpx import HttpxSyncClient
 
 
@@ -27,6 +27,7 @@ def test_login_and_search_flow(monkeypatch):
 
     def patched_init(self, **kwargs):
         self._client = httpx.Client(transport=transport)
+        self._rate_limiter = RateLimiter()
 
     monkeypatch.setattr(HttpxSyncClient, "__init__", patched_init, raising=False)
     monkeypatch.setattr(HttpxSyncClient, "close", lambda self: None, raising=False)
