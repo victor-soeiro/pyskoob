@@ -3,6 +3,7 @@
 import logging
 import re
 from datetime import datetime
+from typing import Any
 
 from bs4 import BeautifulSoup
 
@@ -33,6 +34,27 @@ from pyskoob.utils.skoob_parser_utils import (
 )
 
 logger = logging.getLogger(__name__)
+
+
+def _parse_total_from_html(soup: BeautifulSoup) -> int | None:
+    """Extract total count from common Skoob HTML counters."""
+
+    counter = safe_find(soup, "div", {"class": "contador"})
+    if counter:
+        match = re.search(r"\d+", get_tag_text(counter))
+        if match:
+            return int(match.group())
+    return None
+
+
+def _parse_total_from_paging(paging: dict[str, Any]) -> int | None:
+    """Extract total count from paging JSON metadata."""
+
+    for key in ("total", "total_items", "totalItems", "total_books", "totalBooks"):
+        value = paging.get(key)
+        if isinstance(value, int):
+            return value
+    return None
 
 
 class UserService(AuthenticatedService):
@@ -138,12 +160,13 @@ class UserService(AuthenticatedService):
             logger.error(f"Failed to parse user relations: {e}")
             raise ParsingError("Failed to parse user relations.") from e
 
+        total = _parse_total_from_html(soup)
         logger.info(f"Found {len(users_id)} users on page {page}.")
         return Pagination(
             results=users_id,
             limit=100,
             page=page,
-            total=len(users_id),  # Placeholder, actual total is not easily available
+            total=total,
             has_next_page=bool(next_page_link),
         )
 
@@ -216,12 +239,13 @@ class UserService(AuthenticatedService):
             logger.error(f"Failed to parse user reviews: {e}")
             raise ParsingError("Failed to parse user reviews.") from e
 
+        total = _parse_total_from_html(soup)
         logger.info(f"Found {len(user_reviews)} reviews on page {page}.")
         return Pagination(
             results=user_reviews,
             limit=50,
             page=page,
-            total=len(user_reviews),  # Placeholder, actual total is not easily available
+            total=total,
             has_next_page=bool(next_page_link),
         )
 
@@ -307,11 +331,12 @@ class UserService(AuthenticatedService):
                 )
             )
 
+        total = _parse_total_from_paging(json_data.get("paging", {}))
         logger.info(f"Found {len(results)} books on page {page}.")
         return Pagination(
             limit=100,
             results=results,
-            total=len(results),  # Placeholder, actual total is not easily available
+            total=total,
             has_next_page=bool(next_page),
             page=page,
         )
@@ -507,12 +532,14 @@ class AsyncUserService(AsyncAuthenticatedService):  # pragma: no cover - thin as
         except (AttributeError, ValueError, IndexError) as e:
             logger.error(f"Failed to parse user relations: {e}")
             raise ParsingError("Failed to parse user relations.") from e
+
+        total = _parse_total_from_html(soup)
         logger.info(f"Found {len(users_id)} users on page {page}.")
         return Pagination(
             results=users_id,
             limit=100,
             page=page,
-            total=len(users_id),
+            total=total,
             has_next_page=bool(next_page_link),
         )
 
@@ -582,12 +609,14 @@ class AsyncUserService(AsyncAuthenticatedService):  # pragma: no cover - thin as
         except (AttributeError, ValueError, IndexError) as e:
             logger.error(f"Failed to parse user reviews: {e}")
             raise ParsingError("Failed to parse user reviews.") from e
+
+        total = _parse_total_from_html(soup)
         logger.info(f"Found {len(user_reviews)} reviews on page {page}.")
         return Pagination(
             results=user_reviews,
             limit=50,
             page=page,
-            total=len(user_reviews),
+            total=total,
             has_next_page=bool(next_page_link),
         )
 
@@ -666,11 +695,12 @@ class AsyncUserService(AsyncAuthenticatedService):  # pragma: no cover - thin as
                     pages_read=r.get("paginas_lidas"),
                 )
             )
+        total = _parse_total_from_paging(json_data.get("paging", {}))
         logger.info(f"Found {len(results)} books on page {page}.")
         return Pagination(
             limit=100,
             results=results,
-            total=len(results),
+            total=total,
             has_next_page=bool(next_page),
             page=page,
         )
