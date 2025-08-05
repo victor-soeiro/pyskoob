@@ -27,7 +27,15 @@ logger = logging.getLogger(__name__)
 
 
 class _AuthorServiceMixin:
-    """Shared author retrieval logic for sync and async services."""
+    """Shared author retrieval logic for sync and async services.
+
+    This mixin expects the following attributes to be provided by the base
+    class:
+
+    - ``client``: HTTP client (synchronous or asynchronous)
+    - ``base_url``: Base URL for the Skoob API
+    - ``parse_html``: HTML parsing function
+    """
 
     client: Any
     base_url: str

@@ -68,13 +68,9 @@ class _BookServiceMixin:
         except (AttributeError, ValueError, IndexError, TypeError) as e:  # pragma: no cover - defensive
             logger.error("Failed to parse book search results: %s", e, exc_info=True)
             raise ParsingError("Failed to parse book search results.") from e
-        except Exception as e:  # pragma: no cover - unexpected
-            logger.error(
-                "An unexpected error occurred during book search: %s",
-                e,
-                exc_info=True,
-            )
-            raise ParsingError("An unexpected error occurred during book search.") from e
+        except Exception:  # pragma: no cover - unexpected
+            logger.exception("Unexpected error during book search")
+            raise
 
         logger.info(
             "Found %s books on page %s, total %s results.",

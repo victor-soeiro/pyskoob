@@ -81,7 +81,7 @@ class _UserServiceMixin:
             results=users_id,
             limit=100,
             page=page,
-            total=len(users_id),
+            total=len(users_id),  # total for this page only
             has_next_page=bool(next_page_link),
         )
 
@@ -137,7 +137,7 @@ class _UserServiceMixin:
             results=user_reviews,
             limit=50,
             page=page,
-            total=len(user_reviews),
+            total=len(user_reviews),  # total for this page only
             has_next_page=bool(next_page_link),
         )
 
@@ -197,7 +197,7 @@ class _UserServiceMixin:
         return Pagination(
             limit=100,
             results=results,
-            total=len(results),
+            total=len(results),  # total for this page only
             has_next_page=bool(next_page),
             page=page,
         )

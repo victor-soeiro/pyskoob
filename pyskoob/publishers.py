@@ -2,9 +2,7 @@
 
 import logging
 from collections.abc import Callable
-from typing import Any, cast
-
-from bs4 import Tag
+from typing import Any
 
 from pyskoob.http.client import AsyncHTTPClient
 from pyskoob.internal.async_base import AsyncBaseSkoobService
@@ -28,6 +26,12 @@ logger = logging.getLogger(__name__)
 
 
 class _PublisherServiceMixin:
+    """Shared publisher retrieval logic for sync and async services.
+
+    This mixin expects ``client``, ``base_url`` and ``parse_html`` attributes to
+    be provided by the consuming base classes.
+    """
+
     client: Any
     base_url: str
     parse_html: Callable[[str], Any]
@@ -40,7 +44,7 @@ class _PublisherServiceMixin:
         soup = self.parse_html(response.text)
         name = get_tag_text(safe_find(soup, "h2")) or get_tag_text(soup.title)
         description = get_tag_text(safe_find(soup, "div", {"id": "historico"}))
-        site_link = cast(Tag | None, soup.find("a", string="Site oficial"))
+        site_link = soup.find("a", string="Site oficial")
         website = get_tag_attr(site_link, "href")
         stats = parse_stats(safe_find(soup, "div", {"id": "vt_estatisticas"}))
         releases_div = safe_find(soup, "div", {"id": "livros_lancamentos"})
@@ -99,7 +103,7 @@ class PublisherService(_PublisherServiceMixin, BaseSkoobService):
         return run_sync(self._get_authors(publisher_id, page))
 
     def get_books(self, publisher_id: int, page: int = 1) -> Pagination[PublisherItem]:
-        """Retrieve books published by the publisher."""
+        """Retrieve books published by a publisher."""
         return run_sync(self._get_books(publisher_id, page))
 
 
@@ -118,5 +122,5 @@ class AsyncPublisherService(_PublisherServiceMixin, AsyncBaseSkoobService):  # p
         return await self._get_authors(publisher_id, page)
 
     async def get_books(self, publisher_id: int, page: int = 1) -> Pagination[PublisherItem]:
-        """Retrieve books published by a given publisher."""
+        """Retrieve books published by a publisher."""
         return await self._get_books(publisher_id, page)
