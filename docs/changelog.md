@@ -15,6 +15,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - Pre-commit configuration for Ruff, formatting and tests.
 - Security policy describing vulnerability reporting and secret management.
 - Automated GitHub Pages workflow to build and deploy documentation.
+- ``SkoobClient`` now forwards additional keyword arguments to ``httpx.Client`` for
+  configuring timeouts, proxies and other options.
 ### Fixed
 - Avoided ``httpx`` deprecation warning when posting raw bytes or text.
 - Updated PyPI publish workflow to use the latest action release, resolving missing metadata errors.
