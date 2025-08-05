@@ -8,7 +8,7 @@ from typing import Any
 
 import httpx
 
-from ..utils import RateLimiter
+from ..utils import RateLimiter, Retry
 from .client import AsyncHTTPClient, HTTPResponse, SyncHTTPClient
 
 
@@ -20,13 +20,23 @@ class HttpxSyncClient(SyncHTTPClient):
     rate_limiter:
         Optional rate limiter used to throttle requests. If not provided a
         default limiter allowing one request per second is used.
+    retry:
+        Optional retry handler used to automatically retry requests on network
+        errors. If not provided a default configuration retrying up to three
+        times with exponential backoff is used.
     **kwargs:
         Additional arguments passed directly to ``httpx.Client``.
     """
 
-    def __init__(self, rate_limiter: RateLimiter | None = None, **kwargs: Any) -> None:
+    def __init__(
+        self,
+        rate_limiter: RateLimiter | None = None,
+        retry: Retry | None = None,
+        **kwargs: Any,
+    ) -> None:
         self._client = httpx.Client(**kwargs)
         self._rate_limiter = rate_limiter or RateLimiter()
+        self._retry = retry or Retry(exceptions=(httpx.TransportError,))
 
     @property
     def cookies(self) -> MutableMapping[str, Any]:  # pragma: no cover - simple delegate
@@ -38,7 +48,7 @@ class HttpxSyncClient(SyncHTTPClient):
 
     def get(self, url: str, **kwargs: Any) -> HTTPResponse:
         self._rate_limiter.acquire()
-        return self._client.get(url, **kwargs)
+        return self._retry.run(self._client.get, url, **kwargs)
 
     def post(self, url: str, data: Any | None = None, **kwargs: Any) -> HTTPResponse:  # pragma: no cover - simple delegate
         """Send a POST request.
@@ -62,9 +72,9 @@ class HttpxSyncClient(SyncHTTPClient):
 
         self._rate_limiter.acquire()
         if isinstance(data, (str | bytes)):
-            return self._client.post(url, content=data, **kwargs)
+            return self._retry.run(self._client.post, url, content=data, **kwargs)
 
-        return self._client.post(url, data=data, **kwargs)
+        return self._retry.run(self._client.post, url, data=data, **kwargs)
 
     def close(self) -> None:
         self._client.close()
@@ -78,13 +88,23 @@ class HttpxAsyncClient(AsyncHTTPClient):
     rate_limiter:
         Optional rate limiter used to throttle requests. If not provided a
         default limiter allowing one request per second is used.
+    retry:
+        Optional retry handler used to automatically retry requests on network
+        errors. If not provided a default configuration retrying up to three
+        times with exponential backoff is used.
     **kwargs:
         Additional arguments passed directly to ``httpx.AsyncClient``.
     """
 
-    def __init__(self, rate_limiter: RateLimiter | None = None, **kwargs: Any) -> None:
+    def __init__(
+        self,
+        rate_limiter: RateLimiter | None = None,
+        retry: Retry | None = None,
+        **kwargs: Any,
+    ) -> None:
         self._client = httpx.AsyncClient(**kwargs)
         self._rate_limiter = rate_limiter or RateLimiter()
+        self._retry = retry or Retry(exceptions=(httpx.TransportError,))
 
     @property
     def cookies(self) -> MutableMapping[str, Any]:  # pragma: no cover - simple delegate
@@ -96,7 +116,7 @@ class HttpxAsyncClient(AsyncHTTPClient):
 
     async def get(self, url: str, **kwargs: Any) -> HTTPResponse:
         await self._rate_limiter.acquire_async()
-        return await self._client.get(url, **kwargs)
+        return await self._retry.run_async(self._client.get, url, **kwargs)
 
     async def post(self, url: str, data: Any | None = None, **kwargs: Any) -> HTTPResponse:  # pragma: no cover - simple delegate
         """Send a POST request asynchronously.
@@ -120,9 +140,9 @@ class HttpxAsyncClient(AsyncHTTPClient):
 
         await self._rate_limiter.acquire_async()
         if isinstance(data, (str | bytes)):
-            return await self._client.post(url, content=data, **kwargs)
+            return await self._retry.run_async(self._client.post, url, content=data, **kwargs)
 
-        return await self._client.post(url, data=data, **kwargs)
+        return await self._retry.run_async(self._client.post, url, data=data, **kwargs)
 
     async def close(self) -> None:
         await self._client.aclose()
