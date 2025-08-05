@@ -13,7 +13,7 @@ from pyskoob.http.httpx import HttpxAsyncClient, HttpxSyncClient
 from pyskoob.profile import AsyncSkoobProfileService, SkoobProfileService
 from pyskoob.publishers import AsyncPublisherService, PublisherService
 from pyskoob.users import AsyncUserService, UserService
-from pyskoob.utils import RateLimiter
+from pyskoob.utils import RateLimiter, Retry
 
 
 class SkoobClient:
@@ -25,7 +25,12 @@ class SkoobClient:
     ...     client.auth.login_with_cookies("token")
     """
 
-    def __init__(self, rate_limiter: RateLimiter | None = None, **kwargs: Any) -> None:
+    def __init__(
+        self,
+        rate_limiter: RateLimiter | None = None,
+        retry: Retry | None = None,
+        **kwargs: Any,
+    ) -> None:
         """Initializes the SkoobClient.
 
         Parameters
@@ -33,12 +38,15 @@ class SkoobClient:
         rate_limiter:
             Optional rate limiter used to throttle requests. If ``None``, a
             default limiter allowing one request per second is used.
+        retry:
+            Optional retry handler for automatically retrying requests on
+            network errors. If ``None`` a default configuration is used.
         **kwargs:
             Additional keyword arguments forwarded to ``httpx.Client`` when the
             underlying :class:`HttpxSyncClient` is constructed.
         """
 
-        self._client = HttpxSyncClient(rate_limiter=rate_limiter, **kwargs)
+        self._client = HttpxSyncClient(rate_limiter=rate_limiter, retry=retry, **kwargs)
         self.auth = AuthService(self._client)
         self.books = BookService(self._client)
         self.authors = AuthorService(self._client)
@@ -116,6 +124,9 @@ class SkoobAsyncClient:
     rate_limiter:
         Optional rate limiter used to throttle requests. When ``http_client`` is
         ``None``, a default limiter allowing one request per second is used.
+    retry:
+        Optional retry handler for automatically retrying requests on network
+        errors. Ignored when ``http_client`` is provided.
     **client_kwargs:
         Additional keyword arguments forwarded to ``httpx.AsyncClient`` when the
         default client is constructed.
@@ -126,12 +137,13 @@ class SkoobAsyncClient:
         http_client: AsyncHTTPClient | None = None,
         *,
         rate_limiter: RateLimiter | None = None,
+        retry: Retry | None = None,
         **client_kwargs: Any,
     ) -> None:
         if http_client is not None:
             self._client = http_client
         else:
-            self._client = HttpxAsyncClient(rate_limiter=rate_limiter, **client_kwargs)
+            self._client = HttpxAsyncClient(rate_limiter=rate_limiter, retry=retry, **client_kwargs)
         self.auth = AsyncAuthService(self._client)
         self.books = AsyncBookService(self._client)
         self.authors = AsyncAuthorService(self._client)

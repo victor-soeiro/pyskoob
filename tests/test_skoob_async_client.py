@@ -4,7 +4,7 @@ from typing import Any, cast
 import httpx
 import pytest
 
-from pyskoob import RateLimiter, SkoobAsyncClient
+from pyskoob import RateLimiter, Retry, SkoobAsyncClient
 from pyskoob.http.httpx import HttpxAsyncClient
 
 pytestmark = pytest.mark.anyio
@@ -32,9 +32,11 @@ async def test_async_client_context_manager(monkeypatch, anyio_backend):
 
 async def test_async_client_allows_configuration(anyio_backend):
     limiter = RateLimiter()
-    async with SkoobAsyncClient(rate_limiter=limiter, timeout=5) as client:
+    retry = Retry(max_attempts=1)
+    async with SkoobAsyncClient(rate_limiter=limiter, retry=retry, timeout=5) as client:
         http_client = cast(HttpxAsyncClient, client._client)
         assert http_client._rate_limiter is limiter
+        assert http_client._retry is retry
         assert http_client._client.timeout == httpx.Timeout(5)
 
 
