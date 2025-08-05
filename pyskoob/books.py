@@ -70,7 +70,7 @@ class BookService(BaseSkoobService):
         'Duna'
         """
         url = f"{self.base_url}/livro/lista/busca:{query}/tipo:{search_by.value}/mpage:{page}"
-        logger.info(f"Searching for books with query: '{query}' on page {page}")
+        logger.info("Searching for books with query: '%s' on page %s", query, page)
         try:
             response = self.client.get(url)
             response.raise_for_status()
@@ -86,11 +86,12 @@ class BookService(BaseSkoobService):
             total_results = extract_total_results(soup)
             next_page_link = True if page * limit < total_results else False
         except (AttributeError, ValueError, IndexError, TypeError) as e:  # pragma: no cover - defensive
-            logger.error(f"Failed to parse book search results: {e}", exc_info=True)
+            logger.error("Failed to parse book search results: %s", e, exc_info=True)
             raise ParsingError("Failed to parse book search results.") from e
         except Exception as e:  # pragma: no cover - unexpected
             logger.error(
-                f"An unexpected error occurred during book search: {e}",
+                "An unexpected error occurred during book search: %s",
+                e,
                 exc_info=True,
             )
             raise ParsingError("An unexpected error occurred during book search.") from e
@@ -135,7 +136,7 @@ class BookService(BaseSkoobService):
         >>> service.get_by_id(1).title
         'Some Book'
         """
-        logger.info(f"Getting book by edition_id: {edition_id}")
+        logger.info("Getting book by edition_id: %s", edition_id)
         url = f"{self.base_url}/v1/book/{edition_id}/stats:true"
         try:
             response = self.client.get(url)
@@ -158,7 +159,9 @@ class BookService(BaseSkoobService):
             raise
         except Exception as e:  # pragma: no cover - unexpected
             logger.error(
-                f"Error retrieving book for edition_id {edition_id}: {e}",
+                "Error retrieving book for edition_id %s: %s",
+                edition_id,
+                e,
                 exc_info=True,
             )
             raise ParsingError(f"Failed to retrieve book for edition_id {edition_id}.") from e
@@ -194,7 +197,7 @@ class BookService(BaseSkoobService):
         url = f"{self.base_url}/livro/resenhas/{book_id}/mpage:{page}/limit:50"
         if edition_id:
             url += f"/edition:{edition_id}"
-        logger.info(f"Getting reviews for book_id: {book_id}, page: {page}")
+        logger.info("Getting reviews for book_id: %s, page: %s", book_id, page)
         try:
             response = self.client.get(url)
             response.raise_for_status()
@@ -208,15 +211,16 @@ class BookService(BaseSkoobService):
             ]
             next_page_link = safe_find(soup, "a", {"class": "proximo"})
         except (AttributeError, ValueError, IndexError, TypeError) as e:  # pragma: no cover - defensive
-            logger.error(f"Failed to parse book reviews: {e}", exc_info=True)
+            logger.error("Failed to parse book reviews: %s", e, exc_info=True)
             raise ParsingError("Failed to parse book reviews.") from e
         except Exception as e:  # pragma: no cover - unexpected
             logger.error(
-                f"An unexpected error occurred during review fetching: {e}",
+                "An unexpected error occurred during review fetching: %s",
+                e,
                 exc_info=True,
             )
             raise ParsingError("An unexpected error occurred during review fetching.") from e
-        logger.info(f"Found {len(book_reviews)} reviews on page {page}.")
+        logger.info("Found %s reviews on page %s.", len(book_reviews), page)
         return Pagination[BookReview](
             results=book_reviews,
             limit=50,
@@ -280,7 +284,7 @@ class BookService(BaseSkoobService):
             users_id = extract_user_ids_from_html(soup)
             next_page_link = safe_find(soup, "a", {"class": "proximo"})
         except (AttributeError, ValueError, IndexError, TypeError) as e:  # pragma: no cover - defensive
-            logger.error(f"Failed to parse users by status: {e}", exc_info=True)
+            logger.error("Failed to parse users by status: %s", e, exc_info=True)
             raise ParsingError("Failed to parse users by status.") from e
         except Exception as e:  # pragma: no cover - unexpected
             logger.error(
