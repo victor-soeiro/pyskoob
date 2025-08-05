@@ -114,14 +114,21 @@ with SkoobClient(rate_limiter=limiter) as client:
 ```
 
 ``SkoobAsyncClient`` accepts the same configuration options and forwards any
-extra keyword arguments to ``httpx.AsyncClient``:
+extra keyword arguments to ``httpx.AsyncClient``. You may also provide a
+pre-configured HTTP client or manage the lifecycle manually using the explicit
+``close`` method:
 
 ```python
 from pyskoob import RateLimiter, SkoobAsyncClient
+from pyskoob.http.httpx import HttpxAsyncClient
 
 limiter = RateLimiter(max_calls=2, period=1)
-async with SkoobAsyncClient(rate_limiter=limiter, timeout=5) as client:
+http_client = HttpxAsyncClient(rate_limiter=limiter, timeout=5)
+client = SkoobAsyncClient(http_client=http_client)
+try:
     ...
+finally:
+    await client.close()
 ```
 
 ## Running tests
