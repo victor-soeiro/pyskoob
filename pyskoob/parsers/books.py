@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+"""Parser helpers for book-related pages on Skoob."""
+
 import logging
 import re
 from datetime import datetime
@@ -24,6 +26,23 @@ logger = logging.getLogger(__name__)
 
 
 def extract_user_ids_from_html(soup: Tag) -> list[int]:
+    """Collect user IDs from the readers page.
+
+    The readers listing is composed of ``div.livro-leitor-container`` blocks
+    where each contains a link to ``/usuario/<id>-``. This helper parses those
+    links and returns the numeric user IDs.
+
+    Parameters
+    ----------
+    soup : Tag
+        Parsed readers page.
+
+    Returns
+    -------
+    list of int
+        Numeric user identifiers found on the page.
+    """
+
     users_html = safe_find_all(soup, "div", {"class": "livro-leitor-container"})
     users_id: list[int] = []
     for user_div in users_html:
@@ -41,6 +60,23 @@ def extract_user_ids_from_html(soup: Tag) -> list[int]:
 
 
 def extract_edition_id_from_reviews_page(soup: Tag) -> int | None:
+    """Retrieve the edition ID linked in the reviews menu.
+
+    The reviews page includes a navigation menu whose first anchor points to
+    the book edition. The function parses this URL to obtain the edition
+    identifier.
+
+    Parameters
+    ----------
+    soup : Tag
+        Root tag of a reviews page.
+
+    Returns
+    -------
+    int or None
+        Edition ID or ``None`` when the link is missing or malformed.
+    """
+
     menu_div = safe_find(soup, "div", {"id": "pg-livro-menu-principal-container"})
     menu_div_a = safe_find(menu_div, "a") if menu_div else None
     href = get_tag_attr(menu_div_a, "href")
@@ -53,6 +89,28 @@ def extract_edition_id_from_reviews_page(soup: Tag) -> int | None:
 
 
 def parse_review(r: Tag, book_id: int, edition_id: int | None) -> BookReview | None:
+    """Parse a review block into a :class:`BookReview` instance.
+
+    The ``div`` containing a review has an ``id`` such as ``resenha123`` and
+    includes a user link, a star rating widget and a comment section. This
+    function extracts the review ID, reviewer user ID, star rating, textual
+    content and review date.
+
+    Parameters
+    ----------
+    r : Tag
+        HTML container for the review.
+    book_id : int
+        Identifier of the reviewed book.
+    edition_id : int or None
+        Edition identifier for the review.
+
+    Returns
+    -------
+    BookReview or None
+        Populated review dataclass or ``None`` if required fields are missing.
+    """
+
     review_id_str = get_tag_attr(r, "id")
     review_id = int(review_id_str.replace("resenha", "")) if review_id_str else None
     if review_id is None:
@@ -80,6 +138,25 @@ def parse_review(r: Tag, book_id: int, edition_id: int | None) -> BookReview | N
 
 
 def extract_review_date_and_text(comment_div: Tag | None, review_id: int) -> tuple[datetime | None, str]:
+    """Pull the review date and textual content from the comment block.
+
+    The comment container places the date inside the first ``<span>`` element
+    with siblings representing the review text. All textual siblings are
+    concatenated with newlines to form the final comment.
+
+    Parameters
+    ----------
+    comment_div : Tag or None
+        ``div`` that holds the review comment and metadata.
+    review_id : int
+        Numeric identifier used for logging.
+
+    Returns
+    -------
+    tuple of (datetime or None, str)
+        Parsed review date and the review text.
+    """
+
     date = None
     review_text = ""
     if comment_div:
@@ -103,6 +180,26 @@ def extract_review_date_and_text(comment_div: Tag | None, review_id: int) -> tup
 
 
 def parse_search_result(book_div: Tag, base_url: str) -> BookSearchResult | None:
+    """Parse a search result block into a :class:`BookSearchResult`.
+
+    Each result uses a link of class ``capa-link-item`` pointing to the book
+    details page. The parser derives the book and edition IDs from this URL,
+    normalizes the cover image and extracts publisher, ISBN and rating data.
+
+    Parameters
+    ----------
+    book_div : Tag
+        HTML block representing a single search result.
+    base_url : str
+        Base URL used to expand relative links.
+
+    Returns
+    -------
+    BookSearchResult or None
+        Structured search result or ``None`` if essential data cannot be
+        parsed.
+    """
+
     container = safe_find(book_div, "a", {"class": "capa-link-item"})
     if not container:
         logger.warning("Skipping book_div due to missing 'capa-link-item' container.")  # pragma: no cover
@@ -131,7 +228,21 @@ def parse_search_result(book_div: Tag, base_url: str) -> BookSearchResult | None
 
 
 def extract_img_url(container: Tag | str) -> str:
-    """Normalize image URL from a tag or raw string."""
+    """Normalize a cover image URL.
+
+    Handles both ``<img>`` tags and raw string URLs. Relative or protocol-
+    relative URLs are converted into absolute ``https`` URLs.
+
+    Parameters
+    ----------
+    container : Tag or str
+        Tag containing an image or a raw URL string.
+
+    Returns
+    -------
+    str
+        Normalized image URL, or an empty string when unavailable.
+    """
     src = ""
     if isinstance(container, Tag) and container.img and isinstance(container.img, Tag):
         src = get_tag_attr(container.img, "src") or ""
@@ -147,6 +258,23 @@ def extract_img_url(container: Tag | str) -> str:
 
 
 def extract_publisher_and_isbn(book_div: Tag) -> tuple[str | None, str | None]:
+    """Extract publisher name and ISBN from a search result block.
+
+    ``div.detalhes-2-sub`` contains spans with ISBN and publisher information.
+    The first numeric span is interpreted as the ISBN followed by the publisher
+    name when present.
+
+    Parameters
+    ----------
+    book_div : Tag
+        Search result container.
+
+    Returns
+    -------
+    tuple of (str or None, str or None)
+        Publisher name and ISBN respectively.
+    """
+
     detalhes2sub = safe_find(book_div, "div", {"class": "detalhes-2-sub"})
     detalhes2sub_div = detalhes2sub.div if detalhes2sub else None
     spans = safe_find_all(detalhes2sub_div, "span") if detalhes2sub_div else []
@@ -163,6 +291,21 @@ def extract_publisher_and_isbn(book_div: Tag) -> tuple[str | None, str | None]:
 
 
 def extract_rating(book_div: Tag, title: str) -> float | None:
+    """Parse the star rating displayed in a search result.
+
+    Parameters
+    ----------
+    book_div : Tag
+        Search result container.
+    title : str
+        Title of the book used for logging.
+
+    Returns
+    -------
+    float or None
+        Average rating for the book or ``None`` if missing.
+    """
+
     star_mini = safe_find(book_div, "div", {"class": "star-mini"})
     if star_mini:
         strong_tag = safe_find(star_mini, "strong")
@@ -171,11 +314,29 @@ def extract_rating(book_div: Tag, title: str) -> float | None:
             try:
                 return float(rating_text.replace(",", "."))
             except ValueError:  # pragma: no cover - invalid rating
-                logger.warning("Could not parse rating '%s' for book '%s'. Setting to None.", rating_text, title)
+                logger.warning(
+                    "Could not parse rating '%s' for book '%s'. Setting to None.",
+                    rating_text,
+                    title,
+                )
     return None
 
 
 def extract_total_results(soup: Tag) -> int:
+    """Extract the total number of book search results.
+
+    Parameters
+    ----------
+    soup : Tag
+        Root tag of the search results page.
+
+    Returns
+    -------
+    int
+        Number of results reported by the page; returns ``0`` when the counter
+        cannot be parsed.
+    """
+
     total_results_tag = safe_find(soup, "div", {"class": "contador"})
     if total_results_tag:
         total_results_text = get_tag_text(total_results_tag)

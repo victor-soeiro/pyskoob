@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+"""Client facades bundling synchronous and asynchronous services."""
+
 from pyskoob.auth import AsyncAuthService, AuthService
 from pyskoob.authors import AsyncAuthorService, AuthorService
 from pyskoob.books import AsyncBookService, BookService
