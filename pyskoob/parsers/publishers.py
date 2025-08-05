@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+"""Parser helpers for publisher-related pages on Skoob."""
+
 from bs4 import Tag
 
 from pyskoob.models.publisher import PublisherAuthor, PublisherItem, PublisherStats
@@ -7,6 +9,23 @@ from pyskoob.utils.bs4_utils import get_tag_attr, get_tag_text, safe_find
 
 
 def parse_stats(div: Tag | None) -> PublisherStats:
+    """Parse follower, rating and gender statistics for a publisher.
+
+    The stats block displays follower counts, average rating with total
+    evaluations and the male/female reader percentages. Missing elements are
+    represented as ``None`` in the returned dataclass.
+
+    Parameters
+    ----------
+    div : Tag or None
+        Container with the statistics section.
+
+    Returns
+    -------
+    PublisherStats
+        Dataclass populated with the extracted values.
+    """
+
     if not div:
         return PublisherStats()  # pragma: no cover - default empty stats
     followers = avg = ratings = male = female = None
@@ -40,6 +59,24 @@ def parse_stats(div: Tag | None) -> PublisherStats:
 
 
 def parse_book(div: Tag, base_url: str) -> PublisherItem:
+    """Parse a book entry listed on a publisher page.
+
+    Each book block contains an anchor with the book link and an ``img`` tag
+    for the cover. Only the URL, title and image URL are captured.
+
+    Parameters
+    ----------
+    div : Tag
+        Container representing a single book.
+    base_url : str
+        Base URL used to expand the book link.
+
+    Returns
+    -------
+    PublisherItem
+        Lightweight representation of the book.
+    """
+
     anchor = safe_find(div, "a")
     img_tag = safe_find(anchor, "img")
     return PublisherItem(
@@ -50,6 +87,25 @@ def parse_book(div: Tag, base_url: str) -> PublisherItem:
 
 
 def parse_author(div: Tag, base_url: str) -> PublisherAuthor:
+    """Parse an author entry from a publisher page.
+
+    The entry includes a link with the author's profile image and a heading
+    containing the name. The parser returns the absolute profile URL, author
+    name and image URL.
+
+    Parameters
+    ----------
+    div : Tag
+        Container representing a single author.
+    base_url : str
+        Base URL used to expand the author link.
+
+    Returns
+    -------
+    PublisherAuthor
+        Structured author information extracted from the block.
+    """
+
     anchor = safe_find(div, "a")
     name_tag = safe_find(div, "h3")
     img_tag = safe_find(anchor, "img")

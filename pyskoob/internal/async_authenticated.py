@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+"""Authentication-aware base classes for async services."""
+
 from typing import TYPE_CHECKING
 
 from pyskoob.http.client import AsyncHTTPClient

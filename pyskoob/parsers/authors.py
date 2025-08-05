@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import re
 
+"""Parser helpers for author-related pages on Skoob."""
+
 from bs4 import Tag
 
 from pyskoob.models.author import AuthorBook, AuthorProfile, AuthorSearchResult, AuthorStats, AuthorVideo
@@ -19,6 +21,27 @@ from pyskoob.utils.skoob_parser_utils import (
 
 
 def parse_author_block(div: Tag, base_url: str) -> AuthorSearchResult | None:
+    """Parse a search result block for an author.
+
+    The ``div`` is expected to contain an ``img`` with class ``img-rounded``
+    and an anchor linking to ``/autor/<id>-``. The parser extracts the
+    author's numeric ID, display name, profile URL, nickname and avatar URL
+    into an :class:`AuthorSearchResult`.
+
+    Parameters
+    ----------
+    div : Tag
+        HTML container representing a single search result.
+    base_url : str
+        Base URL used to build absolute links.
+
+    Returns
+    -------
+    AuthorSearchResult or None
+        Structured data for the author or ``None`` if required elements are
+        missing.
+    """
+
     img_tag = safe_find(div, "img", {"class": "img-rounded"})
     links = [a for a in safe_find_all(div, "a", {"href": re.compile(r"/autor/\d+-")}) if get_tag_attr(a, "href")]
     link_tag = next((a for a in links if get_tag_text(a)), None)
@@ -35,12 +58,47 @@ def parse_author_block(div: Tag, base_url: str) -> AuthorSearchResult | None:
 
 
 def extract_total_results(soup: Tag) -> int:
+    """Extract the total number of author search results.
+
+    The counter appears inside ``div.contador`` as text like ``"123"``. This
+    helper isolates the numeric portion and returns it as an integer.
+
+    Parameters
+    ----------
+    soup : Tag
+        Root ``BeautifulSoup`` tag for the search page.
+
+    Returns
+    -------
+    int
+        Number of results reported by the page, or ``0`` when the counter is
+        missing.
+    """
+
     contador = safe_find(soup, "div", {"class": "contador"})
     match = re.search(r"(\d+)", get_tag_text(contador))
     return int(match.group(1)) if match else 0
 
 
 def extract_author_links(soup: Tag) -> dict[str, str]:
+    """Collect external links from an author's profile.
+
+    The profile exposes social links inside ``div#autor-icones``. Each anchor
+    wraps a ``span`` whose class name starts with ``icon-`` (for example,
+    ``icon-facebook``). The function builds a dictionary mapping the icon name
+    without the prefix to the corresponding absolute URL.
+
+    Parameters
+    ----------
+    soup : Tag
+        Parsed author profile page.
+
+    Returns
+    -------
+    dict of str to str
+        Mapping of social network identifiers to URLs.
+    """
+
     links: dict[str, str] = {}
     icons_div = safe_find(soup, "div", {"id": "autor-icones"})
     for a in safe_find_all(icons_div, "a"):
@@ -56,6 +114,23 @@ def extract_author_links(soup: Tag) -> dict[str, str]:
 
 
 def extract_author_info(soup: Tag) -> tuple[str | None, str | None]:
+    """Extract birth date and hometown from the profile sidebar.
+
+    The ``div#box-generos`` section contains ``<b>Nascimento</b>`` and
+    ``<b>Local</b>`` labels followed by text nodes with the desired
+    information.
+
+    Parameters
+    ----------
+    soup : Tag
+        Parsed author profile.
+
+    Returns
+    -------
+    tuple of (str or None, str or None)
+        Birth date string and location string when available.
+    """
+
     box_generos = safe_find(soup, "div", {"id": "box-generos"})
     birth_date = None
     location = None
@@ -71,6 +146,25 @@ def extract_author_info(soup: Tag) -> tuple[str | None, str | None]:
 
 
 def extract_author_stats(soup: Tag) -> AuthorStats:
+    """Extract readership and rating statistics for an author.
+
+    Statistics appear inside ``div#livro-perfil-status02`` and include follower
+    counts, reader counts, number of ratings and the overall average rating.
+    The star rating distribution is determined by reading percentages next to
+    star icons.
+
+    Parameters
+    ----------
+    soup : Tag
+        Parsed author profile.
+
+    Returns
+    -------
+    AuthorStats
+        Dataclass with follower counts, ratings information and star
+        distribution.
+    """
+
     stats_div = safe_find(soup, "div", {"id": "livro-perfil-status02"})
     followers = readers = ratings = None
     average_rating = None
@@ -106,6 +200,22 @@ def extract_author_stats(soup: Tag) -> AuthorStats:
 
 
 def extract_gender_percentages(soup: Tag) -> dict[str, float]:
+    """Extract gender distribution percentages for readers.
+
+    Percentages are displayed next to icons with classes ``icon-male`` and
+    ``icon-female`` on the profile page.
+
+    Parameters
+    ----------
+    soup : Tag
+        Parsed author profile.
+
+    Returns
+    -------
+    dict of str to float
+        Mapping containing ``"male"`` and/or ``"female"`` keys when present.
+    """
+
     gender: dict[str, float] = {}
     male_icon = safe_find(soup, "i", {"class": re.compile("icon-male")})
     if male_icon:
@@ -121,6 +231,24 @@ def extract_gender_percentages(soup: Tag) -> dict[str, float]:
 
 
 def extract_author_books(soup: Tag, base_url: str) -> list[AuthorBook]:
+    """Extract minimal book information from an author's bibliography.
+
+    Each book is represented by ``div.clivro livro-capa-mini`` containing a
+    link and thumbnail. Only the book URL, title and image URL are returned.
+
+    Parameters
+    ----------
+    soup : Tag
+        Parsed author profile page.
+    base_url : str
+        Base URL used to build absolute links.
+
+    Returns
+    -------
+    list of AuthorBook
+        Lightweight representation of the author's books.
+    """
+
     return [
         AuthorBook(
             url=f"{base_url}{get_tag_attr(a, 'href')}",
@@ -133,6 +261,25 @@ def extract_author_books(soup: Tag, base_url: str) -> list[AuthorBook]:
 
 
 def extract_author_videos(soup: Tag, base_url: str) -> list[AuthorVideo]:
+    """Extract videos related to the author.
+
+    Videos appear in ``div.livro-perfil-videos-cont`` containers and provide a
+    link with a thumbnail image. The parser returns a list of video URLs,
+    thumbnails and titles.
+
+    Parameters
+    ----------
+    soup : Tag
+        Parsed author profile page.
+    base_url : str
+        Base URL used to build absolute links.
+
+    Returns
+    -------
+    list of AuthorVideo
+        Video information referenced on the page.
+    """
+
     return [
         AuthorVideo(
             url=f"{base_url}{get_tag_attr(a, 'href')}",
@@ -147,6 +294,24 @@ def extract_author_videos(soup: Tag, base_url: str) -> list[AuthorVideo]:
 def extract_author_metadata(
     soup: Tag,
 ) -> tuple[str | None, str | None, str | None, str | None, str | None, str | None]:
+    """Extract creation, edition and approval metadata from the profile.
+
+    The ``div#box-info-cad`` section lists entries describing when and by whom
+    the profile was created, edited and approved. This function extracts those
+    usernames and timestamps.
+
+    Parameters
+    ----------
+    soup : Tag
+        Parsed author profile.
+
+    Returns
+    -------
+    tuple
+        ``(created_at, created_by, edited_at, edited_by, approved_at, approved_by)``
+        strings, each ``None`` when not available.
+    """
+
     created_at = created_by = edited_at = edited_by = approved_at = approved_by = None
     info_div = safe_find(soup, "div", {"id": "box-info-cad"})
     if info_div:
@@ -168,6 +333,8 @@ def extract_author_metadata(
 
 
 def parse_author_profile(soup: Tag, base_url: str) -> AuthorProfile:
+    """Parse the complete author profile page."""
+
     name = get_tag_text(safe_find(soup, "h1", {"class": "given-name"}))
     photo_url = get_tag_attr(safe_find(soup, "img", {"class": "img-rounded"}), "src")
     links = extract_author_links(soup)
@@ -201,6 +368,8 @@ def parse_author_profile(soup: Tag, base_url: str) -> AuthorProfile:
 
 
 def parse_author_book_div(div: Tag, base_url: str) -> BookSearchResult | None:
+    """Parse a book listing within an author's page."""
+
     anchor = safe_find(div, "a")
     if not anchor:
         return None  # pragma: no cover - missing anchor

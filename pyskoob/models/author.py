@@ -1,3 +1,5 @@
+"""Pydantic models representing authors and related data."""
+
 from pydantic import BaseModel, ConfigDict, Field
 
 

@@ -1,3 +1,5 @@
+"""Services for searching and retrieving books from Skoob."""
+
 import logging
 import re
 
@@ -308,6 +310,23 @@ class AsyncBookService(AsyncBaseSkoobService):  # pragma: no cover - thin async 
         super().__init__(client)
 
     async def search(self, query: str, search_by: BookSearch = BookSearch.TITLE, page: int = 1) -> Pagination[BookSearchResult]:
+        """Asynchronously search for books by query and type.
+
+        Parameters
+        ----------
+        query : str
+            The search query string.
+        search_by : BookSearch, optional
+            Type of search (title, author, etc.), by default ``BookSearch.TITLE``.
+        page : int, optional
+            Page number for pagination, by default ``1``.
+
+        Returns
+        -------
+        Pagination[BookSearchResult]
+            Paginated list of search results.
+        """
+
         url = f"{self.base_url}/livro/lista/busca:{query}/tipo:{search_by.value}/mpage:{page}"
         logger.info("Searching for books with query: '%s' on page %s", query, page)
         try:
@@ -346,6 +365,19 @@ class AsyncBookService(AsyncBaseSkoobService):  # pragma: no cover - thin async 
             )
 
     async def get_by_id(self, edition_id: int) -> Book:
+        """Retrieve a book by its edition ID asynchronously.
+
+        Parameters
+        ----------
+        edition_id : int
+            The edition identifier of the book.
+
+        Returns
+        -------
+        Book
+            The book details for the given edition.
+        """
+
         logger.info("Getting book by edition_id: %s", edition_id)
         url = f"{self.base_url}/v1/book/{edition_id}/stats:true"
         try:
@@ -377,6 +409,23 @@ class AsyncBookService(AsyncBaseSkoobService):  # pragma: no cover - thin async 
             raise ParsingError("Failed to retrieve book.") from exc
 
     async def get_reviews(self, book_id: int, edition_id: int | None = None, page: int = 1) -> Pagination[BookReview]:
+        """Retrieve book reviews asynchronously.
+
+        Parameters
+        ----------
+        book_id : int
+            Identifier of the book.
+        edition_id : int, optional
+            Specific edition to filter reviews, by default ``None``.
+        page : int, optional
+            Pagination page, by default ``1``.
+
+        Returns
+        -------
+        Pagination[BookReview]
+            Paginated list of book reviews.
+        """
+
         url = f"{self.base_url}/livro/resenhas/{book_id}/mpage:{page}/limit:50"
         if edition_id:
             url += f"/edition:{edition_id}"
@@ -418,6 +467,27 @@ class AsyncBookService(AsyncBaseSkoobService):  # pragma: no cover - thin async 
         limit: int = 500,
         page: int = 1,
     ) -> Pagination[int]:
+        """Retrieve user IDs who marked the book with a given status.
+
+        Parameters
+        ----------
+        book_id : int
+            Identifier of the book.
+        status : BookUserStatus
+            User status to filter by (read, reading, etc.).
+        edition_id : int, optional
+            Specific edition to filter, by default ``None``.
+        limit : int, optional
+            Maximum number of users per page, by default ``500``.
+        page : int, optional
+            Page number for pagination, by default ``1``.
+
+        Returns
+        -------
+        Pagination[int]
+            Paginated list of user IDs.
+        """
+
         url = f"{self.base_url}/livro/leitores/{status.value}/{book_id}/limit:{limit}/page:{page}"
         if edition_id:
             url += f"/edition:{edition_id}"
