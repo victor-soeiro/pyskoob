@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+"""Authentication-aware base classes for async services."""
+
 from typing import TYPE_CHECKING
 
 from pyskoob.http.client import AsyncHTTPClient
@@ -16,6 +18,6 @@ class AsyncAuthenticatedService(AsyncBaseSkoobService):  # pragma: no cover - th
         super().__init__(client)
         self._auth_service = auth_service
 
-    def _validate_login(self) -> None:
+    async def _validate_login(self) -> None:
         """Ensure the current session is authenticated."""
-        self._auth_service.validate_login()
+        await self._auth_service.validate_login()

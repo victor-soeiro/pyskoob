@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+"""Base classes for asynchronous Skoob HTTP services."""
+
 from bs4 import BeautifulSoup
 
 from pyskoob.http.client import AsyncHTTPClient

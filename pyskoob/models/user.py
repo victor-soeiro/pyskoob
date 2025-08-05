@@ -1,3 +1,5 @@
+"""Pydantic models representing Skoob users and related data."""
+
 from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict, Field, HttpUrl

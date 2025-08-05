@@ -1,3 +1,5 @@
+"""Retrieve publisher information, books and authors from Skoob."""
+
 import logging
 from typing import cast
 
@@ -193,6 +195,19 @@ class AsyncPublisherService(AsyncBaseSkoobService):  # pragma: no cover - thin a
         super().__init__(client)
 
     async def get_by_id(self, publisher_id: int) -> Publisher:
+        """Retrieve detailed information about a publisher.
+
+        Parameters
+        ----------
+        publisher_id : int
+            The identifier of the publisher on Skoob.
+
+        Returns
+        -------
+        Publisher
+            Structured publisher information including stats and releases.
+        """
+
         url = f"{self.base_url}/editora/{publisher_id}"
         logger.info("Fetching publisher page: %s", url)
         try:
@@ -226,6 +241,21 @@ class AsyncPublisherService(AsyncBaseSkoobService):  # pragma: no cover - thin a
             raise ParsingError("An unexpected error occurred while parsing publisher page.") from exc
 
     async def get_authors(self, publisher_id: int, page: int = 1) -> Pagination[PublisherAuthor]:
+        """Retrieve authors associated with a publisher.
+
+        Parameters
+        ----------
+        publisher_id : int
+            The identifier of the publisher on Skoob.
+        page : int, optional
+            Pagination page, by default ``1``.
+
+        Returns
+        -------
+        Pagination[PublisherAuthor]
+            Paginated list of authors published by the publisher.
+        """
+
         url = f"{self.base_url}/editora/autores/{publisher_id}/mpage:{page}"
         logger.info("Fetching publisher authors: %s", url)
         try:
@@ -253,6 +283,21 @@ class AsyncPublisherService(AsyncBaseSkoobService):  # pragma: no cover - thin a
             raise ParsingError("An unexpected error occurred while parsing publisher authors.") from exc
 
     async def get_books(self, publisher_id: int, page: int = 1) -> Pagination[PublisherItem]:
+        """Retrieve books published by a given publisher.
+
+        Parameters
+        ----------
+        publisher_id : int
+            The identifier of the publisher on Skoob.
+        page : int, optional
+            Pagination page, by default ``1``.
+
+        Returns
+        -------
+        Pagination[PublisherItem]
+            Paginated list of books released by the publisher.
+        """
+
         url = f"{self.base_url}/editora/livros/{publisher_id}/mpage:{page}"
         logger.info("Fetching publisher books: %s", url)
         try:
