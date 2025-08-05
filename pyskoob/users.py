@@ -455,7 +455,7 @@ class AsyncUserService(AsyncAuthenticatedService):  # pragma: no cover - thin as
         FileNotFoundError
             If the user with the given ID is not found.
         """
-        self._validate_login()
+        await self._validate_login()
         logger.info(f"Getting user by id: {user_id}")
         url = f"{self.base_url}/v1/user/{user_id}/stats:true"
         response = await self.client.get(url)
@@ -492,7 +492,7 @@ class AsyncUserService(AsyncAuthenticatedService):  # pragma: no cover - thin as
         ParsingError
             If the HTML structure of the page changes and parsing fails.
         """
-        self._validate_login()
+        await self._validate_login()
         url = f"{self.base_url}/{relation.value}/listar/{user_id}/page:{page}/limit:100"
         logger.info(f"Getting '{relation.value}' for user_id: {user_id}, page: {page}")
         response = await self.client.get(url)
@@ -534,7 +534,7 @@ class AsyncUserService(AsyncAuthenticatedService):  # pragma: no cover - thin as
         ParsingError
             If the HTML structure of the page changes and parsing fails.
         """
-        self._validate_login()
+        await self._validate_login()
         url = f"{self.base_url}/estante/resenhas/{user_id}/mpage:{page}/limit:50"
         logger.info(f"Getting reviews for user_id: {user_id}, page: {page}")
         response = await self.client.get(url)
@@ -602,7 +602,7 @@ class AsyncUserService(AsyncAuthenticatedService):  # pragma: no cover - thin as
         UserReadStats
             The user's reading statistics.
         """
-        self._validate_login()
+        await self._validate_login()
         logger.info(f"Getting read stats for user_id: {user_id}")
         url = f"{self.base_url}/v1/meta_stats/{user_id}"
         response = await self.client.get(url)
@@ -639,7 +639,7 @@ class AsyncUserService(AsyncAuthenticatedService):  # pragma: no cover - thin as
         Pagination[UserBook]
             A paginated list of books in the user's bookcase.
         """
-        self._validate_login()
+        await self._validate_login()
         url = f"{self.base_url}/v1/bookcase/books/{user_id}/shelf_id:{bookcase_option.value}/page:{page}/limit:100"
         logger.info(f"Getting bookcase for user_id: {user_id}, option: '{bookcase_option.name}', page: {page}")
         response = await self.client.get(url)
@@ -706,7 +706,7 @@ class AsyncUserService(AsyncAuthenticatedService):  # pragma: no cover - thin as
         ParsingError
             If the HTML structure is invalid or parsing fails.
         """
-        self._validate_login()
+        await self._validate_login()
         url = f"{self.base_url}/usuario/lista/busca:{query}/mpage:{page}/limit:{limit}"
         if gender:
             url += f"/sexo:{gender.value}"

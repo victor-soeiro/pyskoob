@@ -208,42 +208,42 @@ class AsyncSkoobProfileService(AsyncAuthenticatedService):  # pragma: no cover -
         super().__init__(client, auth_service)
 
     async def add_book_label(self, edition_id: int, label: BookLabel) -> bool:
-        self._validate_login()
+        await self._validate_login()
         url = f"{self.base_url}/v1/label_add/{edition_id}/{label.value}"
         response = await self.client.get(url)
         response.raise_for_status()
         return response.json().get("success", False)
 
     async def remove_book_label(self, edition_id: int) -> bool:
-        self._validate_login()
+        await self._validate_login()
         url = f"{self.base_url}/v1/label_del/{edition_id}"
         response = await self.client.get(url)
         response.raise_for_status()
         return response.json().get("success", False)
 
     async def update_book_status(self, edition_id: int, status: BookStatus) -> bool:
-        self._validate_login()
+        await self._validate_login()
         url = f"{self.base_url}/v1/shelf_add/{edition_id}/{status.value}"
         response = await self.client.get(url)
         response.raise_for_status()
         return response.json().get("success", False)
 
     async def remove_book_status(self, edition_id: int) -> bool:
-        self._validate_login()
+        await self._validate_login()
         url = f"{self.base_url}/v1/shelf_del/{edition_id}"
         response = await self.client.get(url)
         response.raise_for_status()
         return response.json().get("success", False)
 
     async def change_book_shelf(self, edition_id: int, bookshelf: BookShelf) -> bool:
-        self._validate_login()
+        await self._validate_login()
         url = f"{self.base_url}/estante/prateleira/{edition_id}/{bookshelf.value}"
         response = await self.client.get(url)
         response.raise_for_status()
         return response.json().get("success", False)
 
     async def rate_book(self, edition_id: int, ranking: float) -> bool:
-        self._validate_login()
+        await self._validate_login()
         if not (0 <= ranking <= 5):
             raise ValueError("Rating must be between 0 and 5.")
         url = f"{self.base_url}/v1/book_rate/{edition_id}/{ranking}"
