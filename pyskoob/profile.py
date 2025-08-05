@@ -1,3 +1,5 @@
+"""Profile management helpers for authenticated Skoob users."""
+
 import logging
 
 from pyskoob.auth import AsyncAuthService, AuthService
@@ -208,42 +210,135 @@ class AsyncSkoobProfileService(AsyncAuthenticatedService):  # pragma: no cover -
         super().__init__(client, auth_service)
 
     async def add_book_label(self, edition_id: int, label: BookLabel) -> bool:
-        await self._validate_login()
+        """Add a label to a book in the authenticated profile.
+
+        Parameters
+        ----------
+        edition_id : int
+            The edition identifier.
+        label : BookLabel
+            Label to apply to the book.
+
+        Returns
+        -------
+        bool
+            ``True`` if the operation succeeded.
+        """
+
+        self._validate_login()
         url = f"{self.base_url}/v1/label_add/{edition_id}/{label.value}"
         response = await self.client.get(url)
         response.raise_for_status()
         return response.json().get("success", False)
 
     async def remove_book_label(self, edition_id: int) -> bool:
-        await self._validate_login()
+        """Remove a label from a book in the authenticated profile.
+
+        Parameters
+        ----------
+        edition_id : int
+            The edition identifier.
+
+        Returns
+        -------
+        bool
+            ``True`` if the operation succeeded.
+        """
+
+        self._validate_login()
         url = f"{self.base_url}/v1/label_del/{edition_id}"
         response = await self.client.get(url)
         response.raise_for_status()
         return response.json().get("success", False)
 
     async def update_book_status(self, edition_id: int, status: BookStatus) -> bool:
-        await self._validate_login()
+        """Update the user's status for a book.
+
+        Parameters
+        ----------
+        edition_id : int
+            The edition identifier.
+        status : BookStatus
+            New status to assign to the book.
+
+        Returns
+        -------
+        bool
+            ``True`` if the status update succeeded.
+        """
+
+        self._validate_login()
         url = f"{self.base_url}/v1/shelf_add/{edition_id}/{status.value}"
         response = await self.client.get(url)
         response.raise_for_status()
         return response.json().get("success", False)
 
     async def remove_book_status(self, edition_id: int) -> bool:
-        await self._validate_login()
+        """Remove the user's status for a book.
+
+        Parameters
+        ----------
+        edition_id : int
+            The edition identifier.
+
+        Returns
+        -------
+        bool
+            ``True`` if the status was removed successfully.
+        """
+
+        self._validate_login()
         url = f"{self.base_url}/v1/shelf_del/{edition_id}"
         response = await self.client.get(url)
         response.raise_for_status()
         return response.json().get("success", False)
 
     async def change_book_shelf(self, edition_id: int, bookshelf: BookShelf) -> bool:
-        await self._validate_login()
+        """Move a book to a different bookshelf.
+
+        Parameters
+        ----------
+        edition_id : int
+            The edition identifier.
+        bookshelf : BookShelf
+            Target bookshelf.
+
+        Returns
+        -------
+        bool
+            ``True`` if the operation succeeded.
+        """
+
+        self._validate_login()
         url = f"{self.base_url}/estante/prateleira/{edition_id}/{bookshelf.value}"
         response = await self.client.get(url)
         response.raise_for_status()
         return response.json().get("success", False)
 
     async def rate_book(self, edition_id: int, ranking: float) -> bool:
-        await self._validate_login()
+        """Rate a book in the authenticated profile.
+
+        Parameters
+        ----------
+        edition_id : int
+            The edition identifier.
+        ranking : float
+            Rating between 0 and 5.
+
+        Returns
+        -------
+        bool
+            ``True`` if the rating was saved.
+
+        Raises
+        ------
+        ValueError
+            If ``ranking`` is outside the 0–5 range.
+        RuntimeError
+            If Skoob rejects the rating.
+        """
+
+        self._validate_login()
         if not (0 <= ranking <= 5):
             raise ValueError("Rating must be between 0 and 5.")
         url = f"{self.base_url}/v1/book_rate/{edition_id}/{ranking}"

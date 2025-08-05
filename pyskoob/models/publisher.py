@@ -1,3 +1,5 @@
+"""Pydantic models for publisher information and related data."""
+
 from pydantic import BaseModel, Field
 
 

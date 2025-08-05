@@ -1,4 +1,8 @@
+"""Client facades bundling synchronous and asynchronous services."""
+
 from __future__ import annotations
+
+from typing import Any
 
 from pyskoob.auth import AsyncAuthService, AuthService
 from pyskoob.authors import AsyncAuthorService, AuthorService
@@ -82,10 +86,19 @@ class SkoobClient:
 
 
 class SkoobAsyncClient:
-    """Facade for interacting with Skoob services asynchronously."""
+    """Facade for interacting with Skoob services asynchronously.
 
-    def __init__(self):
-        self._client = HttpxAsyncClient()
+    Parameters
+    ----------
+    rate_limiter:
+        Optional rate limiter used to throttle requests. If ``None``, a
+        default limiter allowing one request per second is used.
+    **client_kwargs:
+        Additional keyword arguments forwarded to ``httpx.AsyncClient``.
+    """
+
+    def __init__(self, rate_limiter: RateLimiter | None = None, **client_kwargs: Any) -> None:
+        self._client = HttpxAsyncClient(rate_limiter=rate_limiter, **client_kwargs)
         self.auth = AsyncAuthService(self._client)
         self.books = AsyncBookService(self._client)
         self.authors = AsyncAuthorService(self._client)

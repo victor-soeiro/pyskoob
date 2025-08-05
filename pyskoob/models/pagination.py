@@ -1,3 +1,5 @@
+"""Generic pagination model used across services."""
+
 from typing import Generic, TypeVar
 
 from pydantic import BaseModel

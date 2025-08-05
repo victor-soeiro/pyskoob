@@ -1,3 +1,5 @@
+"""Base classes for synchronous Skoob HTTP services."""
+
 from bs4 import BeautifulSoup
 
 from pyskoob.http.client import SyncHTTPClient

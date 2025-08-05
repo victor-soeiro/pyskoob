@@ -1,3 +1,5 @@
+"""Authentication helpers and session management for Skoob."""
+
 import logging
 
 from pyskoob.http.client import AsyncHTTPClient, SyncHTTPClient
@@ -185,6 +187,19 @@ class AsyncAuthService(AsyncBaseSkoobService):  # pragma: no cover - thin async 
         self._is_logged_in = False
 
     async def login_with_cookies(self, session_token: str) -> User:
+        """Log in using a pre-existing session token.
+
+        Parameters
+        ----------
+        session_token : str
+            The PHPSESSID token from Skoob.
+
+        Returns
+        -------
+        User
+            The authenticated user's information.
+        """
+
         logger.info("Attempting to log in with session token.")
         self.client.cookies.update({"PHPSESSID": session_token})
         user = await self.get_my_info()
@@ -193,6 +208,21 @@ class AsyncAuthService(AsyncBaseSkoobService):  # pragma: no cover - thin async 
         return user
 
     async def login(self, email: str, password: str) -> User:
+        """Log in using email and password.
+
+        Parameters
+        ----------
+        email : str
+            The user's email address.
+        password : str
+            The user's password.
+
+        Returns
+        -------
+        User
+            The authenticated user's information.
+        """
+
         logger.info("Attempting to log in with email and password.")
         url = f"{self.base_url}/v1/login"
         data = {
@@ -216,6 +246,14 @@ class AsyncAuthService(AsyncBaseSkoobService):  # pragma: no cover - thin async 
         return user
 
     async def get_my_info(self) -> User:
+        """Retrieve information about the authenticated user.
+
+        Returns
+        -------
+        User
+            The authenticated user's information.
+        """
+
         logger.info("Getting authenticated user's information.")
         url = f"{self.base_url}/v1/user/stats:true"
         response = await self.client.get(url)
@@ -237,6 +275,11 @@ class AsyncAuthService(AsyncBaseSkoobService):  # pragma: no cover - thin async 
         -----
         This method performs no I/O but remains asynchronous for API
         consistency across async services.
+
+        Raises
+        ------
+        PermissionError
+            If the user is not logged in.
         """
 
         logger.debug("Validating login status.")

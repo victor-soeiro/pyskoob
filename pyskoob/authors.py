@@ -1,3 +1,5 @@
+"""Services for retrieving authors and their works from Skoob."""
+
 import logging
 
 from pyskoob.exceptions import ParsingError
@@ -159,6 +161,21 @@ class AsyncAuthorService(AsyncBaseSkoobService):  # pragma: no cover - thin asyn
         super().__init__(client)
 
     async def search(self, query: str, page: int = 1) -> Pagination[AuthorSearchResult]:
+        """Asynchronously search for authors by name.
+
+        Parameters
+        ----------
+        query : str
+            Term to look for.
+        page : int, optional
+            Page number for pagination, by default ``1``.
+
+        Returns
+        -------
+        Pagination[AuthorSearchResult]
+            Paginated list of authors matching the query.
+        """
+
         url = f"{self.base_url}/autor/lista/busca:{query}/mpage:{page}"
         logger.info("Searching authors with query '%s' page %s", query, page)
         try:
@@ -191,6 +208,19 @@ class AsyncAuthorService(AsyncBaseSkoobService):  # pragma: no cover - thin asyn
             )
 
     async def get_by_id(self, author_id: int) -> AuthorProfile:
+        """Fetch an author's profile by identifier.
+
+        Parameters
+        ----------
+        author_id : int
+            Identifier of the author on Skoob.
+
+        Returns
+        -------
+        AuthorProfile
+            Structured profile data for the requested author.
+        """
+
         url = f"{self.base_url}/autor/{author_id}"
         logger.info("Fetching author profile: %s", url)
         try:
@@ -203,6 +233,21 @@ class AsyncAuthorService(AsyncBaseSkoobService):  # pragma: no cover - thin asyn
             raise ParsingError("Failed to fetch author profile.") from exc
 
     async def get_books(self, author_id: int, page: int = 1) -> Pagination[BookSearchResult]:
+        """Fetch books written by the given author.
+
+        Parameters
+        ----------
+        author_id : int
+            The author identifier.
+        page : int, optional
+            Pagination page, by default ``1``.
+
+        Returns
+        -------
+        Pagination[BookSearchResult]
+            Paginated list of books authored by the given ID.
+        """
+
         url = f"{self.base_url}/autor/livros/{author_id}/page:{page}"
         logger.info("Fetching books for author %s page %s", author_id, page)
         try:

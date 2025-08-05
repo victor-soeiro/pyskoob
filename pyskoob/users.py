@@ -1,3 +1,5 @@
+"""Services for retrieving and manipulating Skoob user data."""
+
 import logging
 import re
 from datetime import datetime
