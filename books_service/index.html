@@ -60,6 +60,8 @@
   
     
     
+      
+    
     
     
     
@@ -84,9 +86,7 @@
     
       
 
-  
-
-<header class="md-header md-header--shadow" data-md-component="header">
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href=".." title="PySkoob" class="md-header__button md-logo" aria-label="PySkoob" data-md-component="logo">
       
@@ -116,7 +116,33 @@
     </div>
     
       
+        <form class="md-header__option" data-md-component="palette">
+  
     
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -182,6 +208,132 @@
       
         
           
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../author_service/" class="md-tabs__link">
+          
+  
+  
+  Services
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../advanced_usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Advanced Usage
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../stable_api/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Stable Public API
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../changelog/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Changelog
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../contributing/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contributing
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -195,8 +347,10 @@
                     
 
 
+  
 
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="PySkoob" class="md-nav__button md-logo" aria-label="PySkoob" data-md-component="logo">
       
@@ -255,15 +409,21 @@
     
     
     
+      
+        
+        
+      
+      
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
             
   
   
@@ -552,6 +712,28 @@
   
   
     <li class="md-nav__item">
+      <a href="../changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Changelog
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../contributing/" class="md-nav__link">
         
   
@@ -669,7 +851,7 @@
 <h1 id="books-service">Books Service</h1>
 <p>The <code>BookService</code> allows searching for books and retrieving detailed information.</p>
 <h2 id="example">Example</h2>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pyskoob</span><span class="w"> </span><span class="kn">import</span> <span class="n">SkoobClient</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pyskoob</span><span class="w"> </span><span class="kn">import</span> <span class="n">SkoobClient</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyskoob.models.enums</span><span class="w"> </span><span class="kn">import</span> <span class="n">BookSearch</span>
 
 <span class="k">with</span> <span class="n">SkoobClient</span><span class="p">()</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
@@ -677,7 +859,6 @@
     <span class="k">for</span> <span class="n">book</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">results</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">book</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="n">book</span><span class="o">.</span><span class="n">book_id</span><span class="p">)</span>
 </code></pre></div>
-
 
 
 <div class="doc doc-object doc-class">
@@ -704,9 +885,7 @@ with :class:<code>AuthService</code> to operate on the authenticated user's data
 
               <details class="quote">
                 <summary>Source code in <code>pyskoob/books.py</code></summary>
-                <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 27</span>
-<span class="normal"> 28</span>
-<span class="normal"> 29</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 29</span>
 <span class="normal"> 30</span>
 <span class="normal"> 31</span>
 <span class="normal"> 32</span>
@@ -980,388 +1159,7 @@ with :class:<code>AuthService</code> to operate on the authenticated user's data
 <span class="normal">300</span>
 <span class="normal">301</span>
 <span class="normal">302</span>
-<span class="normal">303</span>
-<span class="normal">304</span>
-<span class="normal">305</span>
-<span class="normal">306</span>
-<span class="normal">307</span>
-<span class="normal">308</span>
-<span class="normal">309</span>
-<span class="normal">310</span>
-<span class="normal">311</span>
-<span class="normal">312</span>
-<span class="normal">313</span>
-<span class="normal">314</span>
-<span class="normal">315</span>
-<span class="normal">316</span>
-<span class="normal">317</span>
-<span class="normal">318</span>
-<span class="normal">319</span>
-<span class="normal">320</span>
-<span class="normal">321</span>
-<span class="normal">322</span>
-<span class="normal">323</span>
-<span class="normal">324</span>
-<span class="normal">325</span>
-<span class="normal">326</span>
-<span class="normal">327</span>
-<span class="normal">328</span>
-<span class="normal">329</span>
-<span class="normal">330</span>
-<span class="normal">331</span>
-<span class="normal">332</span>
-<span class="normal">333</span>
-<span class="normal">334</span>
-<span class="normal">335</span>
-<span class="normal">336</span>
-<span class="normal">337</span>
-<span class="normal">338</span>
-<span class="normal">339</span>
-<span class="normal">340</span>
-<span class="normal">341</span>
-<span class="normal">342</span>
-<span class="normal">343</span>
-<span class="normal">344</span>
-<span class="normal">345</span>
-<span class="normal">346</span>
-<span class="normal">347</span>
-<span class="normal">348</span>
-<span class="normal">349</span>
-<span class="normal">350</span>
-<span class="normal">351</span>
-<span class="normal">352</span>
-<span class="normal">353</span>
-<span class="normal">354</span>
-<span class="normal">355</span>
-<span class="normal">356</span>
-<span class="normal">357</span>
-<span class="normal">358</span>
-<span class="normal">359</span>
-<span class="normal">360</span>
-<span class="normal">361</span>
-<span class="normal">362</span>
-<span class="normal">363</span>
-<span class="normal">364</span>
-<span class="normal">365</span>
-<span class="normal">366</span>
-<span class="normal">367</span>
-<span class="normal">368</span>
-<span class="normal">369</span>
-<span class="normal">370</span>
-<span class="normal">371</span>
-<span class="normal">372</span>
-<span class="normal">373</span>
-<span class="normal">374</span>
-<span class="normal">375</span>
-<span class="normal">376</span>
-<span class="normal">377</span>
-<span class="normal">378</span>
-<span class="normal">379</span>
-<span class="normal">380</span>
-<span class="normal">381</span>
-<span class="normal">382</span>
-<span class="normal">383</span>
-<span class="normal">384</span>
-<span class="normal">385</span>
-<span class="normal">386</span>
-<span class="normal">387</span>
-<span class="normal">388</span>
-<span class="normal">389</span>
-<span class="normal">390</span>
-<span class="normal">391</span>
-<span class="normal">392</span>
-<span class="normal">393</span>
-<span class="normal">394</span>
-<span class="normal">395</span>
-<span class="normal">396</span>
-<span class="normal">397</span>
-<span class="normal">398</span>
-<span class="normal">399</span>
-<span class="normal">400</span>
-<span class="normal">401</span>
-<span class="normal">402</span>
-<span class="normal">403</span>
-<span class="normal">404</span>
-<span class="normal">405</span>
-<span class="normal">406</span>
-<span class="normal">407</span>
-<span class="normal">408</span>
-<span class="normal">409</span>
-<span class="normal">410</span>
-<span class="normal">411</span>
-<span class="normal">412</span>
-<span class="normal">413</span>
-<span class="normal">414</span>
-<span class="normal">415</span>
-<span class="normal">416</span>
-<span class="normal">417</span>
-<span class="normal">418</span>
-<span class="normal">419</span>
-<span class="normal">420</span>
-<span class="normal">421</span>
-<span class="normal">422</span>
-<span class="normal">423</span>
-<span class="normal">424</span>
-<span class="normal">425</span>
-<span class="normal">426</span>
-<span class="normal">427</span>
-<span class="normal">428</span>
-<span class="normal">429</span>
-<span class="normal">430</span>
-<span class="normal">431</span>
-<span class="normal">432</span>
-<span class="normal">433</span>
-<span class="normal">434</span>
-<span class="normal">435</span>
-<span class="normal">436</span>
-<span class="normal">437</span>
-<span class="normal">438</span>
-<span class="normal">439</span>
-<span class="normal">440</span>
-<span class="normal">441</span>
-<span class="normal">442</span>
-<span class="normal">443</span>
-<span class="normal">444</span>
-<span class="normal">445</span>
-<span class="normal">446</span>
-<span class="normal">447</span>
-<span class="normal">448</span>
-<span class="normal">449</span>
-<span class="normal">450</span>
-<span class="normal">451</span>
-<span class="normal">452</span>
-<span class="normal">453</span>
-<span class="normal">454</span>
-<span class="normal">455</span>
-<span class="normal">456</span>
-<span class="normal">457</span>
-<span class="normal">458</span>
-<span class="normal">459</span>
-<span class="normal">460</span>
-<span class="normal">461</span>
-<span class="normal">462</span>
-<span class="normal">463</span>
-<span class="normal">464</span>
-<span class="normal">465</span>
-<span class="normal">466</span>
-<span class="normal">467</span>
-<span class="normal">468</span>
-<span class="normal">469</span>
-<span class="normal">470</span>
-<span class="normal">471</span>
-<span class="normal">472</span>
-<span class="normal">473</span>
-<span class="normal">474</span>
-<span class="normal">475</span>
-<span class="normal">476</span>
-<span class="normal">477</span>
-<span class="normal">478</span>
-<span class="normal">479</span>
-<span class="normal">480</span>
-<span class="normal">481</span>
-<span class="normal">482</span>
-<span class="normal">483</span>
-<span class="normal">484</span>
-<span class="normal">485</span>
-<span class="normal">486</span>
-<span class="normal">487</span>
-<span class="normal">488</span>
-<span class="normal">489</span>
-<span class="normal">490</span>
-<span class="normal">491</span>
-<span class="normal">492</span>
-<span class="normal">493</span>
-<span class="normal">494</span>
-<span class="normal">495</span>
-<span class="normal">496</span>
-<span class="normal">497</span>
-<span class="normal">498</span>
-<span class="normal">499</span>
-<span class="normal">500</span>
-<span class="normal">501</span>
-<span class="normal">502</span>
-<span class="normal">503</span>
-<span class="normal">504</span>
-<span class="normal">505</span>
-<span class="normal">506</span>
-<span class="normal">507</span>
-<span class="normal">508</span>
-<span class="normal">509</span>
-<span class="normal">510</span>
-<span class="normal">511</span>
-<span class="normal">512</span>
-<span class="normal">513</span>
-<span class="normal">514</span>
-<span class="normal">515</span>
-<span class="normal">516</span>
-<span class="normal">517</span>
-<span class="normal">518</span>
-<span class="normal">519</span>
-<span class="normal">520</span>
-<span class="normal">521</span>
-<span class="normal">522</span>
-<span class="normal">523</span>
-<span class="normal">524</span>
-<span class="normal">525</span>
-<span class="normal">526</span>
-<span class="normal">527</span>
-<span class="normal">528</span>
-<span class="normal">529</span>
-<span class="normal">530</span>
-<span class="normal">531</span>
-<span class="normal">532</span>
-<span class="normal">533</span>
-<span class="normal">534</span>
-<span class="normal">535</span>
-<span class="normal">536</span>
-<span class="normal">537</span>
-<span class="normal">538</span>
-<span class="normal">539</span>
-<span class="normal">540</span>
-<span class="normal">541</span>
-<span class="normal">542</span>
-<span class="normal">543</span>
-<span class="normal">544</span>
-<span class="normal">545</span>
-<span class="normal">546</span>
-<span class="normal">547</span>
-<span class="normal">548</span>
-<span class="normal">549</span>
-<span class="normal">550</span>
-<span class="normal">551</span>
-<span class="normal">552</span>
-<span class="normal">553</span>
-<span class="normal">554</span>
-<span class="normal">555</span>
-<span class="normal">556</span>
-<span class="normal">557</span>
-<span class="normal">558</span>
-<span class="normal">559</span>
-<span class="normal">560</span>
-<span class="normal">561</span>
-<span class="normal">562</span>
-<span class="normal">563</span>
-<span class="normal">564</span>
-<span class="normal">565</span>
-<span class="normal">566</span>
-<span class="normal">567</span>
-<span class="normal">568</span>
-<span class="normal">569</span>
-<span class="normal">570</span>
-<span class="normal">571</span>
-<span class="normal">572</span>
-<span class="normal">573</span>
-<span class="normal">574</span>
-<span class="normal">575</span>
-<span class="normal">576</span>
-<span class="normal">577</span>
-<span class="normal">578</span>
-<span class="normal">579</span>
-<span class="normal">580</span>
-<span class="normal">581</span>
-<span class="normal">582</span>
-<span class="normal">583</span>
-<span class="normal">584</span>
-<span class="normal">585</span>
-<span class="normal">586</span>
-<span class="normal">587</span>
-<span class="normal">588</span>
-<span class="normal">589</span>
-<span class="normal">590</span>
-<span class="normal">591</span>
-<span class="normal">592</span>
-<span class="normal">593</span>
-<span class="normal">594</span>
-<span class="normal">595</span>
-<span class="normal">596</span>
-<span class="normal">597</span>
-<span class="normal">598</span>
-<span class="normal">599</span>
-<span class="normal">600</span>
-<span class="normal">601</span>
-<span class="normal">602</span>
-<span class="normal">603</span>
-<span class="normal">604</span>
-<span class="normal">605</span>
-<span class="normal">606</span>
-<span class="normal">607</span>
-<span class="normal">608</span>
-<span class="normal">609</span>
-<span class="normal">610</span>
-<span class="normal">611</span>
-<span class="normal">612</span>
-<span class="normal">613</span>
-<span class="normal">614</span>
-<span class="normal">615</span>
-<span class="normal">616</span>
-<span class="normal">617</span>
-<span class="normal">618</span>
-<span class="normal">619</span>
-<span class="normal">620</span>
-<span class="normal">621</span>
-<span class="normal">622</span>
-<span class="normal">623</span>
-<span class="normal">624</span>
-<span class="normal">625</span>
-<span class="normal">626</span>
-<span class="normal">627</span>
-<span class="normal">628</span>
-<span class="normal">629</span>
-<span class="normal">630</span>
-<span class="normal">631</span>
-<span class="normal">632</span>
-<span class="normal">633</span>
-<span class="normal">634</span>
-<span class="normal">635</span>
-<span class="normal">636</span>
-<span class="normal">637</span>
-<span class="normal">638</span>
-<span class="normal">639</span>
-<span class="normal">640</span>
-<span class="normal">641</span>
-<span class="normal">642</span>
-<span class="normal">643</span>
-<span class="normal">644</span>
-<span class="normal">645</span>
-<span class="normal">646</span>
-<span class="normal">647</span>
-<span class="normal">648</span>
-<span class="normal">649</span>
-<span class="normal">650</span>
-<span class="normal">651</span>
-<span class="normal">652</span>
-<span class="normal">653</span>
-<span class="normal">654</span>
-<span class="normal">655</span>
-<span class="normal">656</span>
-<span class="normal">657</span>
-<span class="normal">658</span>
-<span class="normal">659</span>
-<span class="normal">660</span>
-<span class="normal">661</span>
-<span class="normal">662</span>
-<span class="normal">663</span>
-<span class="normal">664</span>
-<span class="normal">665</span>
-<span class="normal">666</span>
-<span class="normal">667</span>
-<span class="normal">668</span>
-<span class="normal">669</span>
-<span class="normal">670</span>
-<span class="normal">671</span>
-<span class="normal">672</span>
-<span class="normal">673</span>
-<span class="normal">674</span>
-<span class="normal">675</span>
-<span class="normal">676</span>
-<span class="normal">677</span>
-<span class="normal">678</span>
-<span class="normal">679</span>
-<span class="normal">680</span>
-<span class="normal">681</span>
-<span class="normal">682</span>
-<span class="normal">683</span>
-<span class="normal">684</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">BookService</span><span class="p">(</span><span class="n">BaseSkoobService</span><span class="p">):</span>
+<span class="normal">303</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">BookService</span><span class="p">(</span><span class="n">BaseSkoobService</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;High level operations for retrieving and searching books.</span>
 
 <span class="sd">    The service parses HTML and JSON responses from Skoob and exposes</span>
@@ -1412,17 +1210,18 @@ with :class:<code>AuthService</code> to operate on the authenticated user's data
             <span class="n">soup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_html</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
             <span class="n">limit</span> <span class="o">=</span> <span class="mi">30</span>
-            <span class="n">results</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">BookSearchResult</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_parse_search_result</span><span class="p">(</span><span class="n">book_div</span><span class="p">)</span> <span class="k">for</span> <span class="n">book_div</span> <span class="ow">in</span> <span class="n">safe_find_all</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;box_lista_busca_vertical&quot;</span><span class="p">})</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">parse_search_result</span><span class="p">(</span><span class="n">book_div</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">book_div</span> <span class="ow">in</span> <span class="n">safe_find_all</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;box_lista_busca_vertical&quot;</span><span class="p">})</span>
             <span class="p">]</span>
             <span class="n">cleaned_results</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">BookSearchResult</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">results</span> <span class="k">if</span> <span class="n">i</span><span class="p">]</span>
 
-            <span class="n">total_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_total_results</span><span class="p">(</span><span class="n">soup</span><span class="p">)</span>
+            <span class="n">total_results</span> <span class="o">=</span> <span class="n">extract_total_results</span><span class="p">(</span><span class="n">soup</span><span class="p">)</span>
             <span class="n">next_page_link</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">page</span> <span class="o">*</span> <span class="n">limit</span> <span class="o">&lt;</span> <span class="n">total_results</span> <span class="k">else</span> <span class="kc">False</span>
-        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># pragma: no cover - defensive</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to parse book search results: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">raise</span> <span class="n">ParsingError</span><span class="p">(</span><span class="s2">&quot;Failed to parse book search results.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># pragma: no cover - unexpected</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;An unexpected error occurred during book search: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
                 <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -1480,7 +1279,7 @@ with :class:<code>AuthService</code> to operate on the authenticated user's data
                 <span class="n">error_msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;No data found for edition_id </span><span class="si">{</span><span class="n">edition_id</span><span class="si">}</span><span class="s2">. Description: </span><span class="si">{</span><span class="n">cod_description</span><span class="si">}</span><span class="s2">&quot;</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">error_msg</span><span class="p">)</span>
                 <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="n">error_msg</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_clean_book_json_data</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
+            <span class="n">json_data</span> <span class="o">=</span> <span class="n">clean_book_json_data</span><span class="p">(</span><span class="n">json_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">)</span>
             <span class="n">book</span> <span class="o">=</span> <span class="n">Book</span><span class="o">.</span><span class="n">model_validate</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
                 <span class="s2">&quot;Successfully retrieved book: &#39;</span><span class="si">%s</span><span class="s2">&#39; (Edition ID: </span><span class="si">%s</span><span class="s2">)&quot;</span><span class="p">,</span>
@@ -1490,7 +1289,7 @@ with :class:<code>AuthService</code> to operate on the authenticated user's data
             <span class="k">return</span> <span class="n">book</span>
         <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
             <span class="k">raise</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># pragma: no cover - unexpected</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Error retrieving book for edition_id </span><span class="si">{</span><span class="n">edition_id</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
                 <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -1534,19 +1333,17 @@ with :class:<code>AuthService</code> to operate on the authenticated user's data
             <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
             <span class="n">soup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_html</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">edition_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">edition_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_edition_id_from_reviews_page</span><span class="p">(</span><span class="n">soup</span><span class="p">)</span>
+                <span class="n">edition_id</span> <span class="o">=</span> <span class="n">extract_edition_id_from_reviews_page</span><span class="p">(</span><span class="n">soup</span><span class="p">)</span>
             <span class="n">book_reviews</span> <span class="o">=</span> <span class="p">[</span>
                 <span class="n">review</span>
-                <span class="k">for</span> <span class="n">review</span> <span class="ow">in</span> <span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_parse_review</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">book_id</span><span class="p">,</span> <span class="n">edition_id</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">safe_find_all</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;resenha\d+&quot;</span><span class="p">)})</span>
-                <span class="p">)</span>
+                <span class="k">for</span> <span class="n">review</span> <span class="ow">in</span> <span class="p">(</span><span class="n">parse_review</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">book_id</span><span class="p">,</span> <span class="n">edition_id</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">safe_find_all</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;resenha\d+&quot;</span><span class="p">)}))</span>
                 <span class="k">if</span> <span class="n">review</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
             <span class="p">]</span>
             <span class="n">next_page_link</span> <span class="o">=</span> <span class="n">safe_find</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;proximo&quot;</span><span class="p">})</span>
-        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># pragma: no cover - defensive</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to parse book reviews: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">raise</span> <span class="n">ParsingError</span><span class="p">(</span><span class="s2">&quot;Failed to parse book reviews.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># pragma: no cover - unexpected</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;An unexpected error occurred during review fetching: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
                 <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -1613,12 +1410,12 @@ with :class:<code>AuthService</code> to operate on the authenticated user's data
             <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
             <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
             <span class="n">soup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_html</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-            <span class="n">users_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_user_ids_from_html</span><span class="p">(</span><span class="n">soup</span><span class="p">)</span>
+            <span class="n">users_id</span> <span class="o">=</span> <span class="n">extract_user_ids_from_html</span><span class="p">(</span><span class="n">soup</span><span class="p">)</span>
             <span class="n">next_page_link</span> <span class="o">=</span> <span class="n">safe_find</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;proximo&quot;</span><span class="p">})</span>
-        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># pragma: no cover - defensive</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to parse users by status: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">raise</span> <span class="n">ParsingError</span><span class="p">(</span><span class="s2">&quot;Failed to parse users by status.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># pragma: no cover - unexpected</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
                 <span class="s2">&quot;An unexpected error occurred during user status fetching: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
                 <span class="n">e</span><span class="p">,</span>
@@ -1637,388 +1434,6 @@ with :class:<code>AuthService</code> to operate on the authenticated user's data
             <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">users_id</span><span class="p">),</span>
             <span class="n">has_next_page</span><span class="o">=</span><span class="n">next_page_link</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span>
         <span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_user_ids_from_html</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soup</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Extracts user IDs from the user list HTML soup.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        soup : Tag</span>
-<span class="sd">            BeautifulSoup Tag containing the user list.</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        list of int</span>
-<span class="sd">            List of user IDs found on the page.</span>
-
-<span class="sd">        Examples</span>
-<span class="sd">        --------</span>
-<span class="sd">        &gt;&gt;&gt; html = (</span>
-<span class="sd">        ...     &quot;&lt;div class=&#39;livro-leitor-container&#39;&gt;&quot;</span>
-<span class="sd">        ...     &quot;&lt;a href=&#39;/usuario/1-name&#39;&gt;&lt;/a&gt;&lt;/div&gt;&quot;</span>
-<span class="sd">        ... )</span>
-<span class="sd">        &gt;&gt;&gt; service._extract_user_ids_from_html(</span>
-<span class="sd">        ...     BeautifulSoup(html, &#39;html.parser&#39;)</span>
-<span class="sd">        ... )</span>
-<span class="sd">        [1]</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">users_html</span> <span class="o">=</span> <span class="n">safe_find_all</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;livro-leitor-container&quot;</span><span class="p">})</span>
-        <span class="n">users_id</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">user_div</span> <span class="ow">in</span> <span class="n">users_html</span><span class="p">:</span>
-            <span class="n">user_link</span> <span class="o">=</span> <span class="n">safe_find</span><span class="p">(</span><span class="n">user_div</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>
-            <span class="n">href</span> <span class="o">=</span> <span class="n">get_tag_attr</span><span class="p">(</span><span class="n">user_link</span><span class="p">,</span> <span class="s2">&quot;href&quot;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">href</span><span class="p">:</span>
-                <span class="n">user_id</span> <span class="o">=</span> <span class="n">get_user_id_from_url</span><span class="p">(</span><span class="n">href</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">user_id</span><span class="p">:</span>
-                    <span class="n">users_id</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">user_id</span><span class="p">))</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not extract user ID from URL: </span><span class="si">{</span><span class="n">href</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Skipping user_div due to missing &#39;a&#39; tag or href attribute.&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">users_id</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_edition_id_from_reviews_page</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soup</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Extracts the edition ID from the reviews page if not provided.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        soup : Tag</span>
-<span class="sd">            BeautifulSoup object of the reviews page.</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        int or None</span>
-<span class="sd">            Edition ID or None if not found.</span>
-
-<span class="sd">        Examples</span>
-<span class="sd">        --------</span>
-<span class="sd">        &gt;&gt;&gt; html = (</span>
-<span class="sd">        ...     &quot;&lt;div id=&#39;pg-livro-menu-principal-container&#39;&gt;&quot;</span>
-<span class="sd">        ...     &quot;&lt;a href=&#39;/livro/1-ed3&#39;&gt;&lt;/a&gt;&lt;/div&gt;&quot;</span>
-<span class="sd">        ... )</span>
-<span class="sd">        &gt;&gt;&gt; service._extract_edition_id_from_reviews_page(</span>
-<span class="sd">        ...     BeautifulSoup(html, &#39;html.parser&#39;)</span>
-<span class="sd">        ... )</span>
-<span class="sd">        3</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">menu_div</span> <span class="o">=</span> <span class="n">safe_find</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;pg-livro-menu-principal-container&quot;</span><span class="p">})</span>
-        <span class="n">menu_div_a</span> <span class="o">=</span> <span class="n">safe_find</span><span class="p">(</span><span class="n">menu_div</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">menu_div</span> <span class="k">else</span> <span class="kc">None</span>
-        <span class="n">href</span> <span class="o">=</span> <span class="n">get_tag_attr</span><span class="p">(</span><span class="n">menu_div_a</span><span class="p">,</span> <span class="s2">&quot;href&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">href</span><span class="p">:</span>
-            <span class="n">extracted_edition_id</span> <span class="o">=</span> <span class="n">get_book_edition_id_from_url</span><span class="p">(</span><span class="n">href</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">extracted_edition_id</span><span class="p">:</span>
-                <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">extracted_edition_id</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not extract edition_id from URL: </span><span class="si">{</span><span class="n">href</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">None</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_review</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">r</span><span class="p">:</span> <span class="n">Tag</span><span class="p">,</span>
-        <span class="n">book_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-        <span class="n">edition_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BookReview</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Parses a single review div into a BookReview object.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        r : Tag</span>
-<span class="sd">            BeautifulSoup Tag for the review.</span>
-<span class="sd">        book_id : int</span>
-<span class="sd">            The book ID.</span>
-<span class="sd">        edition_id : int or None</span>
-<span class="sd">            The edition ID.</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        BookReview or None</span>
-<span class="sd">            Parsed review or None if incomplete.</span>
-
-<span class="sd">        Examples</span>
-<span class="sd">        --------</span>
-<span class="sd">        &gt;&gt;&gt; html = &quot;&lt;div id=&#39;resenha1&#39;&gt;&lt;/div&gt;&quot;</span>
-<span class="sd">        &gt;&gt;&gt; service._parse_review(</span>
-<span class="sd">        ...     BeautifulSoup(html, &#39;html.parser&#39;),</span>
-<span class="sd">        ...     1,</span>
-<span class="sd">        ...     None,</span>
-<span class="sd">        ... )</span>
-<span class="sd">        ... # doctest: +ELLIPSIS</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">review_id_str</span> <span class="o">=</span> <span class="n">get_tag_attr</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">)</span>
-        <span class="n">review_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">review_id_str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;resenha&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span> <span class="k">if</span> <span class="n">review_id_str</span> <span class="k">else</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="n">review_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Skipping review due to missing or invalid ID: </span><span class="si">{</span><span class="n">get_tag_attr</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;id&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">None</span>
-        <span class="n">user_link</span> <span class="o">=</span> <span class="n">safe_find</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;href&quot;</span><span class="p">:</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;/usuario/&quot;</span><span class="p">)})</span>
-        <span class="n">user_url</span> <span class="o">=</span> <span class="n">get_tag_attr</span><span class="p">(</span><span class="n">user_link</span><span class="p">,</span> <span class="s2">&quot;href&quot;</span><span class="p">)</span>
-        <span class="n">user_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">get_user_id_from_url</span><span class="p">(</span><span class="n">user_url</span><span class="p">))</span> <span class="k">if</span> <span class="n">user_url</span> <span class="k">else</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="n">user_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Skipping review </span><span class="si">{</span><span class="n">review_id</span><span class="si">}</span><span class="s2"> due to missing user ID.&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">None</span>
-        <span class="n">star_tag</span> <span class="o">=</span> <span class="n">safe_find</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="s2">&quot;star-rating&quot;</span><span class="p">)</span>
-        <span class="n">rating</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">get_tag_attr</span><span class="p">(</span><span class="n">star_tag</span><span class="p">,</span> <span class="s2">&quot;rate&quot;</span><span class="p">))</span> <span class="k">if</span> <span class="n">star_tag</span> <span class="ow">and</span> <span class="n">get_tag_attr</span><span class="p">(</span><span class="n">star_tag</span><span class="p">,</span> <span class="s2">&quot;rate&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="mf">0.0</span>
-        <span class="n">comment_div</span> <span class="o">=</span> <span class="n">safe_find</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;resenhac\d+&quot;</span><span class="p">)})</span>
-        <span class="n">date</span><span class="p">,</span> <span class="n">review_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_review_date_and_text</span><span class="p">(</span><span class="n">comment_div</span><span class="p">,</span> <span class="n">review_id</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">BookReview</span><span class="p">(</span>
-            <span class="n">review_id</span><span class="o">=</span><span class="n">review_id</span><span class="p">,</span>
-            <span class="n">book_id</span><span class="o">=</span><span class="n">book_id</span><span class="p">,</span>
-            <span class="n">edition_id</span><span class="o">=</span><span class="n">edition_id</span><span class="p">,</span>
-            <span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">,</span>
-            <span class="n">rating</span><span class="o">=</span><span class="n">rating</span><span class="p">,</span>
-            <span class="n">review_text</span><span class="o">=</span><span class="n">review_text</span><span class="p">,</span>
-            <span class="n">reviewed_at</span><span class="o">=</span><span class="n">date</span><span class="p">,</span>
-        <span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_review_date_and_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comment_div</span><span class="p">:</span> <span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">review_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Extracts the review date and text from the comment div.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        comment_div : Tag</span>
-<span class="sd">            BeautifulSoup Tag containing the review comment.</span>
-<span class="sd">        review_id : int</span>
-<span class="sd">            ID of the review (for logging purposes).</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        tuple of (datetime or None, str)</span>
-<span class="sd">            Parsed review date (if found) and review text.</span>
-
-<span class="sd">        Examples</span>
-<span class="sd">        --------</span>
-<span class="sd">        &gt;&gt;&gt; soup = BeautifulSoup(</span>
-<span class="sd">        ...     &#39;&lt;span&gt;01/01/2020&lt;/span&gt; Great&#39;,</span>
-<span class="sd">        ...     &#39;html.parser&#39;,</span>
-<span class="sd">        ... )</span>
-<span class="sd">        &gt;&gt;&gt; service._extract_review_date_and_text(soup, 1)[1]</span>
-<span class="sd">        &#39;Great&#39;</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">date</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">review_text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">comment_div</span><span class="p">:</span>
-            <span class="n">date_span</span> <span class="o">=</span> <span class="n">safe_find</span><span class="p">(</span><span class="n">comment_div</span><span class="p">,</span> <span class="s2">&quot;span&quot;</span><span class="p">)</span>
-            <span class="n">date_text</span> <span class="o">=</span> <span class="n">get_tag_text</span><span class="p">(</span><span class="n">date_span</span><span class="p">,</span> <span class="n">strip</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">date_text</span><span class="p">:</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">date_text</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%d</span><span class="s2">/%m/%Y&quot;</span><span class="p">)</span>
-                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not parse date &#39;</span><span class="si">{</span><span class="n">date_text</span><span class="si">}</span><span class="s2">&#39; for review </span><span class="si">{</span><span class="n">review_id</span><span class="si">}</span><span class="s2">. Setting to None.&quot;</span><span class="p">)</span>
-            <span class="n">content_parts</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">if</span> <span class="n">date_span</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">sibling</span> <span class="ow">in</span> <span class="n">date_span</span><span class="o">.</span><span class="n">next_siblings</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sibling</span><span class="p">,</span> <span class="n">Tag</span><span class="p">):</span>
-                        <span class="n">content_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sibling</span><span class="o">.</span><span class="n">get_text</span><span class="p">(</span><span class="n">separator</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">strip</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
-                    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sibling</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-                        <span class="n">stripped_text</span> <span class="o">=</span> <span class="n">sibling</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-                        <span class="k">if</span> <span class="n">stripped_text</span><span class="p">:</span>
-                            <span class="n">content_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stripped_text</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">content_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">comment_div</span><span class="o">.</span><span class="n">get_text</span><span class="p">(</span><span class="n">separator</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">strip</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
-            <span class="n">review_text</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">content_parts</span><span class="p">))</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">date</span><span class="p">,</span> <span class="n">review_text</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_search_result</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">book_div</span><span class="p">:</span> <span class="n">Tag</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BookSearchResult</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Parses a single book search result div into a BookSearchResult object.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        book_div : Tag</span>
-<span class="sd">            BeautifulSoup Tag for a single search result.</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        BookSearchResult or None</span>
-<span class="sd">            Parsed result or None if data is incomplete.</span>
-
-<span class="sd">        Examples</span>
-<span class="sd">        --------</span>
-<span class="sd">        &gt;&gt;&gt; html = &quot;&lt;a class=&#39;capa-link-item&#39; title=&#39;X&#39; href=&#39;/livro/1-ed2&#39;&gt;&lt;/a&gt;&quot;</span>
-<span class="sd">        &gt;&gt;&gt; service._parse_search_result(BeautifulSoup(html, &#39;html.parser&#39;))</span>
-<span class="sd">        BookSearchResult(...)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">container</span> <span class="o">=</span> <span class="n">safe_find</span><span class="p">(</span><span class="n">book_div</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;capa-link-item&quot;</span><span class="p">})</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">container</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Skipping book_div due to missing &#39;capa-link-item&#39; container.&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">None</span>
-
-        <span class="n">title</span> <span class="o">=</span> <span class="n">get_tag_attr</span><span class="p">(</span><span class="n">container</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">)</span>
-        <span class="n">book_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="si">}{</span><span class="n">get_tag_attr</span><span class="p">(</span><span class="n">container</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;href&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="n">img_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_img_url</span><span class="p">(</span><span class="n">container</span><span class="p">)</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">book_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">get_book_id_from_url</span><span class="p">(</span><span class="n">book_url</span><span class="p">))</span>
-            <span class="n">edition_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">get_book_edition_id_from_url</span><span class="p">(</span><span class="n">book_url</span><span class="p">))</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Skipping book_div due to invalid book/edition id in url: </span><span class="si">{</span><span class="n">book_url</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">None</span>
-
-        <span class="n">publisher</span><span class="p">,</span> <span class="n">isbn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_publisher_and_isbn</span><span class="p">(</span><span class="n">book_div</span><span class="p">)</span>
-        <span class="n">rating</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_rating</span><span class="p">(</span><span class="n">book_div</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">BookSearchResult</span><span class="p">(</span>
-            <span class="n">edition_id</span><span class="o">=</span><span class="n">edition_id</span><span class="p">,</span>
-            <span class="n">book_id</span><span class="o">=</span><span class="n">book_id</span><span class="p">,</span>
-            <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
-            <span class="n">publisher</span><span class="o">=</span><span class="n">publisher</span><span class="p">,</span>
-            <span class="n">isbn</span><span class="o">=</span><span class="n">isbn</span><span class="p">,</span>
-            <span class="n">url</span><span class="o">=</span><span class="n">book_url</span><span class="p">,</span>
-            <span class="n">cover_url</span><span class="o">=</span><span class="n">img_url</span><span class="p">,</span>
-            <span class="n">rating</span><span class="o">=</span><span class="n">rating</span><span class="p">,</span>
-        <span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_img_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">container</span><span class="p">:</span> <span class="n">Tag</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Extracts the image URL from the book cover container.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        container : Tag</span>
-<span class="sd">            BeautifulSoup Tag for the image container.</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        str</span>
-<span class="sd">            URL of the book cover image or an empty string if not found.</span>
-
-<span class="sd">        Examples</span>
-<span class="sd">        --------</span>
-<span class="sd">        &gt;&gt;&gt; html = &quot;&lt;a&gt;&lt;img src=&#39;https://img.com/c.jpg&#39;&gt;&lt;/a&gt;&quot;</span>
-<span class="sd">        &gt;&gt;&gt; service._extract_img_url(BeautifulSoup(html, &#39;html.parser&#39;).a)</span>
-<span class="sd">        &#39;https://img.com/c.jpg&#39;</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">container</span><span class="o">.</span><span class="n">img</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">container</span><span class="o">.</span><span class="n">img</span><span class="p">,</span> <span class="n">Tag</span><span class="p">):</span>
-            <span class="n">src</span> <span class="o">=</span> <span class="n">get_tag_attr</span><span class="p">(</span><span class="n">container</span><span class="o">.</span><span class="n">img</span><span class="p">,</span> <span class="s2">&quot;src&quot;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">src</span> <span class="ow">and</span> <span class="s2">&quot;https&quot;</span> <span class="ow">in</span> <span class="n">src</span><span class="p">:</span>
-                <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;https</span><span class="si">{</span><span class="n">src</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;https&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="k">return</span> <span class="s2">&quot;&quot;</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_publisher_and_isbn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">book_div</span><span class="p">:</span> <span class="n">Tag</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Extracts publisher and ISBN information from a book search result div.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        book_div : Tag</span>
-<span class="sd">            BeautifulSoup Tag for the book search result.</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        tuple of (str or None, str or None)</span>
-<span class="sd">            Publisher and ISBN string or None if not found.</span>
-
-<span class="sd">        Examples</span>
-<span class="sd">        --------</span>
-<span class="sd">        &gt;&gt;&gt; html = &quot;&lt;div class=&#39;detalhes-2-sub&#39;&gt;&lt;div&gt;&lt;span&gt;Editora&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&quot;</span>
-<span class="sd">        &gt;&gt;&gt; service._extract_publisher_and_isbn(BeautifulSoup(html, &#39;html.parser&#39;))</span>
-<span class="sd">        (&#39;Editora&#39;, None)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">detalhes2sub</span> <span class="o">=</span> <span class="n">safe_find</span><span class="p">(</span><span class="n">book_div</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;detalhes-2-sub&quot;</span><span class="p">})</span>
-        <span class="n">detalhes2sub_div</span> <span class="o">=</span> <span class="n">detalhes2sub</span><span class="o">.</span><span class="n">div</span> <span class="k">if</span> <span class="n">detalhes2sub</span> <span class="k">else</span> <span class="kc">None</span>
-        <span class="n">spans</span> <span class="o">=</span> <span class="n">safe_find_all</span><span class="p">(</span><span class="n">detalhes2sub_div</span><span class="p">,</span> <span class="s2">&quot;span&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">detalhes2sub_div</span> <span class="k">else</span> <span class="p">[]</span>
-        <span class="n">cleaned_spans</span> <span class="o">=</span> <span class="p">[</span><span class="n">text</span> <span class="k">for</span> <span class="n">span</span> <span class="ow">in</span> <span class="n">spans</span> <span class="k">if</span> <span class="p">(</span><span class="n">text</span> <span class="o">:=</span> <span class="n">span</span><span class="o">.</span><span class="n">get_text</span><span class="p">(</span><span class="n">strip</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span> <span class="ow">and</span> <span class="n">text</span> <span class="o">!=</span> <span class="s2">&quot;|&quot;</span><span class="p">]</span>
-        <span class="n">isbn_pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^\d{9,13}$|^B0[A-Z0-9]{8,}$&quot;</span><span class="p">)</span>
-        <span class="n">isbn</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">publisher</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="n">cleaned_spans</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">isbn_pattern</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">cleaned_spans</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-                <span class="n">isbn</span> <span class="o">=</span> <span class="n">cleaned_spans</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cleaned_spans</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">publisher</span> <span class="o">=</span> <span class="n">cleaned_spans</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">publisher</span><span class="p">,</span> <span class="n">isbn</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_rating</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">book_div</span><span class="p">:</span> <span class="n">Tag</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Extracts the rating value from a search result div.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        book_div : Tag</span>
-<span class="sd">            BeautifulSoup Tag for the book search result.</span>
-<span class="sd">        title : str</span>
-<span class="sd">            Title of the book (for logging purposes).</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        float or None</span>
-<span class="sd">            The rating or None if not found or parsing fails.</span>
-
-<span class="sd">        Examples</span>
-<span class="sd">        --------</span>
-<span class="sd">        &gt;&gt;&gt; html = &quot;&lt;div class=&#39;star-mini&#39;&gt;&lt;strong&gt;4,5&lt;/strong&gt;&lt;/div&gt;&quot;</span>
-<span class="sd">        &gt;&gt;&gt; service._extract_rating(BeautifulSoup(html, &#39;html.parser&#39;), &#39;Example&#39;)</span>
-<span class="sd">        4.5</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">star_mini</span> <span class="o">=</span> <span class="n">safe_find</span><span class="p">(</span><span class="n">book_div</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;star-mini&quot;</span><span class="p">})</span>
-        <span class="k">if</span> <span class="n">star_mini</span><span class="p">:</span>
-            <span class="n">strong_tag</span> <span class="o">=</span> <span class="n">safe_find</span><span class="p">(</span><span class="n">star_mini</span><span class="p">,</span> <span class="s2">&quot;strong&quot;</span><span class="p">)</span>
-            <span class="n">rating_text</span> <span class="o">=</span> <span class="n">get_tag_text</span><span class="p">(</span><span class="n">strong_tag</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">rating_text</span><span class="p">:</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">rating_text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">))</span>
-                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not parse rating &#39;</span><span class="si">{</span><span class="n">rating_text</span><span class="si">}</span><span class="s2">&#39; for book &#39;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2">&#39;. Setting to None.&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">None</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_total_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">soup</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Extracts the total number of search results from the soup.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        soup : Tag</span>
-<span class="sd">            Parsed BeautifulSoup object of the search result page.</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        int</span>
-<span class="sd">            Total number of results, or 0 if not found.</span>
-
-<span class="sd">        Examples</span>
-<span class="sd">        --------</span>
-<span class="sd">        &gt;&gt;&gt; service._extract_total_results(BeautifulSoup(&quot;&lt;div class=&#39;contador&#39;&gt;1 encontrados&lt;/div&gt;&quot;, &#39;html.parser&#39;))</span>
-<span class="sd">        1</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">total_results_tag</span> <span class="o">=</span> <span class="n">safe_find</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;contador&quot;</span><span class="p">})</span>
-        <span class="k">if</span> <span class="n">total_results_tag</span><span class="p">:</span>
-            <span class="n">total_results_text</span> <span class="o">=</span> <span class="n">get_tag_text</span><span class="p">(</span><span class="n">total_results_tag</span><span class="p">)</span>
-            <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(\d+)\s+encontrados&quot;</span><span class="p">,</span> <span class="n">total_results_text</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
-                <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
-        <span class="k">return</span> <span class="mi">0</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_clean_book_json_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">json_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Cleans and normalizes the JSON data returned from the API before model validation.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        json_data : dict</span>
-<span class="sd">            Dictionary from the API response, modified in place.</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        None</span>
-
-<span class="sd">        Examples</span>
-<span class="sd">        --------</span>
-<span class="sd">        &gt;&gt;&gt; data = {&quot;url&quot;: &quot;/book&quot;, &quot;isbn&quot;: &quot;0&quot;}</span>
-<span class="sd">        &gt;&gt;&gt; service._clean_book_json_data(data)</span>
-<span class="sd">        &gt;&gt;&gt; data[&quot;cover_url&quot;]</span>
-<span class="sd">        &#39;&#39;</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">json_data</span><span class="p">[</span><span class="s2">&quot;url&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="si">}{</span><span class="n">json_data</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="n">json_data</span><span class="p">[</span><span class="s2">&quot;isbn&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">json_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;isbn&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">))</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span> <span class="k">else</span> <span class="n">json_data</span><span class="p">[</span><span class="s2">&quot;isbn&quot;</span><span class="p">]</span>
-        <span class="n">json_data</span><span class="p">[</span><span class="s2">&quot;autor&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">json_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;autor&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;não especificado&quot;</span> <span class="k">else</span> <span class="n">json_data</span><span class="p">[</span><span class="s2">&quot;autor&quot;</span><span class="p">]</span>
-        <span class="n">json_data</span><span class="p">[</span><span class="s2">&quot;serie&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;serie&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="kc">None</span>
-        <span class="n">json_data</span><span class="p">[</span><span class="s2">&quot;volume&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">json_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;volume&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">str</span><span class="p">(</span><span class="n">json_data</span><span class="p">[</span><span class="s2">&quot;volume&quot;</span><span class="p">])</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span> <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="n">json_data</span><span class="p">[</span><span class="s2">&quot;volume&quot;</span><span class="p">])</span>
-        <span class="n">json_data</span><span class="p">[</span><span class="s2">&quot;mes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">json_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;mes&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">str</span><span class="p">(</span><span class="n">json_data</span><span class="p">[</span><span class="s2">&quot;mes&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="k">else</span> <span class="n">json_data</span><span class="p">[</span><span class="s2">&quot;mes&quot;</span><span class="p">]</span>
-        <span class="n">img_url</span> <span class="o">=</span> <span class="n">json_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;img_url&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
-        <span class="n">json_data</span><span class="p">[</span><span class="s2">&quot;cover_url&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https</span><span class="si">{</span><span class="n">img_url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;https&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">img_url</span> <span class="ow">and</span> <span class="s2">&quot;https&quot;</span> <span class="ow">in</span> <span class="n">img_url</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
-        <span class="n">generos</span> <span class="o">=</span> <span class="n">json_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;generos&quot;</span><span class="p">)</span>
-        <span class="n">json_data</span><span class="p">[</span><span class="s2">&quot;generos&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">generos</span> <span class="k">if</span> <span class="n">generos</span> <span class="k">else</span> <span class="kc">None</span>
 </code></pre></div></td></tr></table></div>
               </details>
 
@@ -2038,7 +1453,7 @@ with :class:<code>AuthService</code> to operate on the authenticated user's data
 
 
 <h2 id="pyskoob.books.BookService.get_by_id" class="doc doc-heading">
-            <code class=" language-python"><span class="n">get_by_id</span><span class="p">(</span><span class="n">edition_id</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">get_by_id</span><span class="p">(</span><span class="n">edition_id</span><span class="p">)</span></code>
 
 </h2>
 
@@ -2136,17 +1551,14 @@ with :class:<code>AuthService</code> to operate on the authenticated user's data
 
 
 <p><span class="doc-section-title">Examples:</span></p>
-    <div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">service</span><span class="o">.</span><span class="n">get_by_id</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">title</span>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">service</span><span class="o">.</span><span class="n">get_by_id</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">title</span>
 <span class="go">&#39;Some Book&#39;</span>
 </code></pre></div>
 
 
             <details class="quote">
               <summary>Source code in <code>pyskoob/books.py</code></summary>
-              <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">109</span>
-<span class="normal">110</span>
-<span class="normal">111</span>
-<span class="normal">112</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">112</span>
 <span class="normal">113</span>
 <span class="normal">114</span>
 <span class="normal">115</span>
@@ -2195,7 +1607,10 @@ with :class:<code>AuthService</code> to operate on the authenticated user's data
 <span class="normal">158</span>
 <span class="normal">159</span>
 <span class="normal">160</span>
-<span class="normal">161</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edition_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Book</span><span class="p">:</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">edition_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Book</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Retrieves a book by its edition ID.</span>
 
@@ -2232,7 +1647,7 @@ with :class:<code>AuthService</code> to operate on the authenticated user's data
             <span class="n">error_msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;No data found for edition_id </span><span class="si">{</span><span class="n">edition_id</span><span class="si">}</span><span class="s2">. Description: </span><span class="si">{</span><span class="n">cod_description</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">error_msg</span><span class="p">)</span>
             <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="n">error_msg</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_clean_book_json_data</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
+        <span class="n">json_data</span> <span class="o">=</span> <span class="n">clean_book_json_data</span><span class="p">(</span><span class="n">json_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">)</span>
         <span class="n">book</span> <span class="o">=</span> <span class="n">Book</span><span class="o">.</span><span class="n">model_validate</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
             <span class="s2">&quot;Successfully retrieved book: &#39;</span><span class="si">%s</span><span class="s2">&#39; (Edition ID: </span><span class="si">%s</span><span class="s2">)&quot;</span><span class="p">,</span>
@@ -2242,7 +1657,7 @@ with :class:<code>AuthService</code> to operate on the authenticated user's data
         <span class="k">return</span> <span class="n">book</span>
     <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
         <span class="k">raise</span>
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># pragma: no cover - unexpected</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;Error retrieving book for edition_id </span><span class="si">{</span><span class="n">edition_id</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
             <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -2258,7 +1673,7 @@ with :class:<code>AuthService</code> to operate on the authenticated user's data
 
 
 <h2 id="pyskoob.books.BookService.get_reviews" class="doc doc-heading">
-            <code class=" language-python"><span class="n">get_reviews</span><span class="p">(</span><span class="n">book_id</span><span class="p">,</span> <span class="n">edition_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">get_reviews</span><span class="p">(</span><span class="n">book_id</span><span class="p">,</span> <span class="n">edition_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></code>
 
 </h2>
 
@@ -2378,17 +1793,14 @@ with :class:<code>AuthService</code> to operate on the authenticated user's data
 
 
 <p><span class="doc-section-title">Examples:</span></p>
-    <div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">service</span><span class="o">.</span><span class="n">get_reviews</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span><span class="o">.</span><span class="n">results</span>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">service</span><span class="o">.</span><span class="n">get_reviews</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span><span class="o">.</span><span class="n">results</span>
 <span class="go">[...]</span>
 </code></pre></div>
 
 
             <details class="quote">
               <summary>Source code in <code>pyskoob/books.py</code></summary>
-              <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">163</span>
-<span class="normal">164</span>
-<span class="normal">165</span>
-<span class="normal">166</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">166</span>
 <span class="normal">167</span>
 <span class="normal">168</span>
 <span class="normal">169</span>
@@ -2447,7 +1859,8 @@ with :class:<code>AuthService</code> to operate on the authenticated user's data
 <span class="normal">222</span>
 <span class="normal">223</span>
 <span class="normal">224</span>
-<span class="normal">225</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_reviews</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">book_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">edition_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">page</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Pagination</span><span class="p">[</span><span class="n">BookReview</span><span class="p">]:</span>
+<span class="normal">225</span>
+<span class="normal">226</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_reviews</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">book_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">edition_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">page</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Pagination</span><span class="p">[</span><span class="n">BookReview</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Retrieves reviews for a book.</span>
 
@@ -2484,19 +1897,17 @@ with :class:<code>AuthService</code> to operate on the authenticated user's data
         <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
         <span class="n">soup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_html</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">edition_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">edition_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_edition_id_from_reviews_page</span><span class="p">(</span><span class="n">soup</span><span class="p">)</span>
+            <span class="n">edition_id</span> <span class="o">=</span> <span class="n">extract_edition_id_from_reviews_page</span><span class="p">(</span><span class="n">soup</span><span class="p">)</span>
         <span class="n">book_reviews</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">review</span>
-            <span class="k">for</span> <span class="n">review</span> <span class="ow">in</span> <span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_parse_review</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">book_id</span><span class="p">,</span> <span class="n">edition_id</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">safe_find_all</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;resenha\d+&quot;</span><span class="p">)})</span>
-            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">review</span> <span class="ow">in</span> <span class="p">(</span><span class="n">parse_review</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">book_id</span><span class="p">,</span> <span class="n">edition_id</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">safe_find_all</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;resenha\d+&quot;</span><span class="p">)}))</span>
             <span class="k">if</span> <span class="n">review</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
         <span class="p">]</span>
         <span class="n">next_page_link</span> <span class="o">=</span> <span class="n">safe_find</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;proximo&quot;</span><span class="p">})</span>
-    <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># pragma: no cover - defensive</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to parse book reviews: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">raise</span> <span class="n">ParsingError</span><span class="p">(</span><span class="s2">&quot;Failed to parse book reviews.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># pragma: no cover - unexpected</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;An unexpected error occurred during review fetching: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
             <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -2520,7 +1931,7 @@ with :class:<code>AuthService</code> to operate on the authenticated user's data
 
 
 <h2 id="pyskoob.books.BookService.get_users_by_status" class="doc doc-heading">
-            <code class=" language-python"><span class="n">get_users_by_status</span><span class="p">(</span><span class="n">book_id</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">edition_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">get_users_by_status</span><span class="p">(</span><span class="n">book_id</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">edition_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></code>
 
 </h2>
 
@@ -2672,15 +2083,14 @@ with :class:<code>AuthService</code> to operate on the authenticated user's data
 
 
 <p><span class="doc-section-title">Examples:</span></p>
-    <div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">service</span><span class="o">.</span><span class="n">get_users_by_status</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">BookUserStatus</span><span class="o">.</span><span class="n">READERS</span><span class="p">)</span><span class="o">.</span><span class="n">results</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">service</span><span class="o">.</span><span class="n">get_users_by_status</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">BookUserStatus</span><span class="o">.</span><span class="n">READERS</span><span class="p">)</span><span class="o">.</span><span class="n">results</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
 <span class="go">[1, 2, 3]</span>
 </code></pre></div>
 
 
             <details class="quote">
               <summary>Source code in <code>pyskoob/books.py</code></summary>
-              <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">227</span>
-<span class="normal">228</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">228</span>
 <span class="normal">229</span>
 <span class="normal">230</span>
 <span class="normal">231</span>
@@ -2754,7 +2164,8 @@ with :class:<code>AuthService</code> to operate on the authenticated user's data
 <span class="normal">299</span>
 <span class="normal">300</span>
 <span class="normal">301</span>
-<span class="normal">302</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_users_by_status</span><span class="p">(</span>
+<span class="normal">302</span>
+<span class="normal">303</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_users_by_status</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">book_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">status</span><span class="p">:</span> <span class="n">BookUserStatus</span><span class="p">,</span>
@@ -2806,12 +2217,12 @@ with :class:<code>AuthService</code> to operate on the authenticated user's data
         <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
         <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
         <span class="n">soup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_html</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-        <span class="n">users_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_user_ids_from_html</span><span class="p">(</span><span class="n">soup</span><span class="p">)</span>
+        <span class="n">users_id</span> <span class="o">=</span> <span class="n">extract_user_ids_from_html</span><span class="p">(</span><span class="n">soup</span><span class="p">)</span>
         <span class="n">next_page_link</span> <span class="o">=</span> <span class="n">safe_find</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;proximo&quot;</span><span class="p">})</span>
-    <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># pragma: no cover - defensive</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to parse users by status: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">raise</span> <span class="n">ParsingError</span><span class="p">(</span><span class="s2">&quot;Failed to parse users by status.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># pragma: no cover - unexpected</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
             <span class="s2">&quot;An unexpected error occurred during user status fetching: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
             <span class="n">e</span><span class="p">,</span>
@@ -2840,7 +2251,7 @@ with :class:<code>AuthService</code> to operate on the authenticated user's data
 
 
 <h2 id="pyskoob.books.BookService.search" class="doc doc-heading">
-            <code class=" language-python"><span class="n">search</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">search_by</span><span class="o">=</span><span class="n">BookSearch</span><span class="o">.</span><span class="n">TITLE</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">search</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">search_by</span><span class="o">=</span><span class="n">BookSearch</span><span class="o">.</span><span class="n">TITLE</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></code>
 
 </h2>
 
@@ -2961,16 +2372,14 @@ with :class:<code>AuthService</code> to operate on the authenticated user's data
 
 
 <p><span class="doc-section-title">Examples:</span></p>
-    <div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">service</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;Duna&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">title</span>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">service</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;Duna&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">title</span>
 <span class="go">&#39;Duna&#39;</span>
 </code></pre></div>
 
 
             <details class="quote">
               <summary>Source code in <code>pyskoob/books.py</code></summary>
-              <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 36</span>
-<span class="normal"> 37</span>
-<span class="normal"> 38</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 38</span>
 <span class="normal"> 39</span>
 <span class="normal"> 40</span>
 <span class="normal"> 41</span>
@@ -3039,7 +2448,10 @@ with :class:<code>AuthService</code> to operate on the authenticated user's data
 <span class="normal">104</span>
 <span class="normal">105</span>
 <span class="normal">106</span>
-<span class="normal">107</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">search</span><span class="p">(</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">search</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">search_by</span><span class="p">:</span> <span class="n">BookSearch</span> <span class="o">=</span> <span class="n">BookSearch</span><span class="o">.</span><span class="n">TITLE</span><span class="p">,</span>
@@ -3081,17 +2493,18 @@ with :class:<code>AuthService</code> to operate on the authenticated user's data
         <span class="n">soup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_html</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
         <span class="n">limit</span> <span class="o">=</span> <span class="mi">30</span>
-        <span class="n">results</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">BookSearchResult</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_parse_search_result</span><span class="p">(</span><span class="n">book_div</span><span class="p">)</span> <span class="k">for</span> <span class="n">book_div</span> <span class="ow">in</span> <span class="n">safe_find_all</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;box_lista_busca_vertical&quot;</span><span class="p">})</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">parse_search_result</span><span class="p">(</span><span class="n">book_div</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">book_div</span> <span class="ow">in</span> <span class="n">safe_find_all</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;box_lista_busca_vertical&quot;</span><span class="p">})</span>
         <span class="p">]</span>
         <span class="n">cleaned_results</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">BookSearchResult</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">results</span> <span class="k">if</span> <span class="n">i</span><span class="p">]</span>
 
-        <span class="n">total_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_total_results</span><span class="p">(</span><span class="n">soup</span><span class="p">)</span>
+        <span class="n">total_results</span> <span class="o">=</span> <span class="n">extract_total_results</span><span class="p">(</span><span class="n">soup</span><span class="p">)</span>
         <span class="n">next_page_link</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">page</span> <span class="o">*</span> <span class="n">limit</span> <span class="o">&lt;</span> <span class="n">total_results</span> <span class="k">else</span> <span class="kc">False</span>
-    <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># pragma: no cover - defensive</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to parse book search results: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">raise</span> <span class="n">ParsingError</span><span class="p">(</span><span class="s2">&quot;Failed to parse book search results.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># pragma: no cover - unexpected</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;An unexpected error occurred during book search: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
             <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -3172,7 +2585,7 @@ with :class:<code>AuthService</code> to operate on the authenticated user's data
     
     
       
-      <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="../assets/javascripts/bundle.50899def.min.js"></script>

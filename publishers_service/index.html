@@ -60,6 +60,8 @@
   
     
     
+      
+    
     
     
     
@@ -84,9 +86,7 @@
     
       
 
-  
-
-<header class="md-header md-header--shadow" data-md-component="header">
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href=".." title="PySkoob" class="md-header__button md-logo" aria-label="PySkoob" data-md-component="logo">
       
@@ -116,7 +116,33 @@
     </div>
     
       
+        <form class="md-header__option" data-md-component="palette">
+  
     
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -182,6 +208,132 @@
       
         
           
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../author_service/" class="md-tabs__link">
+          
+  
+  
+  Services
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../advanced_usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Advanced Usage
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../stable_api/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Stable Public API
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../changelog/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Changelog
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../contributing/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contributing
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -195,8 +347,10 @@
                     
 
 
+  
 
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="PySkoob" class="md-nav__button md-logo" aria-label="PySkoob" data-md-component="logo">
       
@@ -255,15 +409,21 @@
     
     
     
+      
+        
+        
+      
+      
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
             
   
   
@@ -400,6 +560,48 @@
       publishers
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pyskoob.publishers.AsyncPublisherService" class="md-nav__link">
+    <span class="md-ellipsis">
+      AsyncPublisherService
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AsyncPublisherService">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pyskoob.publishers.AsyncPublisherService.get_authors" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_authors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pyskoob.publishers.AsyncPublisherService.get_books" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_books
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pyskoob.publishers.AsyncPublisherService.get_by_id" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_by_id
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -558,6 +760,28 @@
   
   
     <li class="md-nav__item">
+      <a href="../changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Changelog
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../contributing/" class="md-nav__link">
         
   
@@ -614,6 +838,48 @@
       publishers
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pyskoob.publishers.AsyncPublisherService" class="md-nav__link">
+    <span class="md-ellipsis">
+      AsyncPublisherService
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AsyncPublisherService">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pyskoob.publishers.AsyncPublisherService.get_authors" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_authors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pyskoob.publishers.AsyncPublisherService.get_books" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_books
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pyskoob.publishers.AsyncPublisherService.get_by_id" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_by_id
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -681,13 +947,12 @@
 <h1 id="publisher-service">Publisher Service</h1>
 <p>The <code>PublisherService</code> fetches information about publishers and their releases on Skoob.</p>
 <h2 id="example">Example</h2>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pyskoob</span><span class="w"> </span><span class="kn">import</span> <span class="n">SkoobClient</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pyskoob</span><span class="w"> </span><span class="kn">import</span> <span class="n">SkoobClient</span>
 
 <span class="k">with</span> <span class="n">SkoobClient</span><span class="p">()</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
     <span class="n">publisher</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">publishers</span><span class="o">.</span><span class="n">get_by_id</span><span class="p">(</span><span class="mi">21</span><span class="p">)</span>  <span class="c1"># replace with a real id</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">publisher</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 </code></pre></div>
-
 
 
 <div class="doc doc-object doc-module">
@@ -696,6 +961,8 @@
 
 <a id="pyskoob.publishers"></a>
     <div class="doc doc-contents first">
+
+        <p>Retrieve publisher information, books and authors from Skoob.</p>
 
 
 
@@ -713,6 +980,847 @@
 
 
 
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="pyskoob.publishers.AsyncPublisherService" class="doc doc-heading">
+            <code>AsyncPublisherService</code>
+
+
+</h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="pyskoob.internal.async_base.AsyncBaseSkoobService">AsyncBaseSkoobService</span></code></p>
+
+
+        <p>Asynchronous variant of :class:<code>PublisherService</code>.</p>
+
+
+
+
+
+
+
+              <details class="quote">
+                <summary>Source code in <code>pyskoob/publishers.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">AsyncPublisherService</span><span class="p">(</span><span class="n">AsyncBaseSkoobService</span><span class="p">):</span>  <span class="c1"># pragma: no cover - thin async wrapper</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Asynchronous variant of :class:`PublisherService`.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">AsyncHTTPClient</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">publisher_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Publisher</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieve detailed information about a publisher.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        publisher_id : int</span>
+<span class="sd">            The identifier of the publisher on Skoob.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Publisher</span>
+<span class="sd">            Structured publisher information including stats and releases.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="si">}</span><span class="s2">/editora/</span><span class="si">{</span><span class="n">publisher_id</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Fetching publisher page: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+            <span class="n">soup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_html</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">get_tag_text</span><span class="p">(</span><span class="n">safe_find</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;h2&quot;</span><span class="p">))</span> <span class="ow">or</span> <span class="n">get_tag_text</span><span class="p">(</span><span class="n">soup</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+            <span class="n">description</span> <span class="o">=</span> <span class="n">get_tag_text</span><span class="p">(</span><span class="n">safe_find</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;historico&quot;</span><span class="p">}))</span>
+            <span class="n">site_link</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="s2">&quot;Site oficial&quot;</span><span class="p">))</span>
+            <span class="n">website</span> <span class="o">=</span> <span class="n">get_tag_attr</span><span class="p">(</span><span class="n">site_link</span><span class="p">,</span> <span class="s2">&quot;href&quot;</span><span class="p">)</span>
+            <span class="n">stats</span> <span class="o">=</span> <span class="n">parse_stats</span><span class="p">(</span><span class="n">safe_find</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;vt_estatisticas&quot;</span><span class="p">}))</span>
+            <span class="n">releases_div</span> <span class="o">=</span> <span class="n">safe_find</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;livros_lancamentos&quot;</span><span class="p">})</span>
+            <span class="n">releases</span> <span class="o">=</span> <span class="p">[</span><span class="n">parse_book</span><span class="p">(</span><span class="n">div</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">)</span> <span class="k">for</span> <span class="n">div</span> <span class="ow">in</span> <span class="n">safe_find_all</span><span class="p">(</span><span class="n">releases_div</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;livro-capa-mini&quot;</span><span class="p">})]</span>
+            <span class="k">return</span> <span class="n">Publisher</span><span class="p">(</span>
+                <span class="nb">id</span><span class="o">=</span><span class="n">publisher_id</span><span class="p">,</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+                <span class="n">website</span><span class="o">=</span><span class="n">website</span><span class="p">,</span>
+                <span class="n">stats</span><span class="o">=</span><span class="n">stats</span><span class="p">,</span>
+                <span class="n">last_releases</span><span class="o">=</span><span class="n">releases</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>  <span class="c1"># pragma: no cover - defensive</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Failed to parse publisher page: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ParsingError</span><span class="p">(</span><span class="s2">&quot;Failed to parse publisher page.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>  <span class="c1"># pragma: no cover - unexpected</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="s2">&quot;An unexpected error occurred while parsing publisher page: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">exc</span><span class="p">,</span>
+                <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ParsingError</span><span class="p">(</span><span class="s2">&quot;An unexpected error occurred while parsing publisher page.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_authors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">publisher_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">page</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Pagination</span><span class="p">[</span><span class="n">PublisherAuthor</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieve authors associated with a publisher.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        publisher_id : int</span>
+<span class="sd">            The identifier of the publisher on Skoob.</span>
+<span class="sd">        page : int, optional</span>
+<span class="sd">            Pagination page, by default ``1``.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Pagination[PublisherAuthor]</span>
+<span class="sd">            Paginated list of authors published by the publisher.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="si">}</span><span class="s2">/editora/autores/</span><span class="si">{</span><span class="n">publisher_id</span><span class="si">}</span><span class="s2">/mpage:</span><span class="si">{</span><span class="n">page</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Fetching publisher authors: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+            <span class="n">soup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_html</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+            <span class="n">authors</span> <span class="o">=</span> <span class="p">[</span><span class="n">parse_author</span><span class="p">(</span><span class="n">div</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">)</span> <span class="k">for</span> <span class="n">div</span> <span class="ow">in</span> <span class="n">safe_find_all</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;box_autor&quot;</span><span class="p">})]</span>
+            <span class="n">next_page</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">safe_find</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;proximo&quot;</span><span class="p">}))</span>
+            <span class="k">return</span> <span class="n">Pagination</span><span class="p">(</span>
+                <span class="n">results</span><span class="o">=</span><span class="n">authors</span><span class="p">,</span>
+                <span class="n">limit</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">authors</span><span class="p">),</span>
+                <span class="n">page</span><span class="o">=</span><span class="n">page</span><span class="p">,</span>
+                <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">authors</span><span class="p">),</span>
+                <span class="n">has_next_page</span><span class="o">=</span><span class="n">next_page</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>  <span class="c1"># pragma: no cover - defensive</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Failed to parse publisher authors: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ParsingError</span><span class="p">(</span><span class="s2">&quot;Failed to parse publisher authors.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>  <span class="c1"># pragma: no cover - unexpected</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="s2">&quot;An unexpected error occurred while parsing publisher authors: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">exc</span><span class="p">,</span>
+                <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ParsingError</span><span class="p">(</span><span class="s2">&quot;An unexpected error occurred while parsing publisher authors.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_books</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">publisher_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">page</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Pagination</span><span class="p">[</span><span class="n">PublisherItem</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieve books published by a given publisher.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        publisher_id : int</span>
+<span class="sd">            The identifier of the publisher on Skoob.</span>
+<span class="sd">        page : int, optional</span>
+<span class="sd">            Pagination page, by default ``1``.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Pagination[PublisherItem]</span>
+<span class="sd">            Paginated list of books released by the publisher.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="si">}</span><span class="s2">/editora/livros/</span><span class="si">{</span><span class="n">publisher_id</span><span class="si">}</span><span class="s2">/mpage:</span><span class="si">{</span><span class="n">page</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Fetching publisher books: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+            <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+            <span class="n">soup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_html</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+            <span class="n">books</span> <span class="o">=</span> <span class="p">[</span><span class="n">parse_book</span><span class="p">(</span><span class="n">div</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">)</span> <span class="k">for</span> <span class="n">div</span> <span class="ow">in</span> <span class="n">safe_find_all</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;box_livro&quot;</span><span class="p">})]</span>
+            <span class="n">next_page</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">safe_find</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;proximo&quot;</span><span class="p">}))</span>
+            <span class="k">return</span> <span class="n">Pagination</span><span class="p">(</span>
+                <span class="n">results</span><span class="o">=</span><span class="n">books</span><span class="p">,</span>
+                <span class="n">limit</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">books</span><span class="p">),</span>
+                <span class="n">page</span><span class="o">=</span><span class="n">page</span><span class="p">,</span>
+                <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">books</span><span class="p">),</span>
+                <span class="n">has_next_page</span><span class="o">=</span><span class="n">next_page</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>  <span class="c1"># pragma: no cover - defensive</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Failed to parse publisher books: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ParsingError</span><span class="p">(</span><span class="s2">&quot;Failed to parse publisher books.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>  <span class="c1"># pragma: no cover - unexpected</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="s2">&quot;An unexpected error occurred while parsing publisher books: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">exc</span><span class="p">,</span>
+                <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ParsingError</span><span class="p">(</span><span class="s2">&quot;An unexpected error occurred while parsing publisher books.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pyskoob.publishers.AsyncPublisherService.get_authors" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_authors</span><span class="p">(</span><span class="n">publisher_id</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Retrieve authors associated with a publisher.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>publisher_id</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The identifier of the publisher on Skoob.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>page</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Pagination page, by default <code>1</code>.</p>
+              </div>
+            </td>
+            <td>
+                  <code>1</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="pyskoob.models.pagination.Pagination">Pagination</span>[<span title="pyskoob.models.publisher.PublisherAuthor">PublisherAuthor</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Paginated list of authors published by the publisher.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>pyskoob/publishers.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_authors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">publisher_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">page</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Pagination</span><span class="p">[</span><span class="n">PublisherAuthor</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Retrieve authors associated with a publisher.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    publisher_id : int</span>
+<span class="sd">        The identifier of the publisher on Skoob.</span>
+<span class="sd">    page : int, optional</span>
+<span class="sd">        Pagination page, by default ``1``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Pagination[PublisherAuthor]</span>
+<span class="sd">        Paginated list of authors published by the publisher.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="si">}</span><span class="s2">/editora/autores/</span><span class="si">{</span><span class="n">publisher_id</span><span class="si">}</span><span class="s2">/mpage:</span><span class="si">{</span><span class="n">page</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Fetching publisher authors: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="n">soup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_html</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+        <span class="n">authors</span> <span class="o">=</span> <span class="p">[</span><span class="n">parse_author</span><span class="p">(</span><span class="n">div</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">)</span> <span class="k">for</span> <span class="n">div</span> <span class="ow">in</span> <span class="n">safe_find_all</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;box_autor&quot;</span><span class="p">})]</span>
+        <span class="n">next_page</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">safe_find</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;proximo&quot;</span><span class="p">}))</span>
+        <span class="k">return</span> <span class="n">Pagination</span><span class="p">(</span>
+            <span class="n">results</span><span class="o">=</span><span class="n">authors</span><span class="p">,</span>
+            <span class="n">limit</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">authors</span><span class="p">),</span>
+            <span class="n">page</span><span class="o">=</span><span class="n">page</span><span class="p">,</span>
+            <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">authors</span><span class="p">),</span>
+            <span class="n">has_next_page</span><span class="o">=</span><span class="n">next_page</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>  <span class="c1"># pragma: no cover - defensive</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Failed to parse publisher authors: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">ParsingError</span><span class="p">(</span><span class="s2">&quot;Failed to parse publisher authors.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>  <span class="c1"># pragma: no cover - unexpected</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="s2">&quot;An unexpected error occurred while parsing publisher authors: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">exc</span><span class="p">,</span>
+            <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">raise</span> <span class="n">ParsingError</span><span class="p">(</span><span class="s2">&quot;An unexpected error occurred while parsing publisher authors.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pyskoob.publishers.AsyncPublisherService.get_books" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_books</span><span class="p">(</span><span class="n">publisher_id</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Retrieve books published by a given publisher.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>publisher_id</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The identifier of the publisher on Skoob.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>page</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Pagination page, by default <code>1</code>.</p>
+              </div>
+            </td>
+            <td>
+                  <code>1</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="pyskoob.models.pagination.Pagination">Pagination</span>[<span title="pyskoob.models.publisher.PublisherItem">PublisherItem</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Paginated list of books released by the publisher.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>pyskoob/publishers.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_books</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">publisher_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">page</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Pagination</span><span class="p">[</span><span class="n">PublisherItem</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Retrieve books published by a given publisher.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    publisher_id : int</span>
+<span class="sd">        The identifier of the publisher on Skoob.</span>
+<span class="sd">    page : int, optional</span>
+<span class="sd">        Pagination page, by default ``1``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Pagination[PublisherItem]</span>
+<span class="sd">        Paginated list of books released by the publisher.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="si">}</span><span class="s2">/editora/livros/</span><span class="si">{</span><span class="n">publisher_id</span><span class="si">}</span><span class="s2">/mpage:</span><span class="si">{</span><span class="n">page</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Fetching publisher books: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="n">soup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_html</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+        <span class="n">books</span> <span class="o">=</span> <span class="p">[</span><span class="n">parse_book</span><span class="p">(</span><span class="n">div</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">)</span> <span class="k">for</span> <span class="n">div</span> <span class="ow">in</span> <span class="n">safe_find_all</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;box_livro&quot;</span><span class="p">})]</span>
+        <span class="n">next_page</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">safe_find</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;proximo&quot;</span><span class="p">}))</span>
+        <span class="k">return</span> <span class="n">Pagination</span><span class="p">(</span>
+            <span class="n">results</span><span class="o">=</span><span class="n">books</span><span class="p">,</span>
+            <span class="n">limit</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">books</span><span class="p">),</span>
+            <span class="n">page</span><span class="o">=</span><span class="n">page</span><span class="p">,</span>
+            <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">books</span><span class="p">),</span>
+            <span class="n">has_next_page</span><span class="o">=</span><span class="n">next_page</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>  <span class="c1"># pragma: no cover - defensive</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Failed to parse publisher books: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">ParsingError</span><span class="p">(</span><span class="s2">&quot;Failed to parse publisher books.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>  <span class="c1"># pragma: no cover - unexpected</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="s2">&quot;An unexpected error occurred while parsing publisher books: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">exc</span><span class="p">,</span>
+            <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">raise</span> <span class="n">ParsingError</span><span class="p">(</span><span class="s2">&quot;An unexpected error occurred while parsing publisher books.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pyskoob.publishers.AsyncPublisherService.get_by_id" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">get_by_id</span><span class="p">(</span><span class="n">publisher_id</span><span class="p">)</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Retrieve detailed information about a publisher.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>publisher_id</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The identifier of the publisher on Skoob.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="pyskoob.models.publisher.Publisher">Publisher</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Structured publisher information including stats and releases.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="quote">
+              <summary>Source code in <code>pyskoob/publishers.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">publisher_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Publisher</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Retrieve detailed information about a publisher.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    publisher_id : int</span>
+<span class="sd">        The identifier of the publisher on Skoob.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Publisher</span>
+<span class="sd">        Structured publisher information including stats and releases.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="si">}</span><span class="s2">/editora/</span><span class="si">{</span><span class="n">publisher_id</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Fetching publisher page: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="n">soup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_html</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">get_tag_text</span><span class="p">(</span><span class="n">safe_find</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;h2&quot;</span><span class="p">))</span> <span class="ow">or</span> <span class="n">get_tag_text</span><span class="p">(</span><span class="n">soup</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+        <span class="n">description</span> <span class="o">=</span> <span class="n">get_tag_text</span><span class="p">(</span><span class="n">safe_find</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;historico&quot;</span><span class="p">}))</span>
+        <span class="n">site_link</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="s2">&quot;Site oficial&quot;</span><span class="p">))</span>
+        <span class="n">website</span> <span class="o">=</span> <span class="n">get_tag_attr</span><span class="p">(</span><span class="n">site_link</span><span class="p">,</span> <span class="s2">&quot;href&quot;</span><span class="p">)</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="n">parse_stats</span><span class="p">(</span><span class="n">safe_find</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;vt_estatisticas&quot;</span><span class="p">}))</span>
+        <span class="n">releases_div</span> <span class="o">=</span> <span class="n">safe_find</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;livros_lancamentos&quot;</span><span class="p">})</span>
+        <span class="n">releases</span> <span class="o">=</span> <span class="p">[</span><span class="n">parse_book</span><span class="p">(</span><span class="n">div</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">)</span> <span class="k">for</span> <span class="n">div</span> <span class="ow">in</span> <span class="n">safe_find_all</span><span class="p">(</span><span class="n">releases_div</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;livro-capa-mini&quot;</span><span class="p">})]</span>
+        <span class="k">return</span> <span class="n">Publisher</span><span class="p">(</span>
+            <span class="nb">id</span><span class="o">=</span><span class="n">publisher_id</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+            <span class="n">website</span><span class="o">=</span><span class="n">website</span><span class="p">,</span>
+            <span class="n">stats</span><span class="o">=</span><span class="n">stats</span><span class="p">,</span>
+            <span class="n">last_releases</span><span class="o">=</span><span class="n">releases</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>  <span class="c1"># pragma: no cover - defensive</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Failed to parse publisher page: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">ParsingError</span><span class="p">(</span><span class="s2">&quot;Failed to parse publisher page.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>  <span class="c1"># pragma: no cover - unexpected</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="s2">&quot;An unexpected error occurred while parsing publisher page: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">exc</span><span class="p">,</span>
+            <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">raise</span> <span class="n">ParsingError</span><span class="p">(</span><span class="s2">&quot;An unexpected error occurred while parsing publisher page.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
 
 <div class="doc doc-object doc-class">
 
@@ -740,11 +1848,7 @@
 
               <details class="quote">
                 <summary>Source code in <code>pyskoob/publishers.py</code></summary>
-                <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 25</span>
-<span class="normal"> 26</span>
-<span class="normal"> 27</span>
-<span class="normal"> 28</span>
-<span class="normal"> 29</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 29</span>
 <span class="normal"> 30</span>
 <span class="normal"> 31</span>
 <span class="normal"> 32</span>
@@ -903,59 +2007,7 @@
 <span class="normal">185</span>
 <span class="normal">186</span>
 <span class="normal">187</span>
-<span class="normal">188</span>
-<span class="normal">189</span>
-<span class="normal">190</span>
-<span class="normal">191</span>
-<span class="normal">192</span>
-<span class="normal">193</span>
-<span class="normal">194</span>
-<span class="normal">195</span>
-<span class="normal">196</span>
-<span class="normal">197</span>
-<span class="normal">198</span>
-<span class="normal">199</span>
-<span class="normal">200</span>
-<span class="normal">201</span>
-<span class="normal">202</span>
-<span class="normal">203</span>
-<span class="normal">204</span>
-<span class="normal">205</span>
-<span class="normal">206</span>
-<span class="normal">207</span>
-<span class="normal">208</span>
-<span class="normal">209</span>
-<span class="normal">210</span>
-<span class="normal">211</span>
-<span class="normal">212</span>
-<span class="normal">213</span>
-<span class="normal">214</span>
-<span class="normal">215</span>
-<span class="normal">216</span>
-<span class="normal">217</span>
-<span class="normal">218</span>
-<span class="normal">219</span>
-<span class="normal">220</span>
-<span class="normal">221</span>
-<span class="normal">222</span>
-<span class="normal">223</span>
-<span class="normal">224</span>
-<span class="normal">225</span>
-<span class="normal">226</span>
-<span class="normal">227</span>
-<span class="normal">228</span>
-<span class="normal">229</span>
-<span class="normal">230</span>
-<span class="normal">231</span>
-<span class="normal">232</span>
-<span class="normal">233</span>
-<span class="normal">234</span>
-<span class="normal">235</span>
-<span class="normal">236</span>
-<span class="normal">237</span>
-<span class="normal">238</span>
-<span class="normal">239</span>
-<span class="normal">240</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">PublisherService</span><span class="p">(</span><span class="n">BaseSkoobService</span><span class="p">):</span>
+<span class="normal">188</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">PublisherService</span><span class="p">(</span><span class="n">BaseSkoobService</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;High level operations for retrieving publishers.&quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">get_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">publisher_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Publisher</span><span class="p">:</span>
@@ -992,9 +2044,9 @@
             <span class="n">description</span> <span class="o">=</span> <span class="n">get_tag_text</span><span class="p">(</span><span class="n">safe_find</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;historico&quot;</span><span class="p">}))</span>
             <span class="n">site_link</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="s2">&quot;Site oficial&quot;</span><span class="p">))</span>
             <span class="n">website</span> <span class="o">=</span> <span class="n">get_tag_attr</span><span class="p">(</span><span class="n">site_link</span><span class="p">,</span> <span class="s2">&quot;href&quot;</span><span class="p">)</span>
-            <span class="n">stats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_stats</span><span class="p">(</span><span class="n">safe_find</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;vt_estatisticas&quot;</span><span class="p">}))</span>
+            <span class="n">stats</span> <span class="o">=</span> <span class="n">parse_stats</span><span class="p">(</span><span class="n">safe_find</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;vt_estatisticas&quot;</span><span class="p">}))</span>
             <span class="n">releases_div</span> <span class="o">=</span> <span class="n">safe_find</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;livros_lancamentos&quot;</span><span class="p">})</span>
-            <span class="n">releases</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_parse_book</span><span class="p">(</span><span class="n">div</span><span class="p">)</span> <span class="k">for</span> <span class="n">div</span> <span class="ow">in</span> <span class="n">safe_find_all</span><span class="p">(</span><span class="n">releases_div</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;livro-capa-mini&quot;</span><span class="p">})]</span>
+            <span class="n">releases</span> <span class="o">=</span> <span class="p">[</span><span class="n">parse_book</span><span class="p">(</span><span class="n">div</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">)</span> <span class="k">for</span> <span class="n">div</span> <span class="ow">in</span> <span class="n">safe_find_all</span><span class="p">(</span><span class="n">releases_div</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;livro-capa-mini&quot;</span><span class="p">})]</span>
             <span class="k">return</span> <span class="n">Publisher</span><span class="p">(</span>
                 <span class="nb">id</span><span class="o">=</span><span class="n">publisher_id</span><span class="p">,</span>
                 <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
@@ -1003,7 +2055,7 @@
                 <span class="n">stats</span><span class="o">=</span><span class="n">stats</span><span class="p">,</span>
                 <span class="n">last_releases</span><span class="o">=</span><span class="n">releases</span><span class="p">,</span>
             <span class="p">)</span>
-        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>  <span class="c1"># pragma: no cover - defensive</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Failed to parse publisher page: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">raise</span> <span class="n">ParsingError</span><span class="p">(</span><span class="s2">&quot;Failed to parse publisher page.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>  <span class="c1"># pragma: no cover - unexpected</span>
@@ -1045,7 +2097,7 @@
             <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
             <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
             <span class="n">soup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_html</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-            <span class="n">authors</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_parse_author</span><span class="p">(</span><span class="n">div</span><span class="p">)</span> <span class="k">for</span> <span class="n">div</span> <span class="ow">in</span> <span class="n">safe_find_all</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;box_autor&quot;</span><span class="p">})]</span>
+            <span class="n">authors</span> <span class="o">=</span> <span class="p">[</span><span class="n">parse_author</span><span class="p">(</span><span class="n">div</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">)</span> <span class="k">for</span> <span class="n">div</span> <span class="ow">in</span> <span class="n">safe_find_all</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;box_autor&quot;</span><span class="p">})]</span>
             <span class="n">next_page</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">safe_find</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;proximo&quot;</span><span class="p">}))</span>
             <span class="k">return</span> <span class="n">Pagination</span><span class="p">(</span>
                 <span class="n">results</span><span class="o">=</span><span class="n">authors</span><span class="p">,</span>
@@ -1054,7 +2106,7 @@
                 <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">authors</span><span class="p">),</span>
                 <span class="n">has_next_page</span><span class="o">=</span><span class="n">next_page</span><span class="p">,</span>
             <span class="p">)</span>
-        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>  <span class="c1"># pragma: no cover - defensive</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Failed to parse publisher authors: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">raise</span> <span class="n">ParsingError</span><span class="p">(</span><span class="s2">&quot;Failed to parse publisher authors.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>  <span class="c1"># pragma: no cover - unexpected</span>
@@ -1096,7 +2148,7 @@
             <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
             <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
             <span class="n">soup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_html</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-            <span class="n">books</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_parse_book</span><span class="p">(</span><span class="n">div</span><span class="p">)</span> <span class="k">for</span> <span class="n">div</span> <span class="ow">in</span> <span class="n">safe_find_all</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;box_livro&quot;</span><span class="p">})]</span>
+            <span class="n">books</span> <span class="o">=</span> <span class="p">[</span><span class="n">parse_book</span><span class="p">(</span><span class="n">div</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">)</span> <span class="k">for</span> <span class="n">div</span> <span class="ow">in</span> <span class="n">safe_find_all</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;box_livro&quot;</span><span class="p">})]</span>
             <span class="n">next_page</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">safe_find</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;proximo&quot;</span><span class="p">}))</span>
             <span class="k">return</span> <span class="n">Pagination</span><span class="p">(</span>
                 <span class="n">results</span><span class="o">=</span><span class="n">books</span><span class="p">,</span>
@@ -1105,7 +2157,7 @@
                 <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">books</span><span class="p">),</span>
                 <span class="n">has_next_page</span><span class="o">=</span><span class="n">next_page</span><span class="p">,</span>
             <span class="p">)</span>
-        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>  <span class="c1"># pragma: no cover - defensive</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Failed to parse publisher books: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">raise</span> <span class="n">ParsingError</span><span class="p">(</span><span class="s2">&quot;Failed to parse publisher books.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>  <span class="c1"># pragma: no cover - unexpected</span>
@@ -1115,62 +2167,6 @@
                 <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="k">raise</span> <span class="n">ParsingError</span><span class="p">(</span><span class="s2">&quot;An unexpected error occurred while parsing publisher books.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
-
-    <span class="c1"># Helpers</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">div</span><span class="p">:</span> <span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PublisherStats</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">div</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">PublisherStats</span><span class="p">()</span>
-        <span class="n">followers</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">avg</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">ratings</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">male</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">female</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">seg_span</span> <span class="o">=</span> <span class="n">div</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;span&quot;</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="k">lambda</span> <span class="n">text</span><span class="p">:</span> <span class="nb">bool</span><span class="p">(</span><span class="n">text</span> <span class="ow">and</span> <span class="s2">&quot;Seguidor&quot;</span> <span class="ow">in</span> <span class="n">text</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">seg_span</span><span class="p">:</span>
-            <span class="n">followers_text</span> <span class="o">=</span> <span class="n">get_tag_text</span><span class="p">(</span><span class="n">seg_span</span><span class="o">.</span><span class="n">find_next</span><span class="p">(</span><span class="s2">&quot;span&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
-            <span class="n">followers</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">followers_text</span><span class="p">)</span> <span class="k">if</span> <span class="n">followers_text</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="k">else</span> <span class="kc">None</span>
-        <span class="n">aval_span</span> <span class="o">=</span> <span class="n">div</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;span&quot;</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="k">lambda</span> <span class="n">text</span><span class="p">:</span> <span class="nb">bool</span><span class="p">(</span><span class="n">text</span> <span class="ow">and</span> <span class="s2">&quot;Avalia&quot;</span> <span class="ow">in</span> <span class="n">text</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">aval_span</span><span class="p">:</span>
-            <span class="n">rating_info</span> <span class="o">=</span> <span class="n">get_tag_text</span><span class="p">(</span><span class="n">aval_span</span><span class="o">.</span><span class="n">find_next</span><span class="p">(</span><span class="s2">&quot;span&quot;</span><span class="p">))</span>
-            <span class="k">if</span> <span class="s2">&quot;/&quot;</span> <span class="ow">in</span> <span class="n">rating_info</span><span class="p">:</span>
-                <span class="n">rating_part</span><span class="p">,</span> <span class="n">total_part</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">rating_info</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">))</span>
-                <span class="n">avg</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">rating_part</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">))</span> <span class="k">if</span> <span class="n">rating_part</span> <span class="k">else</span> <span class="kc">None</span>
-                <span class="n">clean_total</span> <span class="o">=</span> <span class="n">total_part</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
-                <span class="n">ratings</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">clean_total</span><span class="p">)</span> <span class="k">if</span> <span class="n">clean_total</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="k">else</span> <span class="kc">None</span>
-        <span class="n">male_icon</span> <span class="o">=</span> <span class="n">div</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;i&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;icon-male&quot;</span><span class="p">})</span>
-        <span class="k">if</span> <span class="n">male_icon</span><span class="p">:</span>
-            <span class="n">male_text</span> <span class="o">=</span> <span class="n">get_tag_text</span><span class="p">(</span><span class="n">male_icon</span><span class="o">.</span><span class="n">find_next</span><span class="p">(</span><span class="s2">&quot;span&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;%&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
-            <span class="n">male</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">male_text</span><span class="p">)</span> <span class="k">if</span> <span class="n">male_text</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="k">else</span> <span class="kc">None</span>
-        <span class="n">female_icon</span> <span class="o">=</span> <span class="n">div</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;i&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;icon-female&quot;</span><span class="p">})</span>
-        <span class="k">if</span> <span class="n">female_icon</span><span class="p">:</span>
-            <span class="n">female_text</span> <span class="o">=</span> <span class="n">get_tag_text</span><span class="p">(</span><span class="n">female_icon</span><span class="o">.</span><span class="n">find_next</span><span class="p">(</span><span class="s2">&quot;span&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;%&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
-            <span class="n">female</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">female_text</span><span class="p">)</span> <span class="k">if</span> <span class="n">female_text</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="k">else</span> <span class="kc">None</span>
-        <span class="k">return</span> <span class="n">PublisherStats</span><span class="p">(</span>
-            <span class="n">followers</span><span class="o">=</span><span class="n">followers</span><span class="p">,</span>
-            <span class="n">average_rating</span><span class="o">=</span><span class="n">avg</span><span class="p">,</span>
-            <span class="n">ratings</span><span class="o">=</span><span class="n">ratings</span><span class="p">,</span>
-            <span class="n">male_percentage</span><span class="o">=</span><span class="n">male</span><span class="p">,</span>
-            <span class="n">female_percentage</span><span class="o">=</span><span class="n">female</span><span class="p">,</span>
-        <span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_book</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">div</span><span class="p">:</span> <span class="n">Tag</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PublisherItem</span><span class="p">:</span>
-        <span class="n">anchor</span> <span class="o">=</span> <span class="n">safe_find</span><span class="p">(</span><span class="n">div</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>
-        <span class="n">img_tag</span> <span class="o">=</span> <span class="n">safe_find</span><span class="p">(</span><span class="n">anchor</span><span class="p">,</span> <span class="s2">&quot;img&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">PublisherItem</span><span class="p">(</span>
-            <span class="n">url</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="si">}{</span><span class="n">get_tag_attr</span><span class="p">(</span><span class="n">anchor</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;href&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-            <span class="n">title</span><span class="o">=</span><span class="n">get_tag_attr</span><span class="p">(</span><span class="n">anchor</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">),</span>
-            <span class="n">img_url</span><span class="o">=</span><span class="n">get_tag_attr</span><span class="p">(</span><span class="n">img_tag</span><span class="p">,</span> <span class="s2">&quot;src&quot;</span><span class="p">),</span>
-        <span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_parse_author</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">div</span><span class="p">:</span> <span class="n">Tag</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PublisherAuthor</span><span class="p">:</span>
-        <span class="n">anchor</span> <span class="o">=</span> <span class="n">safe_find</span><span class="p">(</span><span class="n">div</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span>
-        <span class="n">name_tag</span> <span class="o">=</span> <span class="n">safe_find</span><span class="p">(</span><span class="n">div</span><span class="p">,</span> <span class="s2">&quot;h3&quot;</span><span class="p">)</span>
-        <span class="n">img_tag</span> <span class="o">=</span> <span class="n">safe_find</span><span class="p">(</span><span class="n">anchor</span><span class="p">,</span> <span class="s2">&quot;img&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">PublisherAuthor</span><span class="p">(</span>
-            <span class="n">url</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="si">}{</span><span class="n">get_tag_attr</span><span class="p">(</span><span class="n">anchor</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;href&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-            <span class="n">name</span><span class="o">=</span><span class="n">get_tag_text</span><span class="p">(</span><span class="n">name_tag</span><span class="p">),</span>
-            <span class="n">img_url</span><span class="o">=</span><span class="n">get_tag_attr</span><span class="p">(</span><span class="n">img_tag</span><span class="p">,</span> <span class="s2">&quot;src&quot;</span><span class="p">),</span>
-        <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
               </details>
 
@@ -1190,7 +2186,7 @@
 
 
 <h3 id="pyskoob.publishers.PublisherService.get_authors" class="doc doc-heading">
-            <code class=" language-python"><span class="n">get_authors</span><span class="p">(</span><span class="n">publisher_id</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">get_authors</span><span class="p">(</span><span class="n">publisher_id</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></code>
 
 </h3>
 
@@ -1294,18 +2290,14 @@
 
 
 <p><span class="doc-section-title">Examples:</span></p>
-    <div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">service</span><span class="o">.</span><span class="n">get_authors</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">service</span><span class="o">.</span><span class="n">get_authors</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
 <span class="go">&#39;Autor Exemplo&#39;</span>
 </code></pre></div>
 
 
             <details class="quote">
               <summary>Source code in <code>pyskoob/publishers.py</code></summary>
-              <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 84</span>
-<span class="normal"> 85</span>
-<span class="normal"> 86</span>
-<span class="normal"> 87</span>
-<span class="normal"> 88</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 88</span>
 <span class="normal"> 89</span>
 <span class="normal"> 90</span>
 <span class="normal"> 91</span>
@@ -1350,7 +2342,11 @@
 <span class="normal">130</span>
 <span class="normal">131</span>
 <span class="normal">132</span>
-<span class="normal">133</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_authors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">publisher_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">page</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Pagination</span><span class="p">[</span><span class="n">PublisherAuthor</span><span class="p">]:</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_authors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">publisher_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">page</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Pagination</span><span class="p">[</span><span class="n">PublisherAuthor</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Retrieve authors associated with a publisher.</span>
 
 <span class="sd">    Parameters</span>
@@ -1381,7 +2377,7 @@
         <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
         <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
         <span class="n">soup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_html</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-        <span class="n">authors</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_parse_author</span><span class="p">(</span><span class="n">div</span><span class="p">)</span> <span class="k">for</span> <span class="n">div</span> <span class="ow">in</span> <span class="n">safe_find_all</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;box_autor&quot;</span><span class="p">})]</span>
+        <span class="n">authors</span> <span class="o">=</span> <span class="p">[</span><span class="n">parse_author</span><span class="p">(</span><span class="n">div</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">)</span> <span class="k">for</span> <span class="n">div</span> <span class="ow">in</span> <span class="n">safe_find_all</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;box_autor&quot;</span><span class="p">})]</span>
         <span class="n">next_page</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">safe_find</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;proximo&quot;</span><span class="p">}))</span>
         <span class="k">return</span> <span class="n">Pagination</span><span class="p">(</span>
             <span class="n">results</span><span class="o">=</span><span class="n">authors</span><span class="p">,</span>
@@ -1390,7 +2386,7 @@
             <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">authors</span><span class="p">),</span>
             <span class="n">has_next_page</span><span class="o">=</span><span class="n">next_page</span><span class="p">,</span>
         <span class="p">)</span>
-    <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>  <span class="c1"># pragma: no cover - defensive</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Failed to parse publisher authors: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">raise</span> <span class="n">ParsingError</span><span class="p">(</span><span class="s2">&quot;Failed to parse publisher authors.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>  <span class="c1"># pragma: no cover - unexpected</span>
@@ -1410,7 +2406,7 @@
 
 
 <h3 id="pyskoob.publishers.PublisherService.get_books" class="doc doc-heading">
-            <code class=" language-python"><span class="n">get_books</span><span class="p">(</span><span class="n">publisher_id</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">get_books</span><span class="p">(</span><span class="n">publisher_id</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></code>
 
 </h3>
 
@@ -1514,18 +2510,14 @@
 
 
 <p><span class="doc-section-title">Examples:</span></p>
-    <div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">service</span><span class="o">.</span><span class="n">get_books</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">title</span>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">service</span><span class="o">.</span><span class="n">get_books</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">title</span>
 <span class="go">&#39;Livro Exemplo&#39;</span>
 </code></pre></div>
 
 
             <details class="quote">
               <summary>Source code in <code>pyskoob/publishers.py</code></summary>
-              <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">135</span>
-<span class="normal">136</span>
-<span class="normal">137</span>
-<span class="normal">138</span>
-<span class="normal">139</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">139</span>
 <span class="normal">140</span>
 <span class="normal">141</span>
 <span class="normal">142</span>
@@ -1570,7 +2562,11 @@
 <span class="normal">181</span>
 <span class="normal">182</span>
 <span class="normal">183</span>
-<span class="normal">184</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_books</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">publisher_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">page</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Pagination</span><span class="p">[</span><span class="n">PublisherItem</span><span class="p">]:</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_books</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">publisher_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">page</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Pagination</span><span class="p">[</span><span class="n">PublisherItem</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Retrieve books published by the publisher.</span>
 
 <span class="sd">    Parameters</span>
@@ -1601,7 +2597,7 @@
         <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
         <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
         <span class="n">soup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_html</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-        <span class="n">books</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_parse_book</span><span class="p">(</span><span class="n">div</span><span class="p">)</span> <span class="k">for</span> <span class="n">div</span> <span class="ow">in</span> <span class="n">safe_find_all</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;box_livro&quot;</span><span class="p">})]</span>
+        <span class="n">books</span> <span class="o">=</span> <span class="p">[</span><span class="n">parse_book</span><span class="p">(</span><span class="n">div</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">)</span> <span class="k">for</span> <span class="n">div</span> <span class="ow">in</span> <span class="n">safe_find_all</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;box_livro&quot;</span><span class="p">})]</span>
         <span class="n">next_page</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">safe_find</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;proximo&quot;</span><span class="p">}))</span>
         <span class="k">return</span> <span class="n">Pagination</span><span class="p">(</span>
             <span class="n">results</span><span class="o">=</span><span class="n">books</span><span class="p">,</span>
@@ -1610,7 +2606,7 @@
             <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">books</span><span class="p">),</span>
             <span class="n">has_next_page</span><span class="o">=</span><span class="n">next_page</span><span class="p">,</span>
         <span class="p">)</span>
-    <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>  <span class="c1"># pragma: no cover - defensive</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Failed to parse publisher books: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">raise</span> <span class="n">ParsingError</span><span class="p">(</span><span class="s2">&quot;Failed to parse publisher books.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>  <span class="c1"># pragma: no cover - unexpected</span>
@@ -1630,7 +2626,7 @@
 
 
 <h3 id="pyskoob.publishers.PublisherService.get_by_id" class="doc doc-heading">
-            <code class=" language-python"><span class="n">get_by_id</span><span class="p">(</span><span class="n">publisher_id</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">get_by_id</span><span class="p">(</span><span class="n">publisher_id</span><span class="p">)</span></code>
 
 </h3>
 
@@ -1719,18 +2715,14 @@ statistics and recently released books.</p>
 
 
 <p><span class="doc-section-title">Examples:</span></p>
-    <div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">service</span><span class="o">.</span><span class="n">get_by_id</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">service</span><span class="o">.</span><span class="n">get_by_id</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
 <span class="go">&#39;Editora Exemplo&#39;</span>
 </code></pre></div>
 
 
             <details class="quote">
               <summary>Source code in <code>pyskoob/publishers.py</code></summary>
-              <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">32</span>
 <span class="normal">33</span>
 <span class="normal">34</span>
 <span class="normal">35</span>
@@ -1780,7 +2772,11 @@ statistics and recently released books.</p>
 <span class="normal">79</span>
 <span class="normal">80</span>
 <span class="normal">81</span>
-<span class="normal">82</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">publisher_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Publisher</span><span class="p">:</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">publisher_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Publisher</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Retrieve detailed information about a publisher.</span>
 
 <span class="sd">    Parameters</span>
@@ -1814,9 +2810,9 @@ statistics and recently released books.</p>
         <span class="n">description</span> <span class="o">=</span> <span class="n">get_tag_text</span><span class="p">(</span><span class="n">safe_find</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;historico&quot;</span><span class="p">}))</span>
         <span class="n">site_link</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="s2">&quot;Site oficial&quot;</span><span class="p">))</span>
         <span class="n">website</span> <span class="o">=</span> <span class="n">get_tag_attr</span><span class="p">(</span><span class="n">site_link</span><span class="p">,</span> <span class="s2">&quot;href&quot;</span><span class="p">)</span>
-        <span class="n">stats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_stats</span><span class="p">(</span><span class="n">safe_find</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;vt_estatisticas&quot;</span><span class="p">}))</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="n">parse_stats</span><span class="p">(</span><span class="n">safe_find</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;vt_estatisticas&quot;</span><span class="p">}))</span>
         <span class="n">releases_div</span> <span class="o">=</span> <span class="n">safe_find</span><span class="p">(</span><span class="n">soup</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;livros_lancamentos&quot;</span><span class="p">})</span>
-        <span class="n">releases</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_parse_book</span><span class="p">(</span><span class="n">div</span><span class="p">)</span> <span class="k">for</span> <span class="n">div</span> <span class="ow">in</span> <span class="n">safe_find_all</span><span class="p">(</span><span class="n">releases_div</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;livro-capa-mini&quot;</span><span class="p">})]</span>
+        <span class="n">releases</span> <span class="o">=</span> <span class="p">[</span><span class="n">parse_book</span><span class="p">(</span><span class="n">div</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">)</span> <span class="k">for</span> <span class="n">div</span> <span class="ow">in</span> <span class="n">safe_find_all</span><span class="p">(</span><span class="n">releases_div</span><span class="p">,</span> <span class="s2">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;livro-capa-mini&quot;</span><span class="p">})]</span>
         <span class="k">return</span> <span class="n">Publisher</span><span class="p">(</span>
             <span class="nb">id</span><span class="o">=</span><span class="n">publisher_id</span><span class="p">,</span>
             <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
@@ -1825,7 +2821,7 @@ statistics and recently released books.</p>
             <span class="n">stats</span><span class="o">=</span><span class="n">stats</span><span class="p">,</span>
             <span class="n">last_releases</span><span class="o">=</span><span class="n">releases</span><span class="p">,</span>
         <span class="p">)</span>
-    <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>  <span class="c1"># pragma: no cover - defensive</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Failed to parse publisher page: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">raise</span> <span class="n">ParsingError</span><span class="p">(</span><span class="s2">&quot;Failed to parse publisher page.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>  <span class="c1"># pragma: no cover - unexpected</span>
@@ -1905,7 +2901,7 @@ statistics and recently released books.</p>
     
     
       
-      <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="../assets/javascripts/bundle.50899def.min.js"></script>
