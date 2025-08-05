@@ -17,6 +17,7 @@ from .http.httpx import HttpxAsyncClient, HttpxSyncClient
 from .profile import SkoobProfileService
 from .publishers import PublisherService
 from .users import UserService
+from .utils import RateLimiter
 
 __all__ = [
     "AuthService",
@@ -30,5 +31,6 @@ __all__ = [
     "UserService",
     "models",
     "ParsingError",
+    "RateLimiter",
     "__version__",
 ]
