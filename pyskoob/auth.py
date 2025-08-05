@@ -8,6 +8,13 @@ logger = logging.getLogger(__name__)
 
 
 class AuthService(BaseSkoobService):
+    """Handle authentication with Skoob and track login state.
+
+    The service exposes login helpers and validates whether requests are
+    performed as an authenticated user. Other high-level services depend on
+    this class to ensure session-sensitive operations are authorized.
+    """
+
     def __init__(self, client: SyncHTTPClient):
         """Manage Skoob authentication and session validation.
 
