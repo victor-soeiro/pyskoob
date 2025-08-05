@@ -5,11 +5,16 @@ from conftest import DummyClient, DummyResponse, make_user
 
 from pyskoob.auth import AuthService
 from pyskoob.http.client import SyncHTTPClient
+from pyskoob.models.user import User
 
 
 def test_login_with_cookies(dummy_client: DummyClient, monkeypatch):
     service = AuthService(cast(SyncHTTPClient, dummy_client))
-    monkeypatch.setattr(service, "get_my_info", make_user)
+
+    async def make_user_async() -> User:
+        return make_user()
+
+    monkeypatch.setattr(service, "_get_my_info", make_user_async)
     user = service.login_with_cookies("tok")
     assert service._is_logged_in is True
     assert dummy_client.cookies["PHPSESSID"] == "tok"
@@ -27,7 +32,11 @@ def test_validate_login(dummy_auth: AuthService, monkeypatch):
 def test_login_success(dummy_client: DummyClient, monkeypatch):
     dummy_client.json_data = {"success": True}
     service = AuthService(cast(SyncHTTPClient, dummy_client))
-    monkeypatch.setattr(service, "get_my_info", make_user)
+
+    async def make_user_async() -> User:
+        return make_user()
+
+    monkeypatch.setattr(service, "_get_my_info", make_user_async)
     user = service.login("a@b.com", "pass")
     assert user.name == "John" and service._is_logged_in
 

@@ -1,8 +1,9 @@
 """Services for retrieving authors and their works from Skoob."""
 
 import logging
+from collections.abc import Callable
+from typing import Any
 
-from pyskoob.exceptions import ParsingError
 from pyskoob.http.client import AsyncHTTPClient
 from pyskoob.internal.async_base import AsyncBaseSkoobService
 from pyskoob.internal.base import BaseSkoobService
@@ -20,45 +21,30 @@ from pyskoob.utils.bs4_utils import (
     safe_find,
     safe_find_all,
 )
+from pyskoob.utils.sync_async import maybe_await, run_sync
 
 logger = logging.getLogger(__name__)
 
 
-class AuthorService(BaseSkoobService):
-    """High level operations for retrieving authors.
+class _AuthorServiceMixin:
+    """Shared author retrieval logic for sync and async services.
 
-    The service scrapes HTML pages from Skoob to return author search results.
+    This mixin expects the following attributes to be provided by the base
+    class:
 
-    Examples
-    --------
-    >>> service = AuthorService(None)
-    >>> service.search("john").results
-    []
+    - ``client``: HTTP client (synchronous or asynchronous)
+    - ``base_url``: Base URL for the Skoob API
+    - ``parse_html``: HTML parsing function
     """
 
-    def search(self, query: str, page: int = 1) -> Pagination[AuthorSearchResult]:
-        """Search for authors by name.
+    client: Any
+    base_url: str
+    parse_html: Callable[[str], Any]
 
-        Parameters
-        ----------
-        query : str
-            Term to look for.
-        page : int, optional
-            Page number for pagination, by default ``1``.
-
-        Returns
-        -------
-        Pagination[AuthorSearchResult]
-            Paginated list of authors matching the query.
-
-        Examples
-        --------
-        >>> service.search("john").total
-        0
-        """
+    async def _search(self, query: str, page: int = 1) -> Pagination[AuthorSearchResult]:
         url = f"{self.base_url}/autor/lista/busca:{query}/mpage:{page}"
         logger.info("Searching authors with query '%s' page %s", query, page)
-        response = self.client.get(url)
+        response = await maybe_await(self.client.get, url)
         response.raise_for_status()
         soup = self.parse_html(response.text)
 
@@ -83,60 +69,18 @@ class AuthorService(BaseSkoobService):
             has_next_page=has_next,
         )
 
-    # ------------------------------------------------------------------
-    # Author profile
-    def get_by_id(self, author_id: int) -> AuthorProfile:
-        """Retrieve detailed information about an author.
-
-        Parameters
-        ----------
-        author_id : int
-            Identifier of the author on Skoob.
-
-        Returns
-        -------
-        AuthorProfile
-            Structured profile data for the requested author.
-
-        Examples
-        --------
-        >>> service.get_by_id(1).name
-        'Some Author'
-        """
-
+    async def _get_by_id(self, author_id: int) -> AuthorProfile:
         url = f"{self.base_url}/autor/{author_id}"
         logger.info("Fetching author profile: %s", url)
-        response = self.client.get(url)
+        response = await maybe_await(self.client.get, url)
         response.raise_for_status()
         soup = self.parse_html(response.text)
         return parse_author_profile(soup, self.base_url)
 
-    # ------------------------------------------------------------------
-    # Author books
-    def get_books(self, author_id: int, page: int = 1) -> Pagination[BookSearchResult]:
-        """Retrieve books written by the author.
-
-        Parameters
-        ----------
-        author_id : int
-            The author identifier.
-        page : int, optional
-            Pagination page, by default ``1``.
-
-        Returns
-        -------
-        Pagination[BookSearchResult]
-            Paginated list of books authored by the given ID.
-
-        Examples
-        --------
-        >>> service.get_books(1).results[0].title
-        'Book'
-        """
-
+    async def _get_books(self, author_id: int, page: int = 1) -> Pagination[BookSearchResult]:
         url = f"{self.base_url}/autor/livros/{author_id}/page:{page}"
         logger.info("Fetching books for author %s page %s", author_id, page)
-        response = self.client.get(url)
+        response = await maybe_await(self.client.get, url)
         response.raise_for_status()
         soup = self.parse_html(response.text)
 
@@ -161,137 +105,36 @@ class AuthorService(BaseSkoobService):
         )
 
 
-class AsyncAuthorService(AsyncBaseSkoobService):  # pragma: no cover - thin async wrapper
+class AuthorService(_AuthorServiceMixin, BaseSkoobService):
+    """High level operations for retrieving authors."""
+
+    def search(self, query: str, page: int = 1) -> Pagination[AuthorSearchResult]:
+        """Search for authors by name."""
+        return run_sync(self._search(query, page))
+
+    def get_by_id(self, author_id: int) -> AuthorProfile:
+        """Retrieve detailed information about an author."""
+        return run_sync(self._get_by_id(author_id))
+
+    def get_books(self, author_id: int, page: int = 1) -> Pagination[BookSearchResult]:
+        """Retrieve books written by the author."""
+        return run_sync(self._get_books(author_id, page))
+
+
+class AsyncAuthorService(_AuthorServiceMixin, AsyncBaseSkoobService):  # pragma: no cover - thin async wrapper
     """Asynchronous variant of :class:`AuthorService`."""
 
     def __init__(self, client: AsyncHTTPClient):
         super().__init__(client)
 
     async def search(self, query: str, page: int = 1) -> Pagination[AuthorSearchResult]:
-        """Asynchronously search for authors by name.
-
-        Parameters
-        ----------
-        query : str
-            Term to look for.
-        page : int, optional
-            Page number for pagination, by default ``1``.
-
-        Returns
-        -------
-        Pagination[AuthorSearchResult]
-            Paginated list of authors matching the query.
-        """
-
-        url = f"{self.base_url}/autor/lista/busca:{query}/mpage:{page}"
-        logger.info("Searching authors with query '%s' page %s", query, page)
-        try:
-            response = await self.client.get(url)
-            response.raise_for_status()
-            soup = self.parse_html(response.text)
-            author_blocks = []
-            for div in safe_find_all(soup, "div"):
-                style = str(div.get("style") or "")
-                if "border-bottom:#ccc" in style and "margin-bottom:10px" in style:
-                    author_blocks.append(div)
-            results: list[AuthorSearchResult] = []
-            for div in author_blocks:
-                author = parse_author_block(div, self.base_url)
-                if author is not None:
-                    results.append(author)
-            total = extract_total_results(soup)
-            has_next = bool(safe_find(soup, "div", {"class": "proximo"}))
-            return Pagination(
-                results=results,
-                limit=len(results),
-                page=page,
-                total=total,
-                has_next_page=has_next,
-            )
-        except Exception as exc:  # pragma: no cover - defensive
-            logger.error("Failed to search authors: %s", exc, exc_info=True)
-            return Pagination(
-                results=[],
-                limit=0,
-                page=page,
-                total=0,
-                has_next_page=False,
-            )
+        """Asynchronously search for authors by name."""
+        return await self._search(query, page)
 
     async def get_by_id(self, author_id: int) -> AuthorProfile:
-        """Fetch an author's profile by identifier.
-
-        Parameters
-        ----------
-        author_id : int
-            Identifier of the author on Skoob.
-
-        Returns
-        -------
-        AuthorProfile
-            Structured profile data for the requested author.
-        """
-
-        url = f"{self.base_url}/autor/{author_id}"
-        logger.info("Fetching author profile: %s", url)
-        try:
-            response = await self.client.get(url)
-            response.raise_for_status()
-            soup = self.parse_html(response.text)
-            return parse_author_profile(soup, self.base_url)
-        except Exception as exc:  # pragma: no cover - defensive
-            logger.error("Failed to fetch author profile %s: %s", author_id, exc, exc_info=True)
-            raise ParsingError("Failed to fetch author profile.") from exc
+        """Fetch an author's profile by identifier."""
+        return await self._get_by_id(author_id)
 
     async def get_books(self, author_id: int, page: int = 1) -> Pagination[BookSearchResult]:
-        """Fetch books written by the given author.
-
-        Parameters
-        ----------
-        author_id : int
-            The author identifier.
-        page : int, optional
-            Pagination page, by default ``1``.
-
-        Returns
-        -------
-        Pagination[BookSearchResult]
-            Paginated list of books authored by the given ID.
-        """
-
-        url = f"{self.base_url}/autor/livros/{author_id}/page:{page}"
-        logger.info("Fetching books for author %s page %s", author_id, page)
-        try:
-            response = await self.client.get(url)
-            response.raise_for_status()
-            soup = self.parse_html(response.text)
-            books: list[BookSearchResult] = []
-            for div in safe_find_all(soup, "div", {"class": "clivro livro-capa-mini"}):
-                book = parse_author_book_div(div, self.base_url)
-                if book is not None:
-                    books.append(book)
-            total_span = safe_find(soup, "span", {"class": "badge badge-ativa"})
-            total_text = get_tag_text(total_span).replace(".", "")
-            total = int(total_text) if total_text.isdigit() else len(books)
-            has_next = bool(safe_find(soup, "div", {"class": "proximo"}))
-            return Pagination(
-                results=books,
-                total=total,
-                page=page,
-                limit=len(books),
-                has_next_page=has_next,
-            )
-        except Exception as exc:  # pragma: no cover - defensive
-            logger.error(
-                "Failed to fetch books for author %s: %s",
-                author_id,
-                exc,
-                exc_info=True,
-            )
-            return Pagination(
-                results=[],
-                total=0,
-                page=page,
-                limit=0,
-                has_next_page=False,
-            )
+        """Fetch books written by the given author."""
+        return await self._get_books(author_id, page)
