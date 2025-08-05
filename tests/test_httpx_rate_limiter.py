@@ -4,6 +4,7 @@ import httpx
 import pytest
 
 from pyskoob.http.httpx import HttpxAsyncClient, HttpxSyncClient
+from pyskoob.utils import RateLimiter
 
 
 @pytest.fixture
@@ -11,10 +12,11 @@ def anyio_backend() -> str:
     return "asyncio"
 
 
-class DummyLimiter:
+class DummyLimiter(RateLimiter):
     """Simple limiter that counts acquire calls."""
 
     def __init__(self) -> None:
+        super().__init__()
         self.calls = 0
 
     def acquire(self) -> None:  # pragma: no cover - trivial increment

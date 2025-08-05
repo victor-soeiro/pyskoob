@@ -72,7 +72,8 @@ def test_get_by_id_parses_profile():
     assert profile.stats.star_ratings["5"] == 80.0
     assert profile.gender_percentages == {"male": 60.0, "female": 40.0}
     assert profile.birth_date == "01/01/2000"
-    assert profile.location.startswith("Brasil")
+    loc = profile.location
+    assert loc is not None and loc.startswith("Brasil")
     assert profile.tags == ["Fantasia"]
     assert profile.books[0].title == "B1"
     assert profile.videos[0].title == "V1"

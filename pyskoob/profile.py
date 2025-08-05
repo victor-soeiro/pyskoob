@@ -225,7 +225,7 @@ class AsyncSkoobProfileService(AsyncAuthenticatedService):  # pragma: no cover -
             ``True`` if the operation succeeded.
         """
 
-        self._validate_login()
+        await self._validate_login()
         url = f"{self.base_url}/v1/label_add/{edition_id}/{label.value}"
         response = await self.client.get(url)
         response.raise_for_status()
@@ -245,7 +245,7 @@ class AsyncSkoobProfileService(AsyncAuthenticatedService):  # pragma: no cover -
             ``True`` if the operation succeeded.
         """
 
-        self._validate_login()
+        await self._validate_login()
         url = f"{self.base_url}/v1/label_del/{edition_id}"
         response = await self.client.get(url)
         response.raise_for_status()
@@ -267,7 +267,7 @@ class AsyncSkoobProfileService(AsyncAuthenticatedService):  # pragma: no cover -
             ``True`` if the status update succeeded.
         """
 
-        self._validate_login()
+        await self._validate_login()
         url = f"{self.base_url}/v1/shelf_add/{edition_id}/{status.value}"
         response = await self.client.get(url)
         response.raise_for_status()
@@ -287,7 +287,7 @@ class AsyncSkoobProfileService(AsyncAuthenticatedService):  # pragma: no cover -
             ``True`` if the status was removed successfully.
         """
 
-        self._validate_login()
+        await self._validate_login()
         url = f"{self.base_url}/v1/shelf_del/{edition_id}"
         response = await self.client.get(url)
         response.raise_for_status()
@@ -309,7 +309,7 @@ class AsyncSkoobProfileService(AsyncAuthenticatedService):  # pragma: no cover -
             ``True`` if the operation succeeded.
         """
 
-        self._validate_login()
+        await self._validate_login()
         url = f"{self.base_url}/estante/prateleira/{edition_id}/{bookshelf.value}"
         response = await self.client.get(url)
         response.raise_for_status()
@@ -338,7 +338,7 @@ class AsyncSkoobProfileService(AsyncAuthenticatedService):  # pragma: no cover -
             If Skoob rejects the rating.
         """
 
-        self._validate_login()
+        await self._validate_login()
         if not (0 <= ranking <= 5):
             raise ValueError("Rating must be between 0 and 5.")
         url = f"{self.base_url}/v1/book_rate/{edition_id}/{ranking}"

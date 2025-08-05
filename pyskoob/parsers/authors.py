@@ -135,10 +135,10 @@ def extract_author_info(soup: Tag) -> tuple[str | None, str | None]:
     birth_date = None
     location = None
     if box_generos:
-        birth_b = box_generos.find("b", string=lambda s: s and "Nascimento" in s)
+        birth_b = box_generos.find("b", string=lambda s: bool(s) and "Nascimento" in s)
         if birth_b and birth_b.next_sibling:
             birth_date = str(birth_b.next_sibling).strip(" |")
-        loc_b = box_generos.find("b", string=lambda s: s and "Local" in s)
+        loc_b = box_generos.find("b", string=lambda s: bool(s) and "Local" in s)
         if loc_b and loc_b.next_sibling:
             loc_tag = loc_b.next_sibling
             location = get_tag_text(loc_tag) if isinstance(loc_tag, Tag) else str(loc_tag).strip()
@@ -172,7 +172,7 @@ def extract_author_stats(soup: Tag) -> AuthorStats:
         rating_span = safe_find(stats_div, "span", {"class": "rating"})
         rating_text = get_tag_text(rating_span).replace(",", ".")
         average_rating = float(rating_text) if rating_text else None
-        aval_span = stats_div.find("span", string=lambda t: t and "avalia" in t.lower())
+        aval_span = stats_div.find("span", string=lambda t: bool(t) and "avalia" in t.lower())
         if aval_span:
             aval_match = re.search(r"(\d+)", get_tag_text(aval_span).replace(".", ""))
             ratings = int(aval_match.group(1)) if aval_match else None
