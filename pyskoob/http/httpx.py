@@ -79,6 +79,39 @@ class HttpxSyncClient(SyncHTTPClient):
     def close(self) -> None:
         self._client.close()
 
+    def __enter__(self) -> HttpxSyncClient:
+        """Enter the context manager.
+
+        Returns
+        -------
+        HttpxSyncClient
+            The initialized client instance.
+        """
+
+        return self
+
+    def __exit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc: BaseException | None,
+        tb: TracebackType | None,
+    ) -> None:
+        """Exit the context manager.
+
+        Ensures the underlying HTTPX client is properly closed.
+
+        Parameters
+        ----------
+        exc_type:
+            Exception type raised within the ``with`` block, if any.
+        exc:
+            The exception instance raised within the block, if any.
+        tb:
+            Traceback information, if an exception occurred.
+        """
+
+        self.close()
+
 
 class HttpxAsyncClient(AsyncHTTPClient):
     """Asynchronous HTTP client built on :class:`httpx.AsyncClient`.
